@@ -84,7 +84,7 @@ forward := r.Header.Get("X-Forwarded-For")
 
 만약 `X-Forwarded-For` 헤더를 처음 전송할 때 “추가” 한 상태로 전송하게 된다면 다음과 같은 형태로 전송된다.
 
-X-Forwarded-For: <변조하여 추가한 IP A>, <클라이언트의 실제 IP B>, <proxy 1 C>
+X-Forwarded-For: &lt;변조하여 추가한 IP A&gt;, &lt;클라이언트의 실제 IP B&gt;, &lt;PROXY 1 C&gt;
 
 물론 경우에 따라서 proxy C가 없을 수도 있고, 클라이언트의 실제 IP가 RemoteAddr에 있을 수도 있지만 상관 없다.
 

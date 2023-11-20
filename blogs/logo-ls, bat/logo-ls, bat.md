@@ -2,7 +2,7 @@
 title: "logo-ls, bat"
 description: "내가 터미널에서 가장 많이 사용하는 명령어 중에 ls와 cat을 예쁘게 꾸며주는 방법 가이드"
 date: 2021-12-20 13:28:00 +0900
-tags: ["bat","linux","logo-ls","terminal"]
+tags: ["bat", "linux", "logo-ls", "terminal"]
 ---
 
 터미널을 쓰다보면 알록달록해서 예쁜게 마음에 드는거 같으면서도 글자만 나와서 심심하다.

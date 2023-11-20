@@ -2,8 +2,9 @@
 title: "rust 표준 입출력 코드 분석"
 description: "rust의 길고도 기괴한 표준 입력 코드를 보고 놀라서 아는 많큼 정리해본 글"
 date: 2022-03-28T12:55:30.277Z
-tags: ["Rust","Syntax"]
+tags: ["Rust", "Syntax"]
 ---
+
 ```rust
 use std::io;
 fn main() {
@@ -20,6 +21,7 @@ fn main() {
 
 위 코드는 백준 문제 `a - b` 문제를 rust로 풀이한 결과이다.
 상당히 어지러운데 잠깐 C언어로 푼 버전을 보자.
+
 ```c
 #include <stdio.h>
 int main(void) {
@@ -28,6 +30,7 @@ int main(void) {
     printf("%f\n",a/b);
 }
 ```
+
 rust와 비교하면 정말 간단하다.
 
 그렇다면 왜 러스트의 경우 저리도 많은 코드를 짜야할까?

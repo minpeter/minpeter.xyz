@@ -61,18 +61,21 @@ export async function getAllPosts(): Promise<BlogProps[]> {
       });
 
       return mdFiles.map(async (filePath: string) => {
-        const postDir = path.dirname(filePath);
-        const id = path
-          .basename(postDir)
-          .replace(/[^\w\s\\/-]/g, "")
-          .replace(/ /g, "-");
-
         const fileContents = await fs.promises.readFile(filePath, "utf8");
         const matterResult = matter(fileContents);
 
         const postPath = filePath
           .replace(postsDirectory, "")
           .split(path.sep)[1];
+
+        const id = path
+          .basename(filePath, path.extname(filePath))
+          .replace(/ /g, "-")
+          .replace(/_/g, "-")
+          .replace(/,/g, "-")
+          .replace(/./g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-/, "");
 
         const hash = createHash("md5")
           .update(postPath)

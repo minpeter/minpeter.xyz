@@ -2,16 +2,17 @@
 title: "stack 서비스를 외부에서 사용하기"
 description: "docker stack를 사용할 때 서비스 노출을 위해 프록시 서버를 띄워보자 :)"
 date: 2021-09-14 08:23:00 +0900
-tags: ["docker","server","swarm"]
+tags: ["docker", "server", "swarm"]
 ---
 
 기본적으로 stack에서 실행되는 서비스를 외부에 접속하기위해선 manager 노드와 연결되어야한다.  
-하지만 전 포스트에서 만든 echo stack은 `constraints: [node.role != manager]`옵션으로 매니저에서는 실행되지 않도록 설정했기 때문에 각각 컨테이너가 여러 노드에 분산되어있기때문에 전에 visualizer 서비스를 만들때와 같은 방식 또한 사용할수 없다.  
+하지만 전 포스트에서 만든 echo stack은 `constraints: [node.role != manager]`옵션으로 매니저에서는 실행되지 않도록 설정했기 때문에 각각 컨테이너가 여러 노드에 분산되어있기때문에 전에 visualizer 서비스를 만들때와 같은 방식 또한 사용할수 없다.
 
 따라서 클러스터 외부의 트래픽을 내부로 보내주는 프록시 서버를 구성해보겠다.  
-haproxy 이미지를 사용하여 외부트래픽이 nginx 컨테이너로 가도록 설정해보자.  
+haproxy 이미지를 사용하여 외부트래픽이 nginx 컨테이너로 가도록 설정해보자.
 
 **ingress.yaml**
+
 ```yaml
 version: "3"
 
@@ -34,26 +35,32 @@ networks:
   test:
     external: true
 ```
+
 해당 프록시는 8080포트위 페이지를 외부 80포트로 연결해주는 간단한 프록시이다.  
 파일 manager컨테이너로 이동
+
 ```
 $ docker cp ingress.yaml manager:/ingress.yaml
 ```
+
 서비스배포
+
 ```
 $ docker exec -it manager \
 docker stack deploy -c /ingress.yaml ingress
 ```
+
 아래 명령어로 서비스가 실행되고 있는 것을 확인할수 있다.(또는 visualizer를 이용해 확인해도된다.)
+
 ```
 $ docker exec -it manager \
 docker service ls
 ```
 
 마지막으로 로컬에서 브라우저로 [localhost:8000](http://localhost:8000)에 접속하면 `hello, flask!`라는 메세지가 출력되는것을 알수 있다.  
-이때 프록시서버에서 80 포트로 포워딩했는데 8000 포트에 접속하는 이유는 우리가 클러스터 컨테이너를 만들당시 manager노드의 포트를 8000:80으로 주었기때문이다.  
-
+이때 프록시서버에서 80 포트로 포워딩했는데 8000 포트에 접속하는 이유는 우리가 클러스터 컨테이너를 만들당시 manager노드의 포트를 8000:80으로 주었기때문이다.
 
 ## 참고자료
-[스웜(swarm)을 이용한 도커 컨테이너 배포_3 (스웜 클러스터 외부에서 서비스 사용하기)](https://cornswrold.tistory.com/516?category=930033)  
+
+[스웜(swarm)을 이용한 도커 컨테이너 배포\_3 (스웜 클러스터 외부에서 서비스 사용하기)](https://cornswrold.tistory.com/516?category=930033)  
 [docker docs](https://docs.docker.com/engine/swarm/ingress/)

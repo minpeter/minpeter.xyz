@@ -493,7 +493,7 @@ traefik 서비스에 아래 2개 라벨을 추가하고 volume에도 한줄을 �
 echo "<username>:<htpassword>" >> traefik/usersfile
 ```
 
-위에서 <, >은 제거하고 htpassword는 온라인이나 htpasswd 명령어로 생성해주자.
+위에서 &lt;, &gt;은 제거하고 htpassword는 온라인이나 htpasswd 명령어로 생성해주자.
 
 그럼 접근할때 traefik가 인증 과정을 거치고 인증에 성공하면 서비스로 연결시켜준다.
 

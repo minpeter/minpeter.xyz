@@ -9,20 +9,19 @@ tags: [golang, http]
 HTTP는 클라이언트-서버 기반의 세션을 갖지 않는 프로토콜이며 애플리케이션 계층의 프로토콜
 
 하위 계층의 전송 프로토콜로는 TCP를 사용한다.
-*2021년 7월 HTTP/3가 공개되며 TCP만이 아닌 UDP를 사용하는 HTTP가 등장했다.
+\*2021년 7월 HTTP/3가 공개되며 TCP만이 아닌 UDP를 사용하는 HTTP가 등장했다.
 
 ### 통합 리소스 식별자 (URL)
 
 클라이언트가 웹 서버를 찾고 요청된 리소르를 식별하는데 사용되는 일종의 주소
 
-| 스키마(scheme) | 권한 정보(authority) | 경로(path) | 쿼리 파라미터(query arameter) | 쿼리 파라미터 (query parameter) | 정보 조각 (fragment) |
-| --- | --- | --- | --- | --- | --- |
-| scheme:// | user:password@ | host:port/path | ?key1=value1 | &key2=value2 | #table_of_contents |
+| 스키마(scheme) | 권한 정보(authority) | 경로(path)     | 쿼리 파라미터(query arameter) | 쿼리 파라미터 (query parameter) | 정보 조각 (fragment) |
+| -------------- | -------------------- | -------------- | ----------------------------- | ------------------------------- | -------------------- |
+| scheme://      | user:password@       | host:port/path | ?key1=value1                  | &key2=value2                    | #table_of_contents   |
 
 위에 표처럼 구성되어 있으며 주로 인터넷 상 URL은 최소한 스키마와 호스트 네임만을 포함한다.
 
 > https://images.google.com/
-> 
 
 스키마는 브라우저에게 HTTPS를 사용한다고 알렸고, [images.google.com](/images/http://images.google.com/dml)/ 의 경로로 기본리소스를 요청하였다.
 
@@ -49,49 +48,34 @@ GET /robots.txt HTTP/1.1
 응답은 이러하다
 
 ```html
-HTTP/1.1 200 OK
-Accept-Ranges: bytes
-Vary: Accept-Encoding
-Content-Type: text/plain
-Cross-Origin-Resource-Policy: cross-origin
-Cross-Origin-Opener-Policy-Report-Only: same-origin; report-to="static-on-bigtable"
-Report-To: {"group":"static-on-bigtable","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/static-on-bigtable"}]}
-Content-Length: 7240
-Date: Sat, 16 Jul 2022 02:01:54 GMT
-Expires: Sat, 16 Jul 2022 02:01:54 GMT
-Cache-Control: private, max-age=0
-Last-Modified: Wed, 13 Jul 2022 19:00:00 GMT
-X-Content-Type-Options: nosniff
-Server: sffe
-X-XSS-Protection: 0
-
-User-agent: *
-Disallow: /search
-Allow: /search/about
-Allow: /search/static
-Allow: /search/howsearchworks
-.
-.
-.
-(생략)
+HTTP/1.1 200 OK Accept-Ranges: bytes Vary: Accept-Encoding Content-Type:
+text/plain Cross-Origin-Resource-Policy: cross-origin
+Cross-Origin-Opener-Policy-Report-Only: same-origin;
+report-to="static-on-bigtable" Report-To:
+{"group":"static-on-bigtable","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/static-on-bigtable"}]}
+Content-Length: 7240 Date: Sat, 16 Jul 2022 02:01:54 GMT Expires: Sat, 16 Jul
+2022 02:01:54 GMT Cache-Control: private, max-age=0 Last-Modified: Wed, 13 Jul
+2022 19:00:00 GMT X-Content-Type-Options: nosniff Server: sffe X-XSS-Protection:
+0 User-agent: * Disallow: /search Allow: /search/about Allow: /search/static
+Allow: /search/howsearchworks . . . (생략)
 ```
 
-맨 위부터 상태라인,  일련의 헤더, 중간의 보디와 구분하는 공백 라인, 응답 보디의 robots.txt 파일이 전송된다.
+맨 위부터 상태라인, 일련의 헤더, 중간의 보디와 구분하는 공백 라인, 응답 보디의 robots.txt 파일이 전송된다.
 
 Go의 net/http 패키지를 이용하면 HTTP 메서드와 URL만 가지고 HTTP 요청을 만들 수 있다.
 
 ### 요청 메서드의 종류
 
-| GET | 서버 리소스를 요청한다. |
-| --- | --- |
-| HEAD | 요청한 리소스가 생각한 것보다 큰 경우를 대비해 리소스의 정보를 담은 헤더를 우선 요청한다. |
-| POST | 서버에 리소스를 추가하려고 할떄 사용된다. |
-| PUT | 이미 서버에 존재하는 리소스를 업데이터하거나 교체할때 사용한다. |
-| PATCH | 이미 서버에 존재하는 리소스의 일부분을 수정하는 경우 사용한다. |
-| DELETE | 서버에 존재하는 리소스를 제거하기 위해 사용한다. |
-| OPTIONS | 서버의 특정 리소스에 대해 존재하는 메서드를 알아내기 위해 사용한다. |
+| GET     | 서버 리소스를 요청한다.                                                                                                        |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| HEAD    | 요청한 리소스가 생각한 것보다 큰 경우를 대비해 리소스의 정보를 담은 헤더를 우선 요청한다.                                      |
+| POST    | 서버에 리소스를 추가하려고 할떄 사용된다.                                                                                      |
+| PUT     | 이미 서버에 존재하는 리소스를 업데이터하거나 교체할때 사용한다.                                                                |
+| PATCH   | 이미 서버에 존재하는 리소스의 일부분을 수정하는 경우 사용한다.                                                                 |
+| DELETE  | 서버에 존재하는 리소스를 제거하기 위해 사용한다.                                                                               |
+| OPTIONS | 서버의 특정 리소스에 대해 존재하는 메서드를 알아내기 위해 사용한다.                                                            |
 | CONNECT | 웹 서버에 HTTP 터널링을 요청하거나 대상 목적지와 TCP 세션을 수립하고 클라이언트와 목적지 간 데이터 프락싱을 할 수 있게 해준다. |
-| TRACE | 웹 서버에게 요청을 처리하지 말고 에코잉하도록 한다 |
+| TRACE   | 웹 서버에게 요청을 처리하지 말고 에코잉하도록 한다                                                                             |
 
 <aside>
 ⚙ 서버 측에서 TRACE 메소드를 지원하기 전에 XST (Cross-Site Tracking) 공격에서 TRACE 메서드가 무슨 역활을 하는지 알아보세요 :)
@@ -174,28 +158,27 @@ HTTP/1.1은 클라이언트가 서버와의 TCP 연결을 유지하여 여러 �
 이때 2가지 방법을 선택할 수 있는데
 
 1. head 메소드를 이용해 필요한 데이터인지 확인하고 요청한다.
-    
-    ```jsx
-    func TestHeadTime(t *testing.T) {
-    	//바디를 소비하는데 발생하는 오버해드 방지
-    	resp, err := http.Head("https://www.time.gov")
-    	if err != nil {
-    		t.Fatal(err)
-    	}
-    	_ = resp.Body.Close()
-    ```
-    
+
+   ```jsx
+   func TestHeadTime(t *testing.T) {
+   	//바디를 소비하는데 발생하는 오버해드 방지
+   	resp, err := http.Head("https://www.time.gov")
+   	if err != nil {
+   		t.Fatal(err)
+   	}
+   	_ = resp.Body.Close()
+   ```
+
 2. io.Copy 함수와 ioutil.Discard 함수를 활용한 명시적 소비
-    
-    ```go
-    _, _ = io.Copy(ioutil.Discard, resp.Body)
-    _ = resp.Body.Close()
-    ```
-    
-    다음과 같이 Body의 모든 바이트를 읽어서 ioutil.Discard에 전부 쓰는 형태로 응답을 소비한다.
-    
-    또한 다음 코드에서 _ (언더스코어)를 이용해 반환값을 무시했다는 것을 알린다.
-    
+
+   ```go
+   _, _ = io.Copy(ioutil.Discard, resp.Body)
+   _ = resp.Body.Close()
+   ```
+
+   다음과 같이 Body의 모든 바이트를 읽어서 ioutil.Discard에 전부 쓰는 형태로 응답을 소비한다.
+
+   또한 다음 코드에서 \_ (언더스코어)를 이용해 반환값을 무시했다는 것을 알린다.
 
 ### 타인아웃과 취소 구현
 
@@ -271,7 +254,7 @@ func TestBlockIndefinitelyWithTimeout(t *testing.T) {
 
 5초 안에 끝났으며 자동으로 cancel 처리해 오류도 출력되지 않음
 
-또는 다음 코드처럼 
+또는 다음 코드처럼
 
 ### 영속적 TCP 연결 비활성화
 

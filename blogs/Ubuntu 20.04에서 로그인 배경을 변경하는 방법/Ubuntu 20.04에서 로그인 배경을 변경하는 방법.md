@@ -1,7 +1,7 @@
 ---
 title: "Ubuntu 20.04에서 로그인 배경을 변경하는 방법"
 date: 2020-01-01
-tags: ["linux","ubuntu"]
+tags: ["linux", "ubuntu"]
 ---
 
 ### 개요

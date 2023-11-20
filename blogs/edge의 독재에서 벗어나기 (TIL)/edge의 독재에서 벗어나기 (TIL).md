@@ -1,7 +1,7 @@
 ---
 title: "edge의 독재에서 벗어나기 (TIL)"
 date: 2021-09-05 00:30:00 +0900
-tags: ["EdgeDeflector","TIL","chrome","edge","windows"]
+tags: ["EdgeDeflector", "TIL", "chrome", "edge", "windows"]
 ---
 
 ## 잡설

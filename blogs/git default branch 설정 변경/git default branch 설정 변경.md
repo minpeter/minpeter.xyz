@@ -1,7 +1,7 @@
 ---
 title: "git default branch 설정 변경"
 date: 2023-02-25
-tags: ["github","git"]
+tags: ["github", "git"]
 categories:
 ---
 

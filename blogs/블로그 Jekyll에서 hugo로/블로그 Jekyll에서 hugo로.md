@@ -1,9 +1,10 @@
 ---
 title: "블로그 Jekyll에서 hugo로"
 date: 2022-01-09 18:53:00 +0900
-tags: ["blog","github","github pages","go","hugo"]
+tags: ["blog", "github", "github pages", "go", "hugo"]
 categories: "blog"
 ---
+
 예전에 github pages 블로그를 처음 구축했을 당시에 Jekyll를 이용해 구축했다.  
 그리고 마지막에 추가로 했던 말이 있다.
 

@@ -16,9 +16,10 @@ Hyper-V, ESXi, XenServer, KVM 등과 유사한 기능을 제공하는 Type-1 hyp
 ### 설치 환경
 
 Lenovo ThinkPad E485 (Ryzen 3 2200U + 12GB RAM + 1TB HDD)
-무조건 Bare Metal에 설치해야한다.  
+무조건 Bare Metal에 설치해야한다.
 
 최소사양은 다음과 같다.
+
 ```
 CPU: 64비트(Intel EMT64 또는 AMD64)
 
@@ -33,11 +34,11 @@ RAM: 1GB RAM 및 게스트용 추가 RAM 필요
 
 ### 설치 과정
 
-1. [공식 홈페이지](https://www.proxmox.com/en/downloads/category/iso-images-pve)에서 ISO 파일을 다운로드한다.  
+1. [공식 홈페이지](https://www.proxmox.com/en/downloads/category/iso-images-pve)에서 ISO 파일을 다운로드한다.
 2. ISO 파일을 USB에 설치한다. (원도우의 경우 rufus, 리눅스의 경우 dd)
 3. USB를 노트북에 꽂고 부팅한다.
-![image](/images/pve-grub-menu.png)
-다음과 같은 화면이 나오면 `Install Proxmox VE`를 선택한다.
+   ![image](/images/pve-grub-menu.png)
+   다음과 같은 화면이 나오면 `Install Proxmox VE`를 선택한다.
 4. 적절하게 디스크 선택, 적절하게 비밀번호 선택, 적절한 타임존 적절한 선택으로 설치를 완료한다.
 5. https://server-ip:8006 접속 후 로그인한다.
 
@@ -55,7 +56,7 @@ RAM: 1GB RAM 및 게스트용 추가 RAM 필요
 # deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise
 ```
 
-## 로그인 시 구독 안내  메시지 제거
+## 로그인 시 구독 안내 메시지 제거
 
 ```bash
 # vim /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
@@ -113,7 +114,7 @@ proxmox를 서버로 사용해야 하는데 덮개를 닫아서 절전 모드에
 # vim /etc/systemd/logind.conf
 ```
 
-다음과 같은 줄을 
+다음과 같은 줄을
 
 ```bash
 #HandleLidSwitch=suspend
@@ -149,14 +150,13 @@ F5로 reload를 하면 테마가 적용됨!!
 
 `/etc/default/grub` 파일 중
 
-`GRUB_CMDLINE_LINUX_DEFAULT` 에 
+`GRUB_CMDLINE_LINUX_DEFAULT` 에
 
 `acpi_backlight=native` 추가하고
 
 `update-grub` 실행 후 `reboot`
 
-
 ## 앞으로 활용 방안
 
 Kubernetes 클러스터 구축, Jenkins CI/CD, private Docker Registry 등등으로 이용할 예정이다.  
-일단은 테스트 배포 & 배포를 진행할 온프라미스 서버가 생겼다는 것에 의의를 두고 싶다.  
+일단은 테스트 배포 & 배포를 진행할 온프라미스 서버가 생겼다는 것에 의의를 두고 싶다.

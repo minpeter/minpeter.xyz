@@ -2,11 +2,11 @@
 title: "velog로 이사할까말까?"
 description: "처음에 나처럼 좋은 플랫폼인지 모르겠는 분을 위한 롤백 수단 소개"
 date: 2022-03-07T01:49:42.585Z
-tags: ["backup","velog"]
+tags: ["backup", "velog"]
 categories: "blog"
 ---
-모르겠어요 :)
 
+모르겠어요 :)
 
 **2022/3/27일 기준**
 나는 velog 푹 빠져버렸다...

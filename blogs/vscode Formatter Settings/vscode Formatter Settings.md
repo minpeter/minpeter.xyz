@@ -2,8 +2,9 @@
 title: "vscode Formatter Settings"
 description: "Prettier만으로 해결되지 않는 vscode Formatter 설정을 도와줄 가이드"
 date: 2022-03-27T10:27:57.379Z
-tags: ["Formatter","vscode"]
+tags: ["Formatter", "vscode"]
 ---
+
 vscode를 사용할 때 Formatter는 상당히 중요하다.
 보통 구글링 해보면 Prettier와 Beautify를 추천한다.
 

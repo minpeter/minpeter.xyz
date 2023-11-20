@@ -5,17 +5,20 @@ tags:
 ---
 
 # 개요
+
 CTF에 나가서 문제를 푼적은 꽤 많았지만 writeup를 글로 남기는건 처음인 것 같다.  
 이번에는 Nullcon Goa 2022에 참가해서 문제를 풀었는데, 대회 도중 풀이에 성공한 문제들의 writeup을 남기려고 한다.  
-하나같이 100점짜리 기본 문제에 어렵지는 않지만 해킹 초짜인 나에게는 풀이에 성공한 모든 문제가 소중하니까✨  
+하나같이 100점짜리 기본 문제에 어렵지는 않지만 해킹 초짜인 나에게는 풀이에 성공한 모든 문제가 소중하니까✨
 
-*추가로 언제까지 열여있는지 모르겠지만, Nullcon Goa 2022의 문제들은 [여기](https://ctf.winja.site/)에서 풀 수 있다.  
+\*추가로 언제까지 열여있는지 모르겠지만, Nullcon Goa 2022의 문제들은 [여기](https://ctf.winja.site/)에서 풀 수 있다.  
 ~~대회 종료 후 가입이 되는지는 모르겠다.~~
 
 # 문제
 
 ## 1. [Pwn] 100점 - FreeFall
+
 ### 문제 설명
+
 > The highest jump in freefall is 40km, I don't think you so you need to jump that much. But calculate before you jump.
 
 ### 풀이
@@ -73,7 +76,9 @@ python -c "print('A' * 40 + '\x72\x11\x40\x00\x00\x00\x00\x00')" | nc freefall.c
 다음과 같은 플래그 값을 얻을 수 있다.
 
 ## 2. [Rev] 100점 - Revagers
+
 ### 문제 설명
+
 > Help Yondu and the 40 ravagers to steal the flag.
 
 ### 풀이
@@ -82,7 +87,7 @@ python -c "print('A' * 40 + '\x72\x11\x40\x00\x00\x00\x00\x00')" | nc freefall.c
 
 ![Untitled](/images/Revagers%20140a1ab671124bb792ed0aba60744806/Untitled.png)
 
-손쉽게 ELF 파일, 즉 리눅스 실행 파일인 것을 알 수 있음  
+손쉽게 ELF 파일, 즉 리눅스 실행 파일인 것을 알 수 있음
 
 바로 IDA로 오픈
 
@@ -151,7 +156,7 @@ int __fastcall sub_1159(const char *a1)
 }
 ```
 
-./vault <passcode>로 실행 가능하고
+./vault &lt;passcode&gt;로 실행 가능하고
 
 이때 passcode의 길이는 41
 
@@ -168,11 +173,13 @@ if문의 숫자들을 적어보면 다음과 같음
 `89fc238534a13e556726cf70f36205cf_ST4r10RD`
 
 위의 값을 인자로 프로그램 실행
+
 ```
 ./vault 89fc238534a13e556726cf70f36205cf_ST4r10RD
 ```
 
 output :
+
 ```
 [+] You cracked the vault.
 [+] Your flag is flag{89fc238534a13e556726cf70f36205cf_ST4r10RD}
@@ -188,7 +195,7 @@ Brrrrrrrr 이 나다 :)파일 다운 후 메모장으로 열어 파일 시그니
 
 ![Untitled](/images/Revagers%20140a1ab671124bb792ed0aba60744806/Untitled.png)
 
-손쉽게 ELF 파일, 즉 리눅스 실행 파일인 것을 알 수 있음  
+손쉽게 ELF 파일, 즉 리눅스 실행 파일인 것을 알 수 있음
 
 바로 IDA로 오픈
 
@@ -257,7 +264,7 @@ int __fastcall sub_1159(const char *a1)
 }
 ```
 
-./vault <passcode>로 실행 가능하고
+./vault &lt;passcode&gt;로 실행 가능하고
 
 이때 passcode의 길이는 41
 
@@ -279,7 +286,7 @@ if문의 숫자들을 적어보면 다음과 같음
 
 output :
 [+] You cracked the vault.
-[+] Your flag is flag{89fc238534a13e556726cf70f36205cf_ST4r10RD}
+[+] Your flag is `flag{89fc238534a13e556726cf70f36205cf_ST4r10RD}`
 
 히히 바로 제출해보면?
 
@@ -287,9 +294,10 @@ output :
 
 ![Untitled](/images/Revagers%20140a1ab671124bb792ed0aba60744806/Untitled%202.png)
 
-
 ## 3. [Steganography] 100점 - T'kani
+
 ### 문제 설명
+
 > Buzz lightyear sent secret file to Alisha for their secret mission on T'kani Prime Planet.But Alisha is not able to read the file. Can you help Alisha ?
 
 ### 풀이
@@ -318,8 +326,8 @@ word/document.xml 파일 속 플래그 발견
 
 제출하면 정답 처리
 
-
 # 대회 후기
+
 총 222등까지 있었는데 97등이면 혼자선 잘하지 않았나...?  
 라고 위로를 해보고 싶지만? 더 잘하고 싶기 때문에 더 열심히 공부해야겠다.  
 다음 대회는 더 잘해보자.

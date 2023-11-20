@@ -1,31 +1,38 @@
 ---
 title: "AWS - CloudFormation"
 date: 2022-06-15T23:50:15.412Z
-tags: ["aws","cloudformation"]
+tags: ["aws", "cloudformation"]
 categories: "aws"
 ---
+
 ## 이론
+
 ### CloudFormat이란?
+
 AWS 인프라에 대해 코드로 선언하는 방법이다.
 미리 코드로 적어둔 AWS 인프라 자원을 생성하거나 삭제할 수 있다.
 비슷한 서비스로는 Terraform이 존재하고 이를 통틀어 IaC (Infrastructure as Code) 라고 부른다.
 
 ### 템플릿
+
 생성할 인프라 자원을 코드로 정의한 파일
 JSON, YAML 형식을 사용할 수 있다.
 
 ### 생성 순서
+
 1. 템플릿을 CloudFormation에 업로드
 2. CloudFormation에서 스택 생성 명령
 3. AWS가 자동으로 템플릿에 작성된 순서대로 자동으로 생성
 
 ### 삭제 순서
+
 1. CloudFormation에서 스택 삭제 명령
 2. AWS가 자동으로 인프라 자원을 삭제
 
 ## 실습
 
 ### 스택 생성
+
 ```
 Parameters:
   KeyName:

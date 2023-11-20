@@ -2,14 +2,15 @@
 title: "nvm을 이용한 node버전관리"
 description: "NodeJS의 버전 관리를 도와주는 툴, 자신이 노드만 사용한다면 최고의 선택일 것"
 date: 2021-10-01 11:24:00 +0900
-tags: ["Node","Version Manager"]
+tags: ["Node", "Version Manager"]
 ---
+
 ### 공지사항
+
 노드만 사용하는 개발자에겐 nvm의 사용을 추천하나,
 python, java 등을 같이 이용한다면 nvm 대신 asdf이란 툴을 사용할 것을 권장한다.
 
 **훨씬 엘레강스하다**
-
 
 난 솔직히 자가진단이 싫다.  
 최근 아이폰 7으로 바꾸기 전까지는 앱이 열리는데까지 너무 오래걸렸고,  

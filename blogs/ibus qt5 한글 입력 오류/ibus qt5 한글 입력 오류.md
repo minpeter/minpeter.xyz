@@ -1,7 +1,7 @@
 ---
 title: "ibus qt5 한글 입력 오류"
 date: 2020-01-01
-tags: ["QT5","ibus","linux","한글입력기"]
+tags: ["QT5", "ibus", "linux", "한글입력기"]
 ---
 
 ### 개요

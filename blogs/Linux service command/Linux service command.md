@@ -1,7 +1,7 @@
 ---
 title: "Linux service command"
 date: 2020-01-01
-tags: ["command","linux"]
+tags: ["command", "linux"]
 ---
 
 ### 개요
@@ -17,7 +17,6 @@ ssh 서버를 종료하면 간단하게 해결된다. 따라서
 1. `sudo service ssh stop`
 
 2. `sudo systemctl status ssh` (서버스 상태 확인)
-
 
 추가로! 명령어 service를 알아보도록 하자
 

@@ -1,7 +1,7 @@
 ---
 title: "pi hole을 이용한 광고 제거"
 date: 2021-09-02 12:59:59 +0900
-tags: ["DNS","homelab","pihole","raspberrypi","server"]
+tags: ["DNS", "homelab", "pihole", "raspberrypi", "server"]
 ---
 
 ## pi hole이란?
@@ -86,7 +86,6 @@ tags: ["DNS","homelab","pihole","raspberrypi","server"]
 필자는 인터넷에 올라온 설명 따라하다가 "이거 왜 안돼.. 이러면서 한참 삽질했다..  
 보조 DNS를 1.1.1.1, 8.8.8.8 같은 DNS 주소로 입력할 경우 우리가 열심히 구축해둔 PI hole의 광고 제거 기능으로 광고 이미지 아이피를 차단하면 공유기가 자동으로 보조 DNS에서 도메인을 검색해버린다..  
 **따라서 절대로 보조 DNS는 비워두자**
-
 
 ## pi hole 작동 테스트
 
