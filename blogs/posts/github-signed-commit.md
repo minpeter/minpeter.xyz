@@ -1,0 +1,140 @@
+---
+title: github signed commit
+date: 2022-09-29 10:55:06
+tags: ["github", "git", "signed commit", "gpg"]
+---
+
+## 깃허브 Web UI에서만 생기는 Verified 태그
+
+깃허브에 어느 순간 자신의 닉네임으로 레포를 생성하고 readme.md 파일을 작성하면 깃허브 프로필에 표시해주는 기능이 생겼다.  
+![](/images/Screenshot%202022-09-29%20120846.png)
+
+해당 레포에 readme.md 파일 하나만 존재하니 github Web UI에서 수정하는 경우가 데부분이다.  
+
+이런 방식으로 수정한 후 커밋로그를 보면 다음과 같다.
+
+![](/images/Screenshot%202022-09-29%20121627.png)
+
+그 동안 노트북에서 작업해서 업로드했던 커밋에는 없는 Verified 태그가 붙어 있는 것을 볼 수 있다.  
+
+가능하다면 로컬에서 하는 커밋에도 해당 표시가 있었으면 했고 찾아보니 해당 작업을 할만한 이유도 충분했기 때문에 이번 포스트에서 소개하게 되었다.  
+
+## GPG ( GUN Privacy Guard )
+PGP하는 이메일용 암호화 도구를 기반으로 만든 프로그램이다.  
+기본적으로 RSA를 사용하고 DSA and Elgamal, DSA 등도 지원한다.
+
+## github에서 Verified 태그가 존재하는 이유
+노트북이나 컴퓨터를 새로 구매한 뒤 개발을 위해 git 설정을 한다고 가정하자.  
+아마도 무조건 다음 명령어를 입력하게 될 것이다.  
+
+```bash
+git config --global user.name
+git config --global user.email
+```
+
+github는 해당 정보를 참고해 누가 해당 커밋을 했는지 표시해준다.  
+잠깐 생각해보면 이상한 점을 찾을 수 있는데 name과 email은 입력하는데로 저장된다는 것이다.  
+얼마든지 조작가능하고 email를 잘못 입력했던 경험이 있는데 해당 커밋을 github에 push하여도 큰 문제가 발생하지는 않았던거 같다.  
+
+이때 Verified 태그의 존재 이유가 생긴다.  
+
+GPG를 이용해 생성된 키를 Github에 공유하고 해당 키를 이용해 커밋에 디지털서명을 한 다음, 해당 커밋을 Push하게 되면 공유한 키로 Github가 해당 커밋이 내가 한 것을 인증하고 Verified 태그를 붙혀준다.  
+
+정리하자면 내가 했다고 적혀있어도 진짜 내가 했는지 모르겠으니 전자서명을 하여 인증된 커밋을 하는 것이다.  
+또한 Web UI에서 작성한 커밋에 대해서 Verified 태그가 붙은 이유는 Github에서 자동으로 서명을 하기 때문이다.  
+
+# 로컬 커밋에 서명하는 방법
+
+아래 과정은 WSL2에서 GPG 키를 생성하고 커밋을 생성하는 경우를 기준으로 작성되었다.  
+맥 또는 윈도우의 경우 약간의 검색을 통해 진행할 수 있을테니 찾아보자
+
+## GPG 키 생성
+
+GPG 키를 만드는데는 Windows - Gpg4win, macOS - Mac GPG, Linux - GnuPG 를 사용한다.  
+
+macOS는 `brew install gnupg` 데비안 계열은 기본 설치지만 없는 경우 `apt install gnupg` 다른 배포판은 알아서 잘.. 해주겠죠?  
+
+다음 명령어로 GPG 키를 생성한다.  
+
+```
+gpg --full-generate-key
+```
+
+이제 몆가지 선택지가 나올텐데 처음 생성할 키 종류를 선택하라는 질문이 나올 것이다.  
+걍 RSA가 기본이니 엔터를 누르면 RSA and RSA 키가 생성된다.  
+다음은 키 사이즈를 입력하라고 나오는데 최소 조건이 4096이라고 하니 4096를 입력해주자.  
+그 다음은 유효기간을 선택해야하는데 기본값은 무제한이다.  
+`Is this correct? (y/N)` 라는 질문이 나오면 y를 입력해주자  
+`Real Name:` 은 깃허브 닉네임을 입력해주고, 
+`Email address:`에는 깃허브 계정에 등록하여 인증된 이메일를 입력하자.  
+마지막으로 `Comment:`에 지금 생성한 키에 대한 설명을 작성하면 되는데 "For Github Signed commit" 정도로 적어두면 될 것 같다.  
+`Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit?` 이라는 질문이 나오면 잘못 입력한 내용이 없는 경우 O를 입력해 키 생성을 마무리 해주자!!
+
+```
+gpg --list-secret-keys --keyid-format=long
+```
+
+명령어 또는 
+```
+gpg -k --keyid-format=long
+```
+명령어를 통해 생성한 키를 확인할 수 있다.
+
+아래 예시는 다음과 같이 키가 생성된 경우를 예시로 작성되었다.  
+```
+/home/minpeter/.gnupg/pubring.kbx
+---------------------------------
+pub   rsa4096/2167399770AVC2F3 2022-10-11 [SC]
+      2E992F8F8D1944D661F7FA652167399770AVC2F3
+uid                 [ultimate] minpeter2 (for github signed Commit) <kali2005611@gmail.com>
+sub   rsa4096/ADE4A2BCCAEA3G37 2022-10-11 [E]
+```
+
+
+## 생성한 GPG 키 Github에 등록하기
+아래 명령어를 이용해 공개키를 ASCII 형식으로 출력할 수 있다.  
+```
+gpg --armor --export 2167399770AVC2F3
+```
+출력 결과 전체 그러니까 `-----BEGIN PGP PUBLIC KEY BLOCK-----` 부터 `-----END PGP PUBLIC KEY BLOCK-----` 까지 복사해준다.  
+
+그 다음 Github에 접속해서 Settings > SSH and GPG keys 에서
+GPG keys 영역에 초록색 `New GPG key` 버튼을 눌러주자.  
+![](/images/Screenshot%202022-09-29%20190743.png)
+Title에는 Key에 대한 설명.. 같은걸 적어주면 될 것 같아서 나의 경우 
+`노트북명 wsl2 signed commit` 이라고 정했다.
+나중에 나만 알아보면 되지 않을까..?
+그리고 Key 부분에 방금 복사해분 퍼블릭 키를 붙혀주면 된다.
+
+## git config
+
+이제 설정이 거희 끝나간다.
+signed commit를 할 노트북에서 아래 명령어를 이용해 key를 등록해주자.  
+```
+git config --global user.signingkey 2167399770AVC2F3
+```
+리눅스의 경우 다음 명령어를 실행해주자.
+### zsh
+```
+[ -f ~/.zshenv ] && echo '\n## GIT gpg configure\n\nexport GPG_TTY=$(tty)' >> ~/.zshenv
+```
+### bash
+```
+[ -f ~/.bashrc ] && echo '\n## GIT gpg configure\n\nexport GPG_TTY=$(tty)' >> ~/.bashrc
+```
+이제 모든 설정이 끝났고 단지 `git commit` 명령어를 수행할 때 `-S` 옵션을 붙혀주면 된다.
+
+만약 모든 커밋에 서명하길 원한다면 아래 명령어로 활성화 시킬 수 있다.  
+```
+git config --global commit.gpgsign true
+```
+
+
+이제 커밋을 해보면 커밋에 Verified 태그가 생긴 걸 확인할 수 있다. 
+![](/images/Screenshot%202022-09-29%20191559.png)
+
+## 참고
+- [generating-a-new-gpg-key](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key)
+- [adding-a-new-gpg-key-to-your-github-account](https://docs.github.com/en/github/authenticating-to-github/adding-a-new-gpg-key-to-your-github-account)
+- [telling-git-about-your-signing-key](https://docs.github.com/en/github/authenticating-to-github/telling-git-about-your-signing-key)
+- [signing-commits](https://docs.github.com/en/github/authenticating-to-github/signing-commits)

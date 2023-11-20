@@ -1,0 +1,137 @@
+---
+title: jenkins on kernetes with openEBS
+date: 2022-10-04 20:51:16
+tags: [kubernetes, jenkins, openebs]
+---
+
+## 이 글의 존재 이유
+사기 당했다.
+~~나중에 보니 사기까진 아니고 특정 경우에는 유용하게 사용할 수 있다는... 아 몰라 사기야~~
+`kubernetes에 jenkins를 설치`를 주제로 다루는 블로그들을 봤고, 따라해봤다.
+근데 정작 전부 구성하고 나니
+
+> jenkins 그거 스케일링 필요없어서 별도 서버에 구성하는게 더 좋아요 ㅎ
+
+ㅋㅋㅋㅋㅋ 그래서 PersistentVolume 공부한게 아까워서라도 글로 남겨둔다.  
+
+## Persistent Volume이란?
+쿠버네티스에서는 컴퓨팅 인스턴스와 스토리지를 구분한다.  
+이때 스토리지는 `PersistentVolume`이라는 리소스로 관리된다.
+여기서 스토리지는 각 노드의 로컬 파일 시스템일 수도 다른 파일 서버일 수도 있다.
+아래서 언급할 hostPath, GlusterFS, CephFS, NFS, local 등이 이에 해당한다.
+
+## openEBS를 찾기까지
+k8s에 젠킨스를 올리기 위해서 찾아본 글이 대부분은 `hostPath`를 사용했다.
+그 중 거희 항상 언급되는 말이 실제로 운용할 때는 GlusterFS 같은 서버스를 이용해야한다는 것이였다.  
+근데 GlusterFS가 성능이 좋을 지언정 최소 3개의 노드를 운용해야된다는 단정이 있었고 (적어도 나의 경우에는) Proxmox에 남은 자원이 없었다.  
+Proxmox에서 기본으로 지원하는 CephFS도 시도해봤지만 Proxmox 서버 노드가 1개이고 이미 LV가 하드 전체를 이용하고 있어서 불가능했다.  
+그 다음으로 시도한 것이 NFS인데 별도의 NFS 서버를 운용하면서 그 서버에 PV를 마운트하려 했지만 ubuntu 22.04 버전에 depencency 어쩌고 하면서 실패하는 버그 때문에 포기하고 다른 방법을 찾았다.  
+물론 못찾았으면 어떻게든 NFS 서버를 구축하여 사용했겠지만 openEBS라는 좋은 대체제를 찾았다.  
+
+## openEBS란?
+위에서 언급된 GlusterFS, CephFS 등은 별도의 서버를 운용해야하는데 이는 상당히 복잡한 작업에 속한다. 
+반면 openEBS는 k8s 클러스터 내부에 설치하여 사용할 수 있다.
+openEBS는 K8s를 구성하는 각 노드의 Local Disk를 이용하여 PV를 생성한다.
+따라서 별도의 서버나 디스크를 구성하지 않아도 된다.
+*k3s에서는 openEBS Local Path와 유사한 local-path Storage가 존재한다고 한다. 나중에 사용해 보고 싶다.
+
+## openEBS 설치
+openEBS는 다양한 설치 방법을 제공하지만 이번에는 helm를 이용하여 설치해보겠다.  
+다른 방식을 사용해도 되는데 helm이 좋다길래 사용해봤다.
+
+- helm이 설치되있지 않은 경우    
+    
+    ```bash
+    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    ```
+    으로 간단하게 설치할 수 있다.    
+    물론 나의 경우 asdf-vm를 이용해 설치해주었다.
+
+
+```bash
+kubectl create ns openebs
+helm repo add openebs https://openebs.github.io/charts
+helm repo update
+helm install -n openebs openebs openebs/openebs
+```
+이걸로 간단하게 설치가 끝난다.
+다음 명령어로 설치가 잘 되었는지 확인해보자.
+
+```bash
+kubectl get all -n openebs
+```
+
+```
+NAME                                              READY   STATUS    RESTARTS      AGE
+pod/openebs-localpv-provisioner-7b4db8497-hc9g5   1/1     Running   3 (55m ago)   4h41m
+pod/openebs-ndm-hzl66                             1/1     Running   2 (87m ago)   103m
+pod/openebs-ndm-ls78h                             1/1     Running   0             4h41m
+pod/openebs-ndm-operator-575c7c66c-5pwpw          1/1     Running   0             4h41m
+pod/openebs-ndm-sfc5w                             1/1     Running   0             4h41m
+
+NAME                         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/openebs-ndm   3         3         3       3            3           <none>          4h41m
+
+NAME                                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/openebs-localpv-provisioner   1/1     1            1           4h41m
+deployment.apps/openebs-ndm-operator          1/1     1            1           4h41m
+
+NAME                                                    DESIRED   CURRENT   READY   AGE
+replicaset.apps/openebs-localpv-provisioner-7b4db8497   1         1         1       4h41m
+replicaset.apps/openebs-ndm-operator-575c7c66c          1         1         1       4h41m
+```
+위처럼 전부 READY 상태면 설치가 잘 된 것이다.
+
+## openEBS 사용
+openEBS를 사용해보기 위해 포스트 재목처럼 jenkins를 설치해보겠다.
+
+미리 제작해둔 yaml 파일을 클론 받아보자
+```bash
+git clone https://github.com/minpeter/jenkins-with-openebs
+```
+이후 apply 시켜주면 된다.
+```bash
+kubectl create ns ns-jenkins
+kubectl apply -n ns-jenkins -f 00-local-hostpath-sc.yaml
+kubectl apply -n ns-jenkins -f 01-jenkins-leader-pvc.yaml
+kubectl apply -n ns-jenkins -f 02-jenkins-sa-clusteradmin-rbac.yaml
+kubectl apply -n ns-jenkins -f 03-jenkins-dep-serv.yaml
+```
+아래 명령어로 배포 상황을 볼 수 있다.
+```bash
+kubectl get all -n ns-jenkins
+```
+전부 성공적으로 배포되었으면 `http://<node-ip>:30500`으로 접속해보자.
+이때 node-ip는 클러스터를 구성하는 어떤 노드의 ip 든지 상관없이 접속이 가능하다.
+잘 접속이 되면 openEBS가 잘 동작하는 것이다.
+
+만약 실제로 운용할 생각이라면
+```bash
+kubuctl exec -n ns-jenkins <pod-id> -- cat /var/jenkins_home/secrets/initialAdminPassword
+```
+명령어로 비밀번호를 확인하고 접속하면 된다.
+
+위에서 <pod-id> 는 
+```bash
+kubectl get pod -n ns-jenkins
+```
+명령어로 확인할 수 있다.
+
+## 마무리
+이번 포스트에서는 helm를 이용해 openEBS를 설치하고 jenkins를 설치해 테스트해보았다.  
+물론 적절한 예시는 아니였지만 처음으로 helm를 이용해보고 openEBS를 사용해보는 것이라 새로웠다.  
+단 openEBS의 자세한 내용이나 아직 pv, pvc에 대한 내용을 정리하지 않아서 현제 상황에 이게 적절한 설정인건지 알 수 없다.  
+이후에는 openEBS에 대한 내용을 정리하고 PV, PVC에 대한 포스트도 준비해보아야겠다.  
+배포 서버를 구성하려던 원래 계획은 약간 틀어졌지만 알게된게 더 많으니 만족해야겠다.  
+물론 배포 서버 구축해서 배포하는건 docker를 이용해 jenkins 서버를 구축하고 jenkins를 이용해 배포하는 방식으로 진행할 예정이다.
+
+
+## ns-jenkins의 모든 리소스 해제
+
+```bash
+kubectl delete -n ns-jenkins -f 00-local-hostpath-sc.yaml
+kubectl delete -n ns-jenkins -f 01-jenkins-leader-pvc.yaml
+kubectl delete -n ns-jenkins -f 02-jenkins-sa-clusteradmin-rbac.yaml
+kubectl delete -n ns-jenkins -f 03-jenkins-dep-serv.yaml
+kubectl delete ns ns-jenkins
+```

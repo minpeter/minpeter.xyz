@@ -1,0 +1,114 @@
+---
+title: "pi hole을 이용한 광고 제거"
+date: 2021-09-02 12:59:59 +0900
+tags: ["DNS","homelab","pihole","raspberrypi","server"]
+---
+
+## pi hole이란?
+
+라즈베리파이와 리눅스계열 운영체제에 설치되는 DNS서버이다.  
+하지만 **광고 제거**을 곁들인
+
+일반적으로 사용하는 크롬 플러그인과 다르게 네트워크단에서 광고를 차단하기 때문에 성능저하가 덜하다.  
+또한 플러그인에 비해 비교 불가능한 장점이 있는데, 공유기에 DNS서버를 pihole로 설정하면 해당 네트워크 전체에 적용된다.
+
+**그러니까 스마트폰에서도 된단 소리다**
+
+이러한 장점이 있으나 무조건 해야겠지?
+
+## 설치과정
+
+설치하는 방법은 크게 2가지로 나뉜다.
+
+1. 설치스크립트를 이용하는 방법
+
+   `curl -sSL https://install.pi-hole.net | bash`  
+   입력한 뒤에 선택창같은게 뜰꺼다.  
+   눈칫것 설정해주자.  
+   곧 pi hole이 실행될 것이다.  
+   ~~라즈베리파이제로같은~~저성능 머신에선 이 방법을 쓰겠지만 난 3b+ 에서 설정할 것이기에 후자를 선호한다.
+
+2. 도커를 이용해 컨테이너로 띄우는 방법
+
+   이 방법을 추천한다.  
+   3b+같은 모델의 경우 파이홀을 구동하고도 램 같은 리소스가 한참 남는다.  
+   1번 방법을 사용해도 남은 리소스를 사용할 수 있지만 도커 컨테이너를 사용하면 뭔가 깔끔하게 관리가 가능하기 때문에 사용한다.  
+   일단 docker와 docker-compose을 설치한 뒤,  
+   pihole 디렉토리를 하나 만들어준다.  
+   해당 디렉토리에서 docker-compose 파일에 아래와 같이 작성한다.
+
+   ```docker
+   version: "3"
+   # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+   services:
+   pihole:
+       container_name: pihole
+       image: pihole/pihole:latest
+       ports:
+       - "53:53/tcp"
+       - "53:53/udp"
+       - "67:67/udp"
+       - "80:80/tcp"
+       - "443:443/tcp"
+       environment:
+       TZ: 'Asia/Seoul'
+       WEBPASSWORD: '<MY_PASSWORD>'
+       # Volumes store your data between container upgrades
+       volumes:
+       - './etc-pihole/:/etc/pihole/'
+       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+       dns:
+       - 127.0.0.1
+       - 1.1.1.1
+       - 1.0.0.1
+       # Recommended but not required (DHCP needs NET_ADMIN)
+       #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+       cap_add:
+   ```
+
+   위에 파일에서 수정해야될것은 딱 한가지인데 WEBPASSWORD의 <MY_PASSWORD>을 대신해서 비밀번호를 입력해주면된다.  
+   (이때입력한 비밀번호는 관리자페이지 로그인에 사용)
+
+   `docker-compose up -d`  
+   을 실행해주면 조금 뒤에 pi hole이 실행된다.
+
+## pi hole 설정
+
+이제 pi hole 설치는 끝났다. 🎉
+광고 제거를 위해서는 몇가지 설정이 필요한데, 먼저 관리자페이지로 가보자  
+관리자 페이지는 `해당라파ip/admin`으로 접속하면 열린다.  
+잘 열린다면 pi hole 설치가 정상적으로 된 것이다.  
+~~뒤에 설명은 공유기를 사용하고 있다는 가정하에 설명하겠다~~  
+열리는 것을 확인한 후 공유기 설정페이지로 가준다.  
+설정페이지에는 보통 인터넷설정하는 페이지가 있을텐데 여기서 `DNS` 항목을 수정해야된다.  
+기본 DNS 주소와 보조 DNS 주소를 입력하는 공간이 있을텐데 여기서 기본 DNS 주소에 라즈베리파이 IP를 입력해준다.  
+**제발 보조 DNS에 아무것도 입력하지 말자**  
+필자는 인터넷에 올라온 설명 따라하다가 "이거 왜 안돼.. 이러면서 한참 삽질했다..  
+보조 DNS를 1.1.1.1, 8.8.8.8 같은 DNS 주소로 입력할 경우 우리가 열심히 구축해둔 PI hole의 광고 제거 기능으로 광고 이미지 아이피를 차단하면 공유기가 자동으로 보조 DNS에서 도메인을 검색해버린다..  
+**따라서 절대로 보조 DNS는 비워두자**
+
+
+## pi hole 작동 테스트
+
+여기까지 문제 없이 따라왔다면 이제 광고차단이 이루워지고 있을 것이다.  
+근데 전부 차단되는건 아니고 PI hole 광고 차단리스트에 등록된 광고만 삭제되는데  
+~~이는 추가로 등록할수 있으니 넘어가고~~  
+광고가 잘 차단되는지 바로 알 수가 없다.
+
+따라서 테스트 하는 방법을 소개한다.  
+바로 [speedtest.net](https://www.speedtest.net/)!!  
+이건 인터넷속도측정사이튼데 PI hole이 작용 안되면 광고가 엄~청 많다.  
+하지만 PI hole이 잘 작동된다면 해당 사이트에 광고가 하나도 안보여야한다.  
+만약 광고가 보인다면 아래 2가지를 따라해보자.
+
+1. 제발 보조 DNS 확인좀;;
+2. 컴퓨터 재부팅후 재시도 (PIhole돌아가고 있는 라즈베리파이말고)
+
+여기까지가 내가 PI hole 설정하면서 알게된 내용이다.  
+내일은 openVPN을 연동하여 집이 아닌 외부에서도 광고차단 효과를 누릴수 있게 설정해보도록 하겠다.
+
+## 참고자료
+
+[pi hole home page](https://pi-hole.net/)  
+[pi hole로 광고 뿌리뽑기](https://kycfeel.github.io/2019/10/06/Pi-Hole%EB%A1%9C-%EA%B4%91%EA%B3%A0-%EB%BF%8C%EB%A6%AC%EB%BD%91%EA%B8%B0/)  
+[pihole_test_site](https://www.reddit.com/r/pihole/comments/m1xran/pihole_test_site/)
