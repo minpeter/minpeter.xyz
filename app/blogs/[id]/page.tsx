@@ -2,9 +2,8 @@ import Button from "@/components/mdx/Button";
 
 import { MDXRemote } from "next-mdx-remote/rsc";
 
-import { convertPathToAbsolute } from "@libs/mdx-images-path-fix";
-
-import { getPostById, getAllPosts } from "../../loader";
+import { convertPathToAbsolute } from "@/libs/mdx-images-path-fix";
+import { getPostById, getAllPosts } from "@/libs/loader";
 
 const options = {
   mdxOptions: {
