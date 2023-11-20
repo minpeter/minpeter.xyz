@@ -4,11 +4,12 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 
 import { convertPathToAbsolute } from "@/libs/mdx-images-path-fix";
 import { getPostById, getAllPosts } from "@/libs/loader";
+import remarkGfm from "remark-gfm";
 
 const options = {
   mdxOptions: {
     remarkPlugins: [convertPathToAbsolute],
-    rehypePlugins: [],
+    rehypePlugins: [remarkGfm],
   },
 };
 
