@@ -66,7 +66,7 @@ tags: ["DNS", "homelab", "pihole", "raspberrypi", "server"]
        cap_add:
    ```
 
-   위에 파일에서 수정해야될것은 딱 한가지인데 WEBPASSWORD의 <MY_PASSWORD>을 대신해서 비밀번호를 입력해주면된다.  
+   위에 파일에서 수정해야될것은 딱 한가지인데 WEBPASSWORD의 &lt;MY_PASSWORD&gt;을 대신해서 비밀번호를 입력해주면된다.  
    (이때입력한 비밀번호는 관리자페이지 로그인에 사용)
 
    `docker-compose up -d`  

@@ -152,7 +152,7 @@ sudo kubeadm init --control-plane-endpoint=<vm-ip> \
 --node-name <vm-hostname> --pod-network-cidr=10.244.0.0/16
 ```
 
-나의 경우 <vm-ip>는 192.168.0.180, <vm-hostname>은 k8s-ctrlr이다.
+나의 경우 &lt;vm-ip&gt;는 192.168.0.180, &lt;vm-hostname&gt;은 k8s-ctrlr이다.
 
 그 다음 아래 명령어를 실행해준다.
 

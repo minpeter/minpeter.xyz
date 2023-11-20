@@ -67,7 +67,7 @@ cat ~/.ssh/<key-name>.pub
 
 ### 3.1 pve 쉘 접속
 
-web gui 또는 ssh root@<proxmox server ip>로 접속한다.
+web gui 또는 ssh root@&lt;proxmox server ip&gt;로 접속한다.
 
 ### 3.2 cloud image 다운로드
 
