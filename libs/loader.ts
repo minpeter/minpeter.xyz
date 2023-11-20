@@ -70,11 +70,10 @@ export async function getAllPosts(): Promise<BlogProps[]> {
 
         const id = path
           .basename(filePath, path.extname(filePath))
-          .replace(/ /g, "-")
-          .replace(/_/g, "-")
-          .replace(/,/g, "-")
-          .replace(/./g, "-")
-          .replace(/-+/g, "-");
+          // 공백, _, ., , 를 -로 치환
+          .replace(/(\s|_|\.|,)/g, "-")
+          // 2개 이상의 -를 하나로 치환
+          .replace(/-{2,}/g, "-");
 
         const hash = createHash("md5")
           .update(postPath)
