@@ -74,8 +74,7 @@ export async function getAllPosts(): Promise<BlogProps[]> {
           .replace(/_/g, "-")
           .replace(/,/g, "-")
           .replace(/./g, "-")
-          .replace(/-+/g, "-")
-          .replace(/^-/, "");
+          .replace(/-+/g, "-");
 
         const hash = createHash("md5")
           .update(postPath)
