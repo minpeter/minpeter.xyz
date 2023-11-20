@@ -68,17 +68,20 @@ export async function getAllPosts(): Promise<BlogProps[]> {
           .replace(postsDirectory, "")
           .split(path.sep)[1];
 
-        const id = path
-          .basename(filePath, path.extname(filePath))
-          // 공백, _, ., , 를 -로 치환
-          .replace(/(\s|_|\.|,)/g, "-")
-          // 2개 이상의 -를 하나로 치환
-          .replace(/-{2,}/g, "-");
-
         const hash = createHash("md5")
           .update(postPath)
           .digest("hex")
           .substring(0, 5);
+
+        let id = path
+          .basename(filePath, path.extname(filePath))
+          .replace(/(\s|_|\.|,)/g, "-");
+
+        if (!/^[a-zA-Z0-9-]+$/.test(id)) {
+          id = id.replace(/[^a-zA-Z0-9-]/g, "") + "-" + hash;
+        }
+
+        id = id.replace(/-{2,}/g, "-");
 
         return {
           id,
