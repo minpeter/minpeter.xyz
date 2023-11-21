@@ -1,6 +1,8 @@
 import Button from "@/components/mdx/Button";
 
 import { MDXRemote } from "next-mdx-remote/rsc";
+import Link from "next/link";
+import { IoChevronBack } from "react-icons/io5";
 
 import { convertPathToAbsolute } from "@/libs/mdx-images-path-fix";
 import { getPostById, getAllPosts } from "@/libs/loader";
@@ -47,8 +49,19 @@ export default async function Post({ params }: any) {
 
   return (
     <article className="prose prose-sm md:prose-base lg:prose-lg prose-slate !prose-invert mx-auto">
+      <Link
+        href="/"
+        className="w-min flex gap-4 mb-4 md:mb-5 cursor-pointer items-center no-underline group hover:text-white text-gray-400"
+      >
+        <IoChevronBack className="h-5 w-5 md:h-6 md:w-6 md:group-hover:scale-110" />
+        <p className="md:text-lg block my-0 md:group-hover:scale-110">Home</p>
+      </Link>
       <h1 className="text-5xl font-bold">{post.title}</h1>
-
+      <div className="py-4">
+        <span className="text-gray-400">{post.published}</span>
+        <span className="px-2">|</span>
+        <span className="text-gray-400">{post.hash}</span>
+      </div>
       <MDXRemote
         source={post.content}
         components={{ Button }}

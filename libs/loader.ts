@@ -12,6 +12,7 @@ export interface BlogProps {
   title: string;
   hash: string;
   content: string;
+  published: string;
   description: string;
 }
 
@@ -83,18 +84,25 @@ export async function getAllPosts(): Promise<BlogProps[]> {
 
         id = id.replace(/-{2,}/g, "-");
 
+        const published = new Date(matterResult.data.date)
+          .toISOString()
+          .split("T")[0];
+
         return {
           id,
           title: matterResult.data.title,
           description: matterResult.data.description,
           content: matterResult.content,
+          published: published,
           hash,
         };
       });
     })
   );
 
-  return posts;
+  return posts.sort(
+    (a, b) => Date.parse(b.published) - Date.parse(a.published)
+  );
 }
 
 export async function getPostById(id: string): Promise<BlogProps> {
@@ -108,6 +116,7 @@ export async function getPostById(id: string): Promise<BlogProps> {
       hash: "",
       content: "Post not found",
       description: "Post not found",
+      published: "",
     };
 
   return {
