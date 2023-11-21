@@ -2,11 +2,19 @@ import Link from "next/link";
 import { getAllPosts } from "@/libs/loader";
 import { SiGithub, SiInstagram, SiMailgun } from "react-icons/si";
 
+import "@/libs/typing";
+
 export default async function Home() {
   const blogs = await getAllPosts();
+
   return (
     <main className="flex flex-col">
-      <h1 className="text-6xl font-bold">Minpeter&apos;s blog</h1>
+      <div className="flex flex-row">
+        <h1 className="text-6xl font-bold">Minpeter&apos;s&nbsp;</h1>
+        <h1 id="typing" className="text-6xl font-bold">
+          blog
+        </h1>
+      </div>
 
       <div className="py-4 flex">
         <a
@@ -31,8 +39,6 @@ export default async function Home() {
 
         <a
           href="mailto:kali2005611@gmail.com"
-          target="_blank"
-          rel="noopener noreferrer"
           className="text-gray-300 hover:text-gray-100"
         >
           <SiMailgun className="h-5 w-5 md:group-hover:h-6 group-hover:w-6" />
@@ -42,7 +48,12 @@ export default async function Home() {
 
         <p className="text-gray-300 flex flex-row">
           Inspired by&nbsp;
-          <Link href="https://gaudion.dev" passHref>
+          <Link
+            href="https://gaudion.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
             gaudion.dev
           </Link>
         </p>
