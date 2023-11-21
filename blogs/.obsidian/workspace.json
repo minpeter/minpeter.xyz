@@ -1,0 +1,179 @@
+{
+  "main": {
+    "id": "6147302c089011d6",
+    "type": "split",
+    "children": [
+      {
+        "id": "2721bc08eb5ab763",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ede7435adad5323a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "vscode Formatter Settings/vscode Formatter Settings.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6d629352414f0ea2",
+    "type": "split",
+    "children": [
+      {
+        "id": "9dfd921aff25ae9c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cff78075efaa8ceb",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "35807334b9a6cbdc",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "157986f673a6a77c",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 374.5
+  },
+  "right": {
+    "id": "13f8c06599a5ec12",
+    "type": "split",
+    "children": [
+      {
+        "id": "8fa6f04495fc7a5a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9b4511af1ddf67f8",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "vscode Formatter Settings/vscode Formatter Settings.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "10714d80988f472e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "vscode Formatter Settings/vscode Formatter Settings.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8a7bb34dd25dde27",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "04e4b5fd0c89bed3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "vscode Formatter Settings/vscode Formatter Settings.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "ede7435adad5323a",
+  "lastOpenFiles": [
+    "Vscode Extension 추천/Vscode Extension 추천.md",
+    "Ubuntu 20.04에서 로그인 배경을 변경하는 방법/Ubuntu 20.04에서 로그인 배경을 변경하는 방법.md",
+    "pi hole을 이용한 광고 제거/pi hole을 이용한 광고 제거.md",
+    "nvm을 이용한 node버전관리/nvm을 이용한 node버전관리.md",
+    "logo-ls, bat/logo-ls, bat.md",
+    "Linux service command/Linux service command.md",
+    "LFS (TIL)/LFS (TIL).md",
+    "thinkpad 바이오스 부팅 이미지 변경/thinkpad 바이오스 부팅 이미지 변경.md",
+    "WSL Arch distro 설정/WSL Arch distro 설정.md",
+    "WSL 개발 환경 설정 (with asdf)/WSL 개발 환경 설정 (with asdf).md",
+    "zsh p10k 설치/zsh p10k 설치.md",
+    "노트북 고장 (TIL)/노트북 고장 (TIL).md",
+    "2023-03-12-Traefik을 사용한 서비스 프록시 설정/traefik-proxy-setting.md",
+    "노틸러스 포멧 옵션 오류/노틸러스 포멧 옵션 오류.md",
+    "블로그 Jekyll에서 hugo로/블로그 Jekyll에서 hugo로.md",
+    "2022-10-03-안쓰는 노트북을 Proxmox 서버로 재활용/use-laptop-proxmox-server.md",
+    "2021-08-28-리눅스 이주 후 원도우로 복귀/linux-return-windows.md",
+    "velog로 이사할까말까/velog로 이사할까말까.md",
+    "AWS - AWS 클라우드 소개/AWS - AWS 클라우드 소개.md",
+    "2021-09-13-도커 스웜에서 stack 시각화/docker-stack-visualizer.md",
+    "2022-08-31-attiny85 usb 보드 펌웨어 업데이트/attiny85-usb-board-firmware.md",
+    "2021-10-01-snap과 flatpak 소개/snap-flatpak.md",
+    "2023-11-20-MDX-블로그 생성/f-blog.mdx",
+    "2023-11-20-MDX-블로그 생성/img/laptop.jpeg",
+    "2021-08-22-Jekyll 그리고 github pages/Jekyll-github-pages.md",
+    "2021-12-28-4일 간의 한세톤 후기/hanseithon-remind-2021.md",
+    "2021-08-23-루비-jekyll-gh-pages-2/2부 Ruby와 Jekyll 그리고 github-pages.md"
+  ]
+}

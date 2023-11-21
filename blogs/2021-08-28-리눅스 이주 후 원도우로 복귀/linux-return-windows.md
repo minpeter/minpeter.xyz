@@ -1,7 +1,13 @@
 ---
-title: "오늘의 삽질 (TIL)"
+title: 리눅스 이주 후 윈도우로 복귀
 date: 2021-08-28 23:59:59 +0900
-tags: ["TIL", "Wayland", "linux", "sway", "windows"]
+tags:
+  - TIL
+  - Wayland
+  - linux
+  - sway
+  - windows
+description: 리눅스 desktop 사용의 어려움, windows로 복귀 후 느낀점
 ---
 
 ## 내가 리눅스로 가기로 결정한 이유

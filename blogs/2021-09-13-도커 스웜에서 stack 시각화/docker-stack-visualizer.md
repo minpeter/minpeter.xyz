@@ -1,7 +1,12 @@
 ---
-title: "docker stack visualizer"
+title: docker stack visualizer
 date: 2021-09-13 12:05:00 +0900
-tags: ["docker", "server", "swarm", "visualizer"]
+tags:
+  - docker
+  - server
+  - swarm
+  - visualizer
+description: Docker swarm 모드에서 노드와 컨테이너 분포를 시각적으로 확인하는 visualizer
 ---
 
 ## 개요

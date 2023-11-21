@@ -1,7 +1,10 @@
 ---
-title: "apt vs dnf, snap vs flatpak"
+title: apt vs dnf, snap vs flatpak
 date: 2021-10-01 11:24:00 +0900
-tags: ["Node", "linux"]
+tags:
+  - Node
+  - linux
+description: snap과 flatpak을 통해 간편하게 프로그램을 설치하는 방법
 ---
 
 리눅스를 처음 접하면 기장 반가운건 다양한 것들중 단연 패키지관리자일 것이다.  

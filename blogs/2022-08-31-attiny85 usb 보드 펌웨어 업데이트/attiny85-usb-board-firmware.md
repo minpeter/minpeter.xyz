@@ -1,7 +1,9 @@
 ---
-title: digispark attiny85 usb board firmware upgrade!!
+title: Attiny85 usb 보드 펌웨어 업그레이드!!
 date: 2022-08-31 21:11:34
-tags: ["attiny", "digispark"]
+tags:
+  - attiny
+  - digispark
 ---
 
 ## 사전 준비물
@@ -12,7 +14,7 @@ tags: ["attiny", "digispark"]
 
 \*글에서 ISP는 In-System Programming를 의미합니다.
 
-## attiny가 뭔데?
+## Attiny가 뭔데?
 
 Atmel사에서 출시된 마이크로컨트롤러이다.  
 AVR microcontroller 중에서 아두이노에서 사용하는 ATmega 칩보다 전반적으로 사양이 낮은 것이 특징이며, 그에 걸맞게 대체로 크기가 작은 것 또한 특징이다.  

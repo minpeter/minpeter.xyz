@@ -1,13 +1,17 @@
 ---
-title: 총정리 - traefik proxy
+title: Traefik을 사용한 서비스 프록시 설정
 date: 2023-3-12 22:12:8 +0900
-tags: ["traefik", " homelab", " server"]
-categories: "home lab"
+tags:
+  - traefik
+  - homelab
+  - server
+categories: home lab
+description: Traefik을 이용한 서비스 프록시 설정과 도커, 파일을 활용한 서비스 추가 방법, HTTPS, 인증서 발급, 서버에서의 구성
 ---
 
-글을 시작하기에 앞서 [https://doc.traefik.io/traefik/](https://doc.traefik.io/traefik/) 의 내용 중 일부를 재구성했음을 알립니다.
+글을 시작하기에 앞서 [https://doc.traefik.io/traefik/](https://doc.traefik.io/traefik/) 의 내용 중 일부를 재구성한 글임을 알립니다.
 
-2023년 3월 기준 v3.9.8이 최신버전이고 이를 기준으로 작성하였다.
+2023년 3월 기준 v3.9.8이 최신버전, 이를 기준으로 작성하였다.
 
 ## traefik란?
 

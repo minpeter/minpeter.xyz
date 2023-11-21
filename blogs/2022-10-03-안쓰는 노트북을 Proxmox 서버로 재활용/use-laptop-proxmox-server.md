@@ -1,8 +1,11 @@
 ---
-title: 안쓰는 노트북을 Proxmox 서버로 이용하기
+title: 안쓰는 노트북을 Proxmox 서버로 재활용
 date: 2022-10-03 18:47:33
 tags:
-categories: "home lab"
+  - homelab
+  - server
+categories: home lab
+description: Proxmox 설치 및 설정 가이드, 노트북에서의 효율적인 활용 방안 소개.
 ---
 
 # proxmox란?
