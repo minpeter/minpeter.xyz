@@ -106,7 +106,7 @@ arduino IDE 설치할때 같이 다운되는 avrdude를 사용하는데 위의 �
 이제 전부 끝났다.  
 약간 수정한 명령어를 **CMD**에서 실행하면 firmware 업로드가 진행되고 다음과 같은 글씨가 나타나면 성공이다.
 
-```paintext
+```
 .
 .
 avrdude: input file 0xfe contains 1 bytes
@@ -184,7 +184,7 @@ HelloWorld를 두번 입력하고 led를 10번 깜빡이는 코드다.
 
 다음과 같은 글자가 출력되면 USB 포트에 attiny85 board를 연결해주자
 
-```paintext
+```
 Sketch uses 3194 bytes (53%) of program storage space. Maximum is 6012 bytes.
 Global variables use 98 bytes of dynamic memory.
 Running Digispark Uploader...
@@ -193,7 +193,7 @@ Plug in device now... (will timeout in 60 seconds)
 
 연결 후 다음과 같이 출력되면 성공적으로 업로드된 것이다.
 
-```paintext
+```
 > Device is found!
 connecting: 16% complete
 connecting: 22% complete
@@ -225,7 +225,7 @@ running: 100% complete
 그 후 보드에 led가 10번 깜빡거린다면 이 포스트의 모든 과정이 성공적이라는 의미이다.  
 또한 코드를 업로드할때 출력중 다음과 같은 부분이 있다.
 
-```paintext
+```
 > Device is found!
 connecting: 16% complete
 connecting: 22% complete
