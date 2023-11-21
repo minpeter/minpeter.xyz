@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "vscode Formatter Settings/vscode Formatter Settings.md",
+                "file": "nvm을 이용한 node버전관리/use-nvm-node.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 374.5
+    "width": 549.5
   },
   "right": {
     "id": "13f8c06599a5ec12",
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "vscode Formatter Settings/vscode Formatter Settings.md",
+                "file": "nvm을 이용한 node버전관리/use-nvm-node.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "vscode Formatter Settings/vscode Formatter Settings.md",
+                "file": "nvm을 이용한 node버전관리/use-nvm-node.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "vscode Formatter Settings/vscode Formatter Settings.md"
+                "file": "nvm을 이용한 node버전관리/use-nvm-node.md"
               }
             }
           }
@@ -146,34 +146,35 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ede7435adad5323a",
+  "active": "cff78075efaa8ceb",
   "lastOpenFiles": [
-    "Vscode Extension 추천/Vscode Extension 추천.md",
-    "Ubuntu 20.04에서 로그인 배경을 변경하는 방법/Ubuntu 20.04에서 로그인 배경을 변경하는 방법.md",
-    "pi hole을 이용한 광고 제거/pi hole을 이용한 광고 제거.md",
-    "nvm을 이용한 node버전관리/nvm을 이용한 node버전관리.md",
-    "logo-ls, bat/logo-ls, bat.md",
+    "logo-ls, bat/install logo-ls, bat.md",
+    "kubernetes-on-proxmox-2-worker-node-master-node-설정/kubernetes-proxmox-2-worker-master-setting.md",
     "Linux service command/Linux service command.md",
     "LFS (TIL)/LFS (TIL).md",
-    "thinkpad 바이오스 부팅 이미지 변경/thinkpad 바이오스 부팅 이미지 변경.md",
-    "WSL Arch distro 설정/WSL Arch distro 설정.md",
-    "WSL 개발 환경 설정 (with asdf)/WSL 개발 환경 설정 (with asdf).md",
-    "zsh p10k 설치/zsh p10k 설치.md",
-    "노트북 고장 (TIL)/노트북 고장 (TIL).md",
-    "2023-03-12-Traefik을 사용한 서비스 프록시 설정/traefik-proxy-setting.md",
-    "노틸러스 포멧 옵션 오류/노틸러스 포멧 옵션 오류.md",
-    "블로그 Jekyll에서 hugo로/블로그 Jekyll에서 hugo로.md",
-    "2022-10-03-안쓰는 노트북을 Proxmox 서버로 재활용/use-laptop-proxmox-server.md",
-    "2021-08-28-리눅스 이주 후 원도우로 복귀/linux-return-windows.md",
-    "velog로 이사할까말까/velog로 이사할까말까.md",
-    "AWS - AWS 클라우드 소개/AWS - AWS 클라우드 소개.md",
-    "2021-09-13-도커 스웜에서 stack 시각화/docker-stack-visualizer.md",
-    "2022-08-31-attiny85 usb 보드 펌웨어 업데이트/attiny85-usb-board-firmware.md",
-    "2021-10-01-snap과 flatpak 소개/snap-flatpak.md",
+    "kubernetes-on-proxmox-1-ubuntu-22-04-server-template-만들기/kubernetes-proxmox-1-make-ubuntu-template.md",
+    "jenkins-on-kernetes-with-openEBS/jenkins-kernetes-openEBS.md",
+    "git default branch 설정 변경/git default branch setting.md",
+    "ibus qt5 한글 입력 오류/ibus-qt5-hangul-error-fix.md",
+    "Docker swarm Orchestration/Docker swarm Orchestration.md",
+    "edge의 독재에서 벗어나기 (TIL)/esc-from-edge.md",
+    "HRDK 숙련 기술 전수 과정 이수 후기/after-hrdk-skill-transfer.md",
+    "nvm을 이용한 node버전관리/use-nvm-node.md",
+    "onedrive와 pihole (TIL)/onedrive-pihole.md",
+    "pi hole을 이용한 광고 제거/Remove ads using pihole.md",
+    "rust 표준 입출력 코드 분석/Rust std in output code analysis.md",
+    "socat를 이용한 nc remote CTF challenge 배포 with docker buildx/use-socat-nc-ctf-challenge.md",
+    "stack 서비스를 외부에서 사용하기/use-stack-service-externally.md",
+    "Swarm의 compose stack/Swarm compose stack.md",
+    "thinkpad 바이오스 부팅 이미지 변경/change thinkpad bios boot image.md",
+    "Vscode Extension 추천/Vscode Extension suggestion.md",
+    "Ubuntu 20.04에서 로그인 배경을 변경하는 방법/Ubuntu 20.04에서 로그인 배경을 변경하는 방법.md",
+    "vscode Formatter Settings/vscode Formatter Settings.md",
+    "Winja-CTF-Nullcon-Goa-2022-writeups/Winja-CTF-Nullcon-Goa-2022-writeups.md",
+    "WSL Arch distro 설정/wsl-arch-distro-setting.md",
+    "wsl docker sandbox and VMware (TIL)/wsl docker sandbox and VMware (TIL).md",
+    "WSL 개발 환경 설정 (with asdf)/wsl-dev-env-setting.md",
     "2023-11-20-MDX-블로그 생성/f-blog.mdx",
-    "2023-11-20-MDX-블로그 생성/img/laptop.jpeg",
-    "2021-08-22-Jekyll 그리고 github pages/Jekyll-github-pages.md",
-    "2021-12-28-4일 간의 한세톤 후기/hanseithon-remind-2021.md",
-    "2021-08-23-루비-jekyll-gh-pages-2/2부 Ruby와 Jekyll 그리고 github-pages.md"
+    "2023-11-20-MDX-블로그 생성/img/laptop.jpeg"
   ]
 }

@@ -37,7 +37,7 @@ tags: ["DNS", "homelab", "pihole", "raspberrypi", "server"]
    pihole 디렉토리를 하나 만들어준다.  
    해당 디렉토리에서 docker-compose 파일에 아래와 같이 작성한다.
 
-   ```docker
+   ```yaml
    version: "3"
    # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
    services:

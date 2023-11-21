@@ -1,7 +1,11 @@
 ---
-title: "노트북 고장 (TIL)"
+title: T470 해킨토시 후기
 date: 2021-08-30 03:43:00 +0900
-tags: ["Hackintosh", "MacOS", "TIL", "thinkpad"]
+tags:
+  - Hackintosh
+  - MacOS
+  - TIL
+  - thinkpad
 ---
 
 ## 제목에 대해서

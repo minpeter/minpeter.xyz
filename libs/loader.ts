@@ -84,6 +84,8 @@ export async function getAllPosts(): Promise<BlogProps[]> {
 
         id = id.replace(/-{2,}/g, "-");
 
+        id = id.toLowerCase();
+
         const published = new Date(matterResult.data.date)
           .toISOString()
           .split("T")[0];
