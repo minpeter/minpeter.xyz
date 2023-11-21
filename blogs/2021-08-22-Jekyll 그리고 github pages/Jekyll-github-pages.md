@@ -88,7 +88,7 @@ $ bundle exec jekyll serve #jekyll 서버 실행
 
 `Gemfile`을 만들거나 편집해야되는데 맨 아랫줄에 다음 내용을 적어주면 된다.
 
-```Gemfile
+```sh
 gem "jekyll-theme-chirpy"
 ```
 

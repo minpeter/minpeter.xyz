@@ -5,11 +5,13 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { convertPathToAbsolute } from "@/libs/mdx-images-path-fix";
 import { getPostById, getAllPosts } from "@/libs/loader";
 import remarkGfm from "remark-gfm";
+import rehypePrism from "rehype-prism-plus";
+import "@/styles/prism-one-dark.css";
 
 const options = {
   mdxOptions: {
     remarkPlugins: [convertPathToAbsolute],
-    rehypePlugins: [remarkGfm],
+    rehypePlugins: [remarkGfm, rehypePrism],
   },
 };
 
