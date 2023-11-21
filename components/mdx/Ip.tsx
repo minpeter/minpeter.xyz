@@ -18,7 +18,7 @@ export default function Ip() {
   }, []);
 
   if (!ip) {
-    return <div>Loading...</div>;
+    return <div className="text-white">Your IP: Loading...</div>;
   }
 
   return <div className="text-white">Your IP: {ip}</div>;
