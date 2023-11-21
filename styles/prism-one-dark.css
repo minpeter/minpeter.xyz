@@ -28,14 +28,6 @@
  * --syntax-cursor-line: hsla(220, 100%, 80%, 0.04);
  */
 
-
-pre:has(>code[class*="code-highlight"]) {
-	background: #282c34;
-	color: inherit;
-	text-shadow: none;
-}
-
-
 code[class*="language-"],
 pre[class*="language-"] {
 	background: hsl(220, 13%, 18%);

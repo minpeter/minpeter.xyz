@@ -7,6 +7,7 @@ import { getPostById, getAllPosts } from "@/libs/loader";
 import remarkGfm from "remark-gfm";
 import rehypePrism from "rehype-prism-plus";
 import "@/styles/prism-one-dark.css";
+import "@/styles/code-block-custom.css";
 
 const options = {
   mdxOptions: {
