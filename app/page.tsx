@@ -6,7 +6,7 @@ export default async function Home() {
   const blogs = await getAllPosts();
   return (
     <main className="flex flex-col">
-      <h1 className="text-5xl font-bold">minpeter&apos;s blog</h1>
+      <h1 className="text-6xl font-bold">Minpeter&apos;s blog</h1>
 
       <div className="py-4 flex">
         <a

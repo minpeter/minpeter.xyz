@@ -6,15 +6,14 @@ export default function Ip() {
   const [ip, setIp] = useState("");
   useEffect(() => {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://ip.minpeter.tech/json", true);
+    xhr.open("GET", "https://ip.minpeter.tech/ip", true);
     xhr.send();
     xhr.onload = function () {
       if (xhr.status === 200) {
-        const data = JSON.parse(xhr.responseText);
-        setIp(data.ip);
+        setIp(xhr.responseText);
+      } else {
+        setIp("Error, status code: " + xhr.status);
       }
-
-      setIp("Error, status code: " + xhr.status);
     };
   }, []);
 
