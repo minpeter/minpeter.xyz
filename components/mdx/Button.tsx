@@ -1,4 +1,3 @@
-// components/mdx/Button.tsx
 "use client";
 
 import { useState } from "react";

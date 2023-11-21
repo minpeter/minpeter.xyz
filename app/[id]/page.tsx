@@ -1,4 +1,5 @@
 import Button from "@/components/mdx/Button";
+import Ip from "@/components/mdx/Ip";
 
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
@@ -64,7 +65,7 @@ export default async function Post({ params }: any) {
       </div>
       <MDXRemote
         source={post.content}
-        components={{ Button }}
+        components={{ Button, Ip }}
         options={options}
       />
     </article>

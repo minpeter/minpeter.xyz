@@ -1,0 +1,65 @@
+---
+title: mdx 블로그 컴포넌트 실험
+date: 2023-11-21
+description: 블로그가 mdx를 지원하도록 만든 기념으로 컴포넌트 실험글
+---
+
+그냥 간단한 버튼 컴포넌트
+
+```jsx
+"use client";
+
+import { useState } from "react";
+
+export default function Button() {
+  const [toggle, setToggle] = useState(false);
+
+  return (
+    <button
+      className="bg-slate-700 rounded-md px-4 py-2"
+      onClick={() => setToggle(!toggle)}
+    >
+      {toggle ? "Push Me :)" : "You pushed me!!"}
+    </button>
+  );
+}
+```
+
+<Button />
+
+ip.minpeter.tech 서버를 이용한 아이피 조회 컴포넌트
+
+```jsx
+"use client";
+
+import { useState, useEffect } from "react";
+
+export default function Ip() {
+  const [ip, setIp] = useState("");
+  useEffect(() => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://ip.minpeter.tech/json", true);
+    xhr.send();
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        setIp(data.ip);
+      }
+
+      setIp("Error, status code: " + xhr.status);
+    };
+  }, []);
+
+  if (!ip) {
+    return <div>Loading...</div>;
+  }
+
+  return <div className="text-white">Your IP: {ip}</div>;
+}
+```
+
+<Ip />
+
+wow, it works!
+
+짱 신기하고 대단하죠?
