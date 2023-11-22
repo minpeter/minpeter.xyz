@@ -4,14 +4,12 @@ date: 2023-11-21
 description: 블로그가 mdx를 지원하도록 만든 기념으로 컴포넌트 실험글
 ---
 
+import { Button, Ip } from "./components.tsx";
+
 그냥 간단한 버튼 컴포넌트
 
 ```jsx
-"use client";
-
-import { useState } from "react";
-
-export default function Button() {
+export function Button() {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -25,28 +23,18 @@ export default function Button() {
 }
 ```
 
-{/* <Button /> */}
+<Button />
 
 ip.minpeter.tech 서버를 이용한 아이피 조회 컴포넌트
 
 ```jsx
-"use client";
-
-import { useState, useEffect } from "react";
-
-export default function Ip() {
+export function Ip() {
   const [ip, setIp] = useState("");
+
   useEffect(() => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://ip.minpeter.tech/ip", true);
-    xhr.send();
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        setIp(xhr.responseText);
-      } else {
-        setIp("Error, status code: " + xhr.status);
-      }
-    };
+    fetch("https://ip.minpeter.tech/ip").then((res) =>
+      res.text().then((ip) => setIp(ip))
+    );
   }, []);
 
   if (!ip) {
@@ -56,22 +44,6 @@ export default function Ip() {
   return <div className="text-white">Your IP: {ip}</div>;
 }
 ```
-
-import { a, B, C, Ip } from "./components.tsx";
-
-{ a + 1 }
-
-<B />
-
-<br />
-
-{/* Your IP is: **{ await fetch("https://ip.minpeter.tech/ip").then((res) => res.text()) }** with await */}
-
-<br />
-
-{/* Your IP is: **{ fetch("https://ip.minpeter.tech/ip").then((res) => res.text()) }** without await */}
-
-<C />
 
 와우 당신의 아이피가 나왔어요!
 
