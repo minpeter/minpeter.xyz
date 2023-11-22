@@ -5,19 +5,19 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { IoChevronBack } from "react-icons/io5";
 
-import { convertPathToAbsolute } from "@/libs/mdx-images-path-fix";
 import { getPostById, getAllPosts } from "@/libs/loader";
-import remarkGfm from "remark-gfm";
-import rehypePrism from "rehype-prism-plus";
+
 import "@/styles/prism-one-dark.css";
 import "@/styles/code-block-custom.css";
 
-const options = {
-  mdxOptions: {
-    remarkPlugins: [convertPathToAbsolute],
-    rehypePlugins: [remarkGfm, rehypePrism],
-  },
-};
+import PostContent from "./post";
+
+// const options = {
+//   mdxOptions: {
+//     remarkPlugins: [convertPathToAbsolute, remarkGfm],
+//     rehypePlugins: [ rehypePrism],
+//   },
+// };
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -66,11 +66,13 @@ export default async function Post({ params }: any) {
         <span className="text-gray-400">{post.hash}</span>
       </div>
 
-      <MDXRemote
+      {/* <MDXRemote
         source={post.content}
         components={{ Button, Ip }}
         options={options}
-      />
+      /> */}
+
+      <PostContent code={post.content} />
     </article>
   );
 }
