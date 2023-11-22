@@ -14,11 +14,10 @@ import rehypePrism from "rehype-prism-plus";
 
 export interface BlogProps {
   id: string;
-  title: string;
   hash: string;
-  content: any;
   published: string;
-  description: string;
+  content: any;
+  frontmatter?: any;
 }
 
 export async function getAllPosts(): Promise<BlogProps[]> {
@@ -68,7 +67,6 @@ export async function getAllPosts(): Promise<BlogProps[]> {
 
       return mdFiles.map(async (filePath: string) => {
         const fileContents = await fs.promises.readFile(filePath, "utf8");
-        const matterResult = matter(fileContents);
 
         const postPath = filePath
           .replace(postsDirectory, "")
@@ -91,8 +89,9 @@ export async function getAllPosts(): Promise<BlogProps[]> {
 
         id = id.toLowerCase();
 
-        const result = await bundleMDX({
-          source: matterResult.content,
+        const { data: frontmatter, content } = matter(fileContents);
+        const { code } = await bundleMDX({
+          source: content,
           mdxOptions(options) {
             options.remarkPlugins = [remarkGfm, convertPathToAbsolute];
             options.rehypePlugins = [rehypePrism];
@@ -105,15 +104,14 @@ export async function getAllPosts(): Promise<BlogProps[]> {
           cwd: filePath.split(path.sep).slice(0, -1).join(path.sep),
         });
 
-        const published = new Date(matterResult.data.date)
+        const published = new Date(frontmatter.date)
           .toISOString()
           .split("T")[0];
 
         return {
           id,
-          title: matterResult.data.title,
-          description: matterResult.data.description,
-          content: result.code,
+          frontmatter,
+          content: code,
           published: published,
           hash,
         };
@@ -133,11 +131,10 @@ export async function getPostById(id: string): Promise<BlogProps> {
   if (!currentPost)
     return {
       id,
-      title: "404",
       hash: "",
-      content: "Post not found",
-      description: "Post not found",
       published: "",
+      content: "Post not found",
+      frontmatter: {},
     };
 
   return {
