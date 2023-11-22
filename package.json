@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.10",
-    "@types/unist": "^3.0.2",
     "gray-matter": "^4.0.3",
     "mdx-bundler": "^10.0.1",
     "next": "14.0.3",
@@ -19,8 +18,8 @@
     "react-icons": "^4.12.0",
     "rehype-prism-plus": "^1.6.3",
     "remark-gfm": "^4.0.0",
-    "tailwind-scrollbar-hide": "^1.1.7",
-    "unist-util-visit": "^5.0.0"
+    "remark-mdx-images": "^2.0.0",
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
     "@types/node": "^20.9.4",

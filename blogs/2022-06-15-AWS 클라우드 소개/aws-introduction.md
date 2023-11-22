@@ -28,4 +28,4 @@ Availability Zone의 약자로 한 개 이상의 데이터 센터들의 모음�
 
 Edge Point Of Presense의 약자로 외부 인터넷과 AWS 글로벌 네트워크망을 연결하는 별도의 센터이다.
 Edge Location과 Regional Edge Cache로 구성되며 CloudFront(CDN), Direct Connect, Route 53(DNS), AWS shield(DDoS protection), AWS Global Accelerator가 엣지에서 동작한다.
-![](/images/134488e9-5dbe-436c-860c-287d3c61d02a-image.png)
+![](edge-pop.png)

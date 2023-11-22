@@ -8,7 +8,7 @@ import matter from "gray-matter";
 import { createHash } from "crypto";
 import { bundleMDX } from "mdx-bundler";
 
-import { convertPathToAbsolute } from "@/libs/mdx-images-path-fix";
+import remarkMdxImages from "remark-mdx-images";
 import remarkGfm from "remark-gfm";
 import rehypePrism from "rehype-prism-plus";
 
@@ -33,38 +33,6 @@ export async function getAllPosts(): Promise<BlogProps[]> {
         .filter((fileName: string) => /\.(mdx|md)$/.test(fileName))
         .map((fileName: string) => path.join(dirPath, fileName));
 
-      const subDirs = fs
-        .readdirSync(dirPath)
-        .filter((fileName: string) =>
-          fs.lstatSync(path.join(dirPath, fileName)).isDirectory()
-        );
-
-      subDirs.flatMap((subDirName) => {
-        const subDirPath = path.join(dirPath, subDirName);
-        fs.readdirSync(subDirPath)
-          .filter((fileName: string) =>
-            /\.(png|jpg|jpeg|gif|svg|webp|mp4|webm|ogg|mp3|wav)$/.test(fileName)
-          )
-          .map((fileName: string) => {
-            const filePath = path.join(subDirPath, fileName);
-            const dirName = path.dirname(filePath);
-            const postPath = dirName.split(path.sep);
-
-            const hash = createHash("md5")
-              .update(postPath[postPath.length - 2])
-              .digest("hex")
-              .substring(0, 5);
-
-            const destDir = path.join(process.cwd(), "public", "img");
-            if (!fs.existsSync(destDir)) {
-              fs.mkdirSync(destDir, { recursive: true });
-            }
-            const destFileName =
-              fileName === "thumbnail.jpeg" ? hash + "-" + fileName : fileName;
-            fs.copyFileSync(filePath, path.join(destDir, destFileName));
-          });
-      });
-
       return mdFiles.map(async (filePath: string) => {
         const fileContents = await fs.promises.readFile(filePath, "utf8");
 
@@ -75,33 +43,36 @@ export async function getAllPosts(): Promise<BlogProps[]> {
         const hash = createHash("md5")
           .update(postPath)
           .digest("hex")
-          .substring(0, 5);
+          .substring(0, 6);
 
         let id = path
           .basename(filePath, path.extname(filePath))
           .replace(/(\s|_|\.|,)/g, "-");
-
         if (!/^[a-zA-Z0-9-]+$/.test(id)) {
           id = id.replace(/[^a-zA-Z0-9-]/g, "") + "-" + hash;
         }
-
-        id = id.replace(/-{2,}/g, "-");
-
-        id = id.toLowerCase();
+        id = id.replace(/-{2,}/g, "-").toLowerCase();
 
         const { data: frontmatter, content } = matter(fileContents);
         const { code } = await bundleMDX({
           source: content,
+          cwd: filePath.split(path.sep).slice(0, -1).join(path.sep),
           mdxOptions(options) {
-            options.remarkPlugins = [remarkGfm, convertPathToAbsolute];
+            options.remarkPlugins = [remarkGfm, remarkMdxImages];
             options.rehypePlugins = [rehypePrism];
             return options;
           },
           esbuildOptions: (options) => {
-            options.minify = true;
+            options.loader = {
+              ...options.loader,
+              ".png": "dataurl",
+              ".jpg": "dataurl",
+              ".gif": "dataurl",
+              ".jpeg": "dataurl",
+            };
+
             return options;
           },
-          cwd: filePath.split(path.sep).slice(0, -1).join(path.sep),
         });
 
         const published = new Date(frontmatter.date)

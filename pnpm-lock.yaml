@@ -8,9 +8,6 @@ dependencies:
   '@tailwindcss/typography':
     specifier: ^0.5.10
     version: 0.5.10(tailwindcss@3.3.5)
-  '@types/unist':
-    specifier: ^3.0.2
-    version: 3.0.2
   gray-matter:
     specifier: ^4.0.3
     version: 4.0.3
@@ -35,12 +32,12 @@ dependencies:
   remark-gfm:
     specifier: ^4.0.0
     version: 4.0.0
+  remark-mdx-images:
+    specifier: ^2.0.0
+    version: 2.0.0
   tailwind-scrollbar-hide:
     specifier: ^1.1.7
     version: 1.1.7
-  unist-util-visit:
-    specifier: ^5.0.0
-    version: 5.0.0
 
 devDependencies:
   '@types/node':
@@ -592,6 +589,12 @@ packages:
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
+
+  /@types/mdast@3.0.15:
+    resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
+    dependencies:
+      '@types/unist': 2.0.10
+    dev: false
 
   /@types/mdast@4.0.3:
     resolution: {integrity: sha512-LsjtqsyF+d2/yFOYaN22dHZI1Cpwkrj+g06G8+qtUKlhovPW89YhqSnfKtMbkgmEtYpH2gydRNULd6y8mciAFg==}
@@ -3422,6 +3425,15 @@ packages:
       toml: 3.0.0
       unified: 11.0.4
       yaml: 2.3.4
+    dev: false
+
+  /remark-mdx-images@2.0.0:
+    resolution: {integrity: sha512-Eh9sutDjzBPRBMnD7C9tn8DdqCaVNFo3rrqEryqPBJzMZ33i/MMO68ucINsOP3lNGSsCA2N2X+Zws1pHphWSpg==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@types/mdast': 3.0.15
+      unified: 10.1.2
+      unist-util-visit: 4.1.2
     dev: false
 
   /remark-mdx@3.0.0:
