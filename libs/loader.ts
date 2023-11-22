@@ -21,74 +21,68 @@ export interface BlogProps {
 }
 
 export async function getAllPosts(): Promise<BlogProps[]> {
-  const postsDirectory = path.join(process.cwd(), "blogs");
+  let posts: BlogProps[] = [];
+  const postRootPath = path.join(process.cwd(), "blogs");
+  const dirNames = fs.readdirSync(postRootPath);
 
-  const posts = await Promise.all(
-    fs.readdirSync(postsDirectory).flatMap((dir: string) => {
-      const dirPath = path.join(postsDirectory, dir);
-      if (!fs.lstatSync(dirPath).isDirectory()) return [];
+  for (const dirName of dirNames) {
+    const dirPath = path.join(postRootPath, dirName);
+    if (!fs.statSync(dirPath).isDirectory()) continue;
 
-      const mdFiles = fs
+    const postFilePath = path.join(
+      dirPath,
+      fs
         .readdirSync(dirPath)
-        .filter((fileName: string) => /\.(mdx|md)$/.test(fileName))
-        .map((fileName: string) => path.join(dirPath, fileName));
+        .filter((fileName) => /\.(mdx|md)$/.test(fileName))[0]
+    );
 
-      return mdFiles.map(async (filePath: string) => {
-        const fileContents = await fs.promises.readFile(filePath, "utf8");
+    const postData = fs.readFileSync(postFilePath, "utf8");
 
-        const postPath = filePath
-          .replace(postsDirectory, "")
-          .split(path.sep)[1];
+    const hash = createHash("md5")
+      .update(postFilePath)
+      .digest("hex")
+      .substring(0, 6);
 
-        const hash = createHash("md5")
-          .update(postPath)
-          .digest("hex")
-          .substring(0, 6);
+    let id = path
+      .basename(postFilePath, path.extname(postFilePath))
+      .replace(/(\s|_|\.|,)/g, "-");
+    if (!/^[a-zA-Z0-9-]+$/.test(id)) {
+      id = id.replace(/[^a-zA-Z0-9-]/g, "") + "-" + hash;
+    }
+    id = id.replace(/-{2,}/g, "-").toLowerCase();
 
-        let id = path
-          .basename(filePath, path.extname(filePath))
-          .replace(/(\s|_|\.|,)/g, "-");
-        if (!/^[a-zA-Z0-9-]+$/.test(id)) {
-          id = id.replace(/[^a-zA-Z0-9-]/g, "") + "-" + hash;
-        }
-        id = id.replace(/-{2,}/g, "-").toLowerCase();
+    const { data: frontmatter, content } = matter(postData);
 
-        const { data: frontmatter, content } = matter(fileContents);
-        const { code } = await bundleMDX({
-          source: content,
-          cwd: filePath.split(path.sep).slice(0, -1).join(path.sep),
-          mdxOptions(options) {
-            options.remarkPlugins = [remarkGfm, remarkMdxImages];
-            options.rehypePlugins = [rehypePrism];
-            return options;
-          },
-          esbuildOptions: (options) => {
-            options.loader = {
-              ...options.loader,
-              ".png": "dataurl",
-              ".jpg": "dataurl",
-              ".gif": "dataurl",
-              ".jpeg": "dataurl",
-            };
-
-            return options;
-          },
-        });
-
-        const published = new Date(frontmatter.date)
-          .toISOString()
-          .split("T")[0];
-
-        return {
-          id,
-          frontmatter,
-          content: code,
-          published: published,
-          hash,
+    const { code } = await bundleMDX({
+      source: content,
+      cwd: dirPath,
+      mdxOptions(options) {
+        options.remarkPlugins = [remarkGfm, remarkMdxImages];
+        options.rehypePlugins = [rehypePrism];
+        return options;
+      },
+      esbuildOptions: (options) => {
+        options.loader = {
+          ...options.loader,
+          ".png": "dataurl",
+          ".jpg": "dataurl",
+          ".gif": "dataurl",
+          ".jpeg": "dataurl",
         };
-      });
-    })
-  );
+        return options;
+      },
+    });
+
+    const published = new Date(frontmatter.date).toISOString().split("T")[0];
+
+    posts.push({
+      id,
+      frontmatter,
+      content: code,
+      published,
+      hash,
+    });
+  }
 
   return posts.sort(
     (a, b) => Date.parse(b.published) - Date.parse(a.published)

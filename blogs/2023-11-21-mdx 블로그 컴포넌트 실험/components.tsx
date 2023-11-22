@@ -1,16 +1,23 @@
-export const a = 1;
-
 import { useEffect, useState } from "react";
 
-export const B = () => {
-  return <div>asdfasdf</div>;
-};
+export function Button() {
+  const [toggle, setToggle] = useState(false);
+  const [count, setCount] = useState(0);
 
-export function C() {
   return (
-    <h1 className="flex flex-row font-bold text-3xl sm:text-4xl lg:text-5xl">
-      hello? i am C component
-    </h1>
+    <button
+      className="bg-slate-700 rounded-md px-4 py-2"
+      onClick={() => {
+        setToggle(!toggle);
+        setCount(count + 1);
+      }}
+    >
+      {toggle
+        ? "You pushed me!!"
+        : count >= 5
+        ? "Assertive - csy "
+        : "Push me!!"}
+    </button>
   );
 }
 
