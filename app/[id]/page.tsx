@@ -1,7 +1,3 @@
-import Button from "@/components/mdx/Button";
-import Ip from "@/components/mdx/Ip";
-
-import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { IoChevronBack } from "react-icons/io5";
 
@@ -12,13 +8,6 @@ import "@/styles/code-block-custom.css";
 
 import PostContent from "./post";
 
-// const options = {
-//   mdxOptions: {
-//     remarkPlugins: [convertPathToAbsolute, remarkGfm],
-//     rehypePlugins: [ rehypePrism],
-//   },
-// };
-
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   return posts.map((post) => ({
@@ -28,7 +17,6 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: any) {
   const post = await getPostById(params.id);
-
   if (!post) {
     return {
       notFound: true,
@@ -36,8 +24,8 @@ export async function generateMetadata({ params }: any) {
   }
 
   return {
-    title: post.title,
-    description: post.description,
+    title: post.frontmatter.title,
+    description: post.frontmatter.description,
   };
 }
 
@@ -58,19 +46,13 @@ export default async function Post({ params }: any) {
         <p className="md:text-lg block my-0 md:group-hover:scale-110">Home</p>
       </Link>
       <h1 className="flex flex-row font-bold text-3xl sm:text-4xl lg:text-5xl">
-        {post.title}
+        {post.frontmatter.title}
       </h1>
       <div className="py-4">
         <span className="text-gray-400">{post.published}</span>
         <span className="px-2">|</span>
         <span className="text-gray-400">{post.hash}</span>
       </div>
-
-      {/* <MDXRemote
-        source={post.content}
-        components={{ Button, Ip }}
-        options={options}
-      /> */}
 
       <PostContent code={post.content} />
     </article>
