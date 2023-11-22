@@ -65,6 +65,7 @@ export default async function Post({ params }: any) {
         <span className="px-2">|</span>
         <span className="text-gray-400">{post.hash}</span>
       </div>
+
       <MDXRemote
         source={post.content}
         components={{ Button, Ip }}

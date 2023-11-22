@@ -5,6 +5,11 @@ export default function Typing({ staticText, dynamic }: any) {
   const [text, setText] = useState("");
   const [count, setCount] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const speed = 200;
 
@@ -31,9 +36,8 @@ export default function Typing({ staticText, dynamic }: any) {
 
   return (
     <h1 className="flex flex-row font-bold text-4xl lg:text-5xl">
-      {typeof window !== "undefined"
-        ? staticText + text
-        : staticText + dynamic[0]}
+      {staticText}
+      {isClient ? text : dynamic[0]}
     </h1>
   );
 }
