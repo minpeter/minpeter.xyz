@@ -1,26 +1,39 @@
-import { useEffect, useState } from "react";
+---
+title: mdx 블로그 컴포넌트 실험
+date: 2023-11-21
+description: 블로그 mdx 지원 기념 컴포넌트 실험실
+---
 
+import { Button, Ip, Counter } from "./components.jsx";
+
+이제 블로그에서 컴포넌트를 사용할 수 있게 되어 몇가지 실험을 해보고자 한다.
+
+<hr />
+
+간단한 버튼 컴포넌트
+
+```jsx
 export function Button() {
   const [toggle, setToggle] = useState(false);
-  const [count, setCount] = useState(0);
 
   return (
     <button
       className="bg-slate-700 rounded-md px-4 py-2"
-      onClick={() => {
-        setToggle(!toggle);
-        setCount(count + 1);
-      }}
+      onClick={() => setToggle(!toggle)}
     >
-      {count >= 5
-        ? "Assertive - 서윤 "
-        : toggle
-        ? "You pushed me!!"
-        : "Push me!!"}
+      {toggle ? "You pushed me!!" : "Push Me :)"}
     </button>
   );
 }
+```
 
+<Button />
+
+<hr />
+
+ip.minpeter.tech 서버를 이용한 독자 아이피 조회 컴포넌트
+
+```jsx
 export function Ip() {
   const [ip, setIp] = useState("");
 
@@ -32,16 +45,21 @@ export function Ip() {
 
   return <div className="text-white">Your IP: {ip ? ip : "Loading..."}</div>;
 }
+```
 
+<Ip />
+
+<hr />
+
+간단한 카운터 컴포넌트
+
+```jsx
 export function Counter() {
   const [count, setCount] = useState(0);
 
   return (
     <div>
-      <div className="text-white">
-        Count: {count}
-        {count == 82 || count == 802 ? " - 🩷" : ""}
-      </div>
+      <div className="text-white">Count: {count}</div>
       <button
         className="bg-slate-700 rounded-md px-4 py-2"
         onClick={() => setCount(count + 1)}
@@ -54,3 +72,10 @@ export function Counter() {
     </div>
   );
 }
+```
+
+<Counter />
+
+<hr />
+
+ps. 간단한 되게 좋아하네 - csy
