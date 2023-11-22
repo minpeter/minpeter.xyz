@@ -25,7 +25,7 @@ export default function Button() {
 }
 ```
 
-<Button />
+{/* <Button /> */}
 
 ip.minpeter.tech 서버를 이용한 아이피 조회 컴포넌트
 
@@ -57,8 +57,24 @@ export default function Ip() {
 }
 ```
 
-<Ip />
+import { a, B, C, Ip } from "./components.tsx";
+
+{ a + 1 }
+
+<B />
+
+<br />
+
+{/* Your IP is: **{ await fetch("https://ip.minpeter.tech/ip").then((res) => res.text()) }** with await */}
+
+<br />
+
+{/* Your IP is: **{ fetch("https://ip.minpeter.tech/ip").then((res) => res.text()) }** without await */}
+
+<C />
 
 와우 당신의 아이피가 나왔어요!
 
 짱 신기하고 대단하죠?
+
+<Ip />

@@ -6,12 +6,17 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { createHash } from "crypto";
+import { bundleMDX } from "mdx-bundler";
+
+import { convertPathToAbsolute } from "@/libs/mdx-images-path-fix";
+import remarkGfm from "remark-gfm";
+import rehypePrism from "rehype-prism-plus";
 
 export interface BlogProps {
   id: string;
   title: string;
   hash: string;
-  content: string;
+  content: any;
   published: string;
   description: string;
 }
@@ -86,6 +91,20 @@ export async function getAllPosts(): Promise<BlogProps[]> {
 
         id = id.toLowerCase();
 
+        const result = await bundleMDX({
+          source: matterResult.content,
+          mdxOptions(options) {
+            options.remarkPlugins = [remarkGfm, convertPathToAbsolute];
+            options.rehypePlugins = [rehypePrism];
+            return options;
+          },
+          esbuildOptions: (options) => {
+            options.minify = true;
+            return options;
+          },
+          cwd: filePath.split(path.sep).slice(0, -1).join(path.sep),
+        });
+
         const published = new Date(matterResult.data.date)
           .toISOString()
           .split("T")[0];
@@ -94,7 +113,7 @@ export async function getAllPosts(): Promise<BlogProps[]> {
           id,
           title: matterResult.data.title,
           description: matterResult.data.description,
-          content: matterResult.content,
+          content: result.code,
           published: published,
           hash,
         };
