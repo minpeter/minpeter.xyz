@@ -8,8 +8,8 @@ import "@/styles/code-block-custom.css";
 
 import PostContent from "./post";
 
-export async function generateStaticParams() {
-  const posts = await getAllPosts();
+export function generateStaticParams() {
+  const posts = getAllPosts();
   return posts.map((post) => ({
     id: post.id,
   }));
@@ -17,9 +17,11 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: any) {
   const post = await getPostById(params.id);
+
   if (!post) {
     return {
-      notFound: true,
+      title: "404",
+      description: "Not found :/",
     };
   }
 
@@ -32,10 +34,6 @@ export async function generateMetadata({ params }: any) {
 export default async function Post({ params }: any) {
   const post = await getPostById(params.id);
 
-  if (!post) {
-    return <div>Post not found</div>;
-  }
-
   return (
     <article className="prose prose-sm md:prose-base lg:prose-lg prose-slate !prose-invert mx-auto break-words">
       <Link
@@ -45,16 +43,34 @@ export default async function Post({ params }: any) {
         <IoChevronBack className="h-5 w-5 md:h-6 md:w-6 md:group-hover:scale-110" />
         <p className="md:text-lg block my-0 md:group-hover:scale-110">Home</p>
       </Link>
-      <h1 className="flex flex-row font-bold text-3xl sm:text-4xl lg:text-5xl">
-        {post.frontmatter.title}
-      </h1>
-      <div className="py-4">
-        <span className="text-gray-400">{post.published}</span>
-        <span className="px-2">|</span>
-        <span className="text-gray-400">{post.hash}</span>
-      </div>
+      {!post ? (
+        <>
+          <h1 className="flex flex-row font-bold text-3xl sm:text-4xl lg:text-5xl">
+            404 :/
+          </h1>
 
-      <PostContent code={post.content} />
+          <p>존재하지 않는 페이지입니다.</p>
+          <p>다른 글을 읽어보시는건 어떨까요?</p>
+          <Link href="/">
+            <button className="bg-gray-800 text-white px-4 py-2 rounded-md mt-4">
+              홈으로
+            </button>
+          </Link>
+        </>
+      ) : (
+        <>
+          <h1 className="flex flex-row font-bold text-3xl sm:text-4xl lg:text-5xl">
+            {post.frontmatter.title}
+          </h1>
+          <div className="py-4">
+            <span className="text-gray-400">{post.published}</span>
+            <span className="px-2">|</span>
+            <span className="text-gray-400">{post.hash}</span>
+          </div>
+
+          {post.content && <PostContent code={post.content} />}
+        </>
+      )}
     </article>
   );
 }
