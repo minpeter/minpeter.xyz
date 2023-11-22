@@ -12,16 +12,21 @@ import remarkMdxImages from "remark-mdx-images";
 import remarkGfm from "remark-gfm";
 import rehypePrism from "rehype-prism-plus";
 
-export interface BlogProps {
+const pathKV = new Map<string, string>();
+
+export interface BlogListProps {
   id: string;
-  hash: string;
+  frontmatter: any;
   published: string;
-  content: any;
-  frontmatter?: any;
 }
 
-export async function getAllPosts(): Promise<BlogProps[]> {
-  let posts: BlogProps[] = [];
+export interface BlogPostProps extends BlogListProps {
+  hash: string;
+  content: string;
+}
+
+export function getAllPosts(): BlogListProps[] {
+  let posts: BlogListProps[] = [];
   const postRootPath = path.join(process.cwd(), "blogs");
   const dirNames = fs.readdirSync(postRootPath);
 
@@ -51,58 +56,80 @@ export async function getAllPosts(): Promise<BlogProps[]> {
     }
     id = id.replace(/-{2,}/g, "-").toLowerCase();
 
-    const { data: frontmatter, content } = matter(postData);
-
-    const { code } = await bundleMDX({
-      source: content,
-      cwd: dirPath,
-      mdxOptions(options) {
-        options.remarkPlugins = [remarkGfm, remarkMdxImages];
-        options.rehypePlugins = [rehypePrism];
-        return options;
-      },
-      esbuildOptions: (options) => {
-        options.loader = {
-          ...options.loader,
-          ".png": "dataurl",
-          ".jpg": "dataurl",
-          ".gif": "dataurl",
-          ".jpeg": "dataurl",
-        };
-        return options;
-      },
-    });
-
+    const { data: frontmatter } = matter(postData);
     const published = new Date(frontmatter.date).toISOString().split("T")[0];
 
+    pathKV.set(id, dirPath);
+
     posts.push({
-      id,
+      id: id,
       frontmatter,
-      content: code,
       published,
-      hash,
     });
   }
 
   return posts.sort(
-    (a, b) => Date.parse(b.published) - Date.parse(a.published)
+    (a, b) => Date.parse(b.frontmatter.date) - Date.parse(a.frontmatter.date)
   );
 }
 
-export async function getPostById(id: string): Promise<BlogProps> {
-  const posts = await getAllPosts();
-  const currentPost = posts.find((post) => post.id === id);
+export async function getPostById(id: string): Promise<BlogPostProps | null> {
+  let dirPath: string | undefined;
+  let retry = 0;
 
-  if (!currentPost)
-    return {
-      id,
-      hash: "",
-      published: "",
-      content: "Post not found",
-      frontmatter: {},
-    };
+  do {
+    dirPath = pathKV.get(id);
+    getAllPosts();
+    retry++;
+  } while (!dirPath || retry > 4);
 
-  return {
-    ...currentPost,
+  const postFilePath = path.join(
+    dirPath,
+    fs
+      .readdirSync(dirPath)
+      .filter((fileName) => /\.(mdx|md)$/.test(fileName))[0]
+  );
+
+  const postData = fs.readFileSync(postFilePath, "utf8");
+
+  const hash = createHash("md5")
+    .update(postFilePath)
+    .digest("hex")
+    .substring(0, 6);
+
+  const { data: frontmatter, content } = matter(postData);
+
+  // ----------------- MDX Bundler -----------------
+
+  const { code } = await bundleMDX({
+    source: content,
+    cwd: dirPath,
+    mdxOptions(options) {
+      options.remarkPlugins = [remarkGfm, remarkMdxImages];
+      options.rehypePlugins = [rehypePrism];
+      return options;
+    },
+    esbuildOptions: (options) => {
+      options.loader = {
+        ...options.loader,
+        ".png": "dataurl",
+        ".jpg": "dataurl",
+        ".gif": "dataurl",
+        ".jpeg": "dataurl",
+      };
+      return options;
+    },
+  });
+
+  const published = new Date(frontmatter.date).toISOString().split("T")[0];
+
+  const post = {
+    id,
+    frontmatter,
+    content: code,
+    published,
+    hash,
   };
+
+  return post;
 }

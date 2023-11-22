@@ -4,8 +4,8 @@ import { SiGithub, SiInstagram, SiMailgun } from "react-icons/si";
 
 import Typing from "@/components/typing";
 
-export default async function Home() {
-  const blogs = await getAllPosts();
+export default function Home() {
+  const posts = getAllPosts();
 
   return (
     <main className="flex flex-col">
@@ -55,7 +55,7 @@ export default async function Home() {
 
       <section className="py-10">
         <div className="py-2">
-          {blogs.map((blog) => (
+          {posts.map((blog) => (
             <Link href={"/" + blog.id} passHref key={blog.id}>
               <div className="py-2 gap-2">
                 <h3 className="text-lg font-bold">{blog.frontmatter.title}</h3>
