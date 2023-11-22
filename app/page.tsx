@@ -2,19 +2,14 @@ import Link from "next/link";
 import { getAllPosts } from "@/libs/loader";
 import { SiGithub, SiInstagram, SiMailgun } from "react-icons/si";
 
-import "@/libs/typing";
+import Typing from "@/components/typing";
 
 export default async function Home() {
   const blogs = await getAllPosts();
 
   return (
     <main className="flex flex-col">
-      <div className="flex flex-row">
-        <h1 className="text-6xl font-bold">Minpeter&apos;s&nbsp;</h1>
-        <h1 id="typing" className="text-6xl font-bold">
-          blog
-        </h1>
-      </div>
+      <Typing staticText="minpeter's " dynamic={["blog", "dev", "life"]} />
 
       <div className="py-4 flex">
         <a
