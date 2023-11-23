@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { memoizeGetPostById, getPostById, getAllPosts } from "@/libs/loader";
+import { getPostById, getAllPosts } from "@/libs/loader";
 
 import "@/styles/prism-one-dark.css";
 import "@/styles/code-block-custom.css";
@@ -15,7 +15,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: any) {
-  const post = await memoizeGetPostById(params.id);
+  const post = await getPostById(params.id);
 
   if (!post) {
     return {
@@ -31,12 +31,7 @@ export async function generateMetadata({ params }: any) {
 }
 
 export default async function Post({ params }: any) {
-  let post;
-  if (process.env.NODE_ENV === "production") {
-    post = await memoizeGetPostById(params.id);
-  } else {
-    post = await getPostById(params.id);
-  }
+  const post = await getPostById(params.id);
 
   return (
     <article className="prose prose-sm md:prose-base lg:prose-lg prose-slate !prose-invert mx-auto break-words">
