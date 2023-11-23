@@ -99,8 +99,6 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
 
   const { data: frontmatter, content } = matter(postData);
 
-  // ----------------- MDX Bundler -----------------
-
   const { code } = await bundleMDX({
     source: content,
     cwd: dirPath,
@@ -110,6 +108,7 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
       return options;
     },
     esbuildOptions: (options) => {
+      options.minify = true;
       options.loader = {
         ...options.loader,
         ".png": "dataurl",
