@@ -12,17 +12,33 @@ import remarkMdxImages from "remark-mdx-images";
 import remarkGfm from "remark-gfm";
 import rehypePrism from "rehype-prism-plus";
 
-const pathKV = new Map<string, string>();
-
-export interface BlogListProps {
+export interface BlogProps {
   id: string;
-  frontmatter: any;
+  hash: string;
   published: string;
+  frontmatter: any;
 }
 
-export interface BlogPostProps extends BlogListProps {
-  hash: string;
+export interface BlogListProps extends BlogProps {
+  filePath: string;
+}
+
+export interface BlogPostProps extends BlogProps {
   content: string;
+}
+
+function hashAndId(filePath: string): { hash: string; id: string } {
+  const hash = createHash("md5").update(filePath).digest("hex").substring(0, 6);
+
+  let id = path
+    .basename(filePath, path.extname(filePath))
+    .replace(/(\s|_|\.|,)/g, "-");
+  if (!/^[a-zA-Z0-9-]+$/.test(id)) {
+    id = id.replace(/[^a-zA-Z0-9-]/g, "") + "-" + hash;
+  }
+  id = id.replace(/-{2,}/g, "-").toLowerCase();
+
+  return { hash, id };
 }
 
 export function getAllPosts(): BlogListProps[] {
@@ -34,37 +50,23 @@ export function getAllPosts(): BlogListProps[] {
     const dirPath = path.join(postRootPath, dirName);
     if (!fs.statSync(dirPath).isDirectory()) continue;
 
-    const postFilePath = path.join(
+    const filePath = path.join(
       dirPath,
       fs
         .readdirSync(dirPath)
         .filter((fileName) => /\.(mdx|md)$/.test(fileName))[0]
     );
 
-    const postData = fs.readFileSync(postFilePath, "utf8");
+    const { id, hash } = hashAndId(filePath);
 
-    const hash = createHash("md5")
-      .update(postFilePath)
-      .digest("hex")
-      .substring(0, 6);
-
-    let id = path
-      .basename(postFilePath, path.extname(postFilePath))
-      .replace(/(\s|_|\.|,)/g, "-");
-    if (!/^[a-zA-Z0-9-]+$/.test(id)) {
-      id = id.replace(/[^a-zA-Z0-9-]/g, "") + "-" + hash;
-    }
-    id = id.replace(/-{2,}/g, "-").toLowerCase();
-
-    const { data: frontmatter } = matter(postData);
-    const published = new Date(frontmatter.date).toISOString().split("T")[0];
-
-    pathKV.set(id, dirPath);
+    const { data: frontmatter } = matter(fs.readFileSync(filePath, "utf8"));
 
     posts.push({
       id: id,
       frontmatter,
-      published,
+      published: new Date(frontmatter.date).toISOString().split("T")[0],
+      filePath,
+      hash,
     });
   }
 
@@ -74,34 +76,19 @@ export function getAllPosts(): BlogListProps[] {
 }
 
 export async function getPostById(id: string): Promise<BlogPostProps | null> {
-  let dirPath: string | undefined;
-  let retry = 0;
+  const { filePath, published, hash, frontmatter } =
+    getAllPosts().find((post) => post.id === id) || {};
+  if (!filePath || !published || !hash || !frontmatter) return null;
 
-  do {
-    dirPath = pathKV.get(id);
-    getAllPosts();
-    retry++;
-  } while (!dirPath || retry > 4);
-
-  const postFilePath = path.join(
-    dirPath,
-    fs
-      .readdirSync(dirPath)
-      .filter((fileName) => /\.(mdx|md)$/.test(fileName))[0]
-  );
-
-  const postData = fs.readFileSync(postFilePath, "utf8");
-
-  const hash = createHash("md5")
-    .update(postFilePath)
-    .digest("hex")
-    .substring(0, 6);
-
-  const { data: frontmatter, content } = matter(postData);
+  const { content: postData } = matter(fs.readFileSync(filePath, "utf8"));
 
   const { code } = await bundleMDX({
-    source: content,
-    cwd: dirPath,
+    source: postData,
+    cwd: filePath.split("/").slice(0, -1).join("/"),
+    grayMatterOptions(options) {
+      options.excerpt = true;
+      return options;
+    },
     mdxOptions(options) {
       options.remarkPlugins = [remarkGfm, remarkMdxImages];
       options.rehypePlugins = [rehypePrism];
@@ -120,15 +107,11 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
     },
   });
 
-  const published = new Date(frontmatter.date).toISOString().split("T")[0];
-
-  const post = {
+  return {
     id,
+    hash,
     frontmatter,
     content: code,
     published,
-    hash,
   };
-
-  return post;
 }
