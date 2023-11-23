@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { getAllPosts } from "@/libs/loader";
+import { memoizeGetAllPosts } from "@/libs/loader";
 import { SiGithub, SiInstagram, SiMailgun } from "react-icons/si";
 
 import Typing from "@/components/typing";
 
 export default function Home() {
-  const posts = getAllPosts();
+  const posts = memoizeGetAllPosts();
 
   return (
     <main className="flex flex-col">
@@ -56,7 +56,7 @@ export default function Home() {
       <section className="py-10">
         <div className="py-2">
           {posts.map((blog) => (
-            <Link href={"/" + blog.id} passHref key={blog.id}>
+            <Link href={"/" + blog.id} key={blog.id}>
               <div className="py-2 gap-2">
                 <h3 className="text-lg font-bold">{blog.frontmatter.title}</h3>
                 <p className="text-gray-400 ">{blog.frontmatter.description}</p>

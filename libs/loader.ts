@@ -19,6 +19,15 @@ export interface BlogProps {
   frontmatter: any;
 }
 
+export function memoize<T extends (...args: any[]) => any>(fn: T): T {
+  let cache: ReturnType<T>;
+  return ((...args: Parameters<T>): ReturnType<T> => {
+    if (cache) return cache;
+    cache = fn(...args);
+    return cache;
+  }) as T;
+}
+
 export interface BlogListProps extends BlogProps {
   filePath: string;
 }
@@ -41,6 +50,7 @@ function hashAndId(filePath: string): { hash: string; id: string } {
   return { hash, id };
 }
 
+export const memoizeGetAllPosts = memoize(getAllPosts);
 export function getAllPosts(): BlogListProps[] {
   let posts: BlogListProps[] = [];
   const postRootPath = path.join(process.cwd(), "blogs");
@@ -75,9 +85,11 @@ export function getAllPosts(): BlogListProps[] {
   );
 }
 
+export const memoizeGetPostById = memoize(getPostById);
+
 export async function getPostById(id: string): Promise<BlogPostProps | null> {
   const { filePath, published, hash, frontmatter } =
-    getAllPosts().find((post) => post.id === id) || {};
+    memoizeGetAllPosts().find((post) => post.id === id) || {};
   if (!filePath || !published || !hash || !frontmatter) return null;
 
   const { content: postData } = matter(fs.readFileSync(filePath, "utf8"));

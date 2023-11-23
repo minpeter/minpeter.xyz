@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { IoChevronBack } from "react-icons/io5";
 
-import { getPostById, getAllPosts } from "@/libs/loader";
+import { memoizeGetPostById, getAllPosts } from "@/libs/loader";
 
 import "@/styles/prism-one-dark.css";
 import "@/styles/code-block-custom.css";
@@ -16,7 +15,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: any) {
-  const post = await getPostById(params.id);
+  const post = await memoizeGetPostById(params.id);
 
   if (!post) {
     return {
@@ -32,17 +31,10 @@ export async function generateMetadata({ params }: any) {
 }
 
 export default async function Post({ params }: any) {
-  const post = await getPostById(params.id);
+  const post = await memoizeGetPostById(params.id);
 
   return (
     <article className="prose prose-sm md:prose-base lg:prose-lg prose-slate !prose-invert mx-auto break-words">
-      <Link
-        href="/"
-        className="w-min flex gap-4 mb-4 md:mb-5 cursor-pointer items-center no-underline group hover:text-white text-gray-400 break-normal"
-      >
-        <IoChevronBack className="h-5 w-5 md:h-6 md:w-6 md:group-hover:scale-110" />
-        <p className="md:text-lg block my-0 md:group-hover:scale-110">Home</p>
-      </Link>
       {!post ? (
         <>
           <h1 className="flex flex-row font-bold text-3xl sm:text-4xl lg:text-5xl">

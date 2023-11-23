@@ -1,7 +1,7 @@
-import { getAllPosts } from "@/libs/loader";
+import { memoizeGetAllPosts } from "@/libs/loader";
 
 export default function sitemap() {
-  const posts = getAllPosts();
+  const posts = memoizeGetAllPosts();
 
   const url = "https://minpeter.tech";
 
