@@ -35,9 +35,9 @@ export default function Typing({ staticText, dynamic }: any) {
   }, [text, isDeleting, count, dynamic]);
 
   return (
-    <h1 className="flex flex-row font-bold text-4xl lg:text-5xl">
+    <>
       {staticText}
       {isClient ? text : dynamic[0]}
-    </h1>
+    </>
   );
 }

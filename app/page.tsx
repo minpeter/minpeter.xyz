@@ -9,8 +9,9 @@ export default function Home() {
 
   return (
     <main className="flex flex-col">
-      <Typing staticText="minpeter's " dynamic={["blog", "dev", "life"]} />
-
+      <h1 className="flex flex-row font-bold text-4xl lg:text-5xl">
+        <Typing staticText="minpeter's " dynamic={["blog", "dev", "life"]} />
+      </h1>
       <div className="py-4 flex">
         <Link
           href="https://github.com/minpeter"
