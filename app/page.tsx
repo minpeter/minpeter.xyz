@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { memoizeGetAllPosts } from "@/libs/loader";
+import { getAllPosts } from "@/libs/loader";
 import { SiGithub, SiInstagram, SiMailgun } from "react-icons/si";
 
 import Typing from "@/components/typing";
 
 export default function Home() {
-  const posts = memoizeGetAllPosts();
+  const posts = getAllPosts();
 
   return (
     <main className="flex flex-col">
