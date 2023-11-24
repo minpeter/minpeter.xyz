@@ -5,11 +5,11 @@ date: 2023-02-24
 tags: ["arch", "linux", "terminal", "wsl"]
 ---
 
-![Untitled](/images/wslarch/Untitled.png)
+![Untitled](images/Untitled.png)
 
 Virtual Machine Platform & Windows Subsystem for Linux 체크 확인
 
-![Untitled](/images/wslarch/Untitled%201.png)
+![Untitled](images/Untitled%201.png)
 
 다음 목록에서 알 수 있듯 Arch Linux는 마이크로소프트 공식 지원 배포판이 아님
 
@@ -29,7 +29,7 @@ https://github.com/yuk7/ArchWSL/releases
 
 온라인이라고 적힌 파일과 아닌 파일이 있는데 그냥 동일한 세트로 다운 받으면 된다.
 
-![Untitled](/images/wslarch/Untitled%202.png)
+![Untitled](images/Untitled%202.png)
 
 그 다음 아래 링크에 설명된대로 인증서을 설치하고 appx를 실행 시킨다.
 
@@ -45,7 +45,7 @@ Add-AppxPackage -Path .\arch.appx
 
 [Install Certificate for AppX](https://wsldl-pg.github.io/ArchW-docs/Install-Certificate/)
 
-![Untitled](/images/wslarch/Untitled%203.png)
+![Untitled](images/Untitled%203.png)
 
 이후 잠시 기다리면 설치가 완료된다.
 
@@ -220,7 +220,7 @@ export PATH="$PATH:/mnt/c/Users/minpeter/AppData/Local/Programs/Microsoft VS Cod
 
 사실 처음에는 git-credential-manager.exe 도 추가하려했으나 .gitconfig 파일에 경로가 정의되어있기에 문제가 없다고 판단했다.
 
-![Untitled](/images/wslarch/Untitled%204.png)
+![Untitled](images/Untitled%204.png)
 
 상당히 아름다운 터미널이 완성됬다.
 

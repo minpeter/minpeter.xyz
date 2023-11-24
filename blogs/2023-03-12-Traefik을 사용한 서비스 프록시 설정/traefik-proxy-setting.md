@@ -78,7 +78,7 @@ docker-compose up -d traefik-proxy
 
 브라우저를 열고 [http://localhost:8080/dashboard](http://localhost:8080/dashboard) 에 접속하면 traefik의 웹 UI를 확인할 수 있다.
 
-![Untitled](/images/traefik-1/image.png)
+![Untitled](images/image.png)
 
 현재는 traefik만 있고 서비스가 없는 상태이다.
 
@@ -120,7 +120,7 @@ curl -H Host:ip.docker.localhost 127.0.0.1
 
 아마 다음과 같은 화면이 보일 것이다.
 
-![Untitled](/images/traefik-1/image1.png)
+![Untitled](images/image1.png)
 
 80포트는 분명 traefik 컨테이너에 바인딩 되어 있다.
 
@@ -132,15 +132,15 @@ curl -H Host:ip.docker.localhost 127.0.0.1
   따라서 DNS 설정을 하여 도메인으로 접속을 하게 될 텐데 이렇게 하면 Host 헤더가 자동으로 생성된다.
   이걸 연습해볼 수 있는 방법이 바로 traefik.me이다.
   traefik.me는 무조건 127.0.0.1라고 답하는 도메인이다.
-  ![Untitled](/images/traefik-1/image2.png)
+  ![Untitled](images/image2.png)
   [ip.traefik.me](http://ip.traefik.me)의 경우에도 dns 조회 결과는 127.0.0.1 이다.
   이를 이용하면 다음과 같이 요청을 보내 볼 수 있다.
   ```bash
   curl ip.traefik.me
   ```
-  ![Untitled](/images/traefik-1/image3.png)
+  ![Untitled](images/image3.png)
   브라우저로 [http://ip.traefik.me/](http://ip.traefik.me/) 에 접속하면 다음과 같은 웹 페이지도 볼 수 있다.
-  ![Untitled](/images/traefik-1/image4.png)
+  ![Untitled](images/image4.png)
 
 이제 로컬에서 해볼 수 있는 기초 과정을 마쳤다.
 
@@ -178,7 +178,7 @@ curl ip.minpeter.cf -L
 
 만약 클플을 사용한다면 Proxied는 켜두고 \***\*Your SSL/TLS encryption mode is Full (strict) 옵션은 Full (strict)으로 설정하자.\*\***
 
-![Untitled](/images/traefik-1/image5.png)
+![Untitled](images/image5.png)
 
 ~~뭐 사실 그냥 Flexible 박고 https 인증서 발급 설정을 무시해도 된다. ㅋㅋㅋㅋ~~
 
@@ -188,7 +188,7 @@ curl ip.minpeter.cf -L
 
 URL에는 `*.example.com//.well-known/acme-challenge/*` 를 입력해주고 Pick a Setting (required)은 SSL > Off 로 설정해주자.
 
-![Untitled](/images/traefik-1/image6.png)
+![Untitled](images/image6.png)
 
 이제 나름 안전하게 80, 443 포트로 외부에서 접근이 가능해졌고 또한 이후 진행할 인증서 관련 설정도 마쳤다.
 

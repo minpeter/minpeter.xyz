@@ -97,7 +97,7 @@ if (false) {
 deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
 ```
 
-![Untitled](/images/setup-proxmox/pve-no-subscription.png)
+![Untitled](images/pve-no-subscription.png)
 
 저장 후 업데이트
 
@@ -105,7 +105,7 @@ deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
 # apt update && apt dist-upgrade -y
 ```
 
-![web console에서 경고를 주긴 하지만 개발용 서버이기 때문에 상관 없다!](/images/setup-proxmox/web-console-warning.png)
+![web console에서 경고를 주긴 하지만 개발용 서버이기 때문에 상관 없다!](images/web-console-warning.png)
 
 web console에서 경고를 주긴 하지만 개발용 서버이기 때문에 상관 없다!
 
@@ -143,7 +143,7 @@ HandleLidSwitch=ignore
 bash <(curl -s https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.sh ) install
 ```
 
-![F5로 reload를 하면 테마가 적용됨!!](/images/setup-proxmox/proxmox-dark-theme.png)
+![F5로 reload를 하면 테마가 적용됨!!](images/proxmox-dark-theme.png)
 
 F5로 reload를 하면 테마가 적용됨!!
 

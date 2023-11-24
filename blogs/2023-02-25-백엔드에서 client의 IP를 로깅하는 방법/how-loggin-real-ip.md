@@ -23,7 +23,7 @@ categories: ""
 
 바로 RemoteAddr 필드를 파싱해서 사용하면 된다.
 
-![스타벅스 아이피다.. 괴롭히지 말자.](/images/client-ip/Untitled.png)
+![스타벅스 아이피다.. 괴롭히지 말자.](images/Untitled.png)
 
 스타벅스 아이피다.. 괴롭히지 말자.
 
@@ -37,7 +37,7 @@ categories: ""
 
 다음 스크린샷은 whoami 서비스가 2개의 리버스 프록시 뒤에서 실행되고 있는 경우이다.
 
-![Untitled](/images/client-ip/Untitled%201.png)
+![Untitled](images/Untitled%201.png)
 
 자세히보면 원본 클라이언트 IP를 넣을 수 있는 부분이 2가지 존재하는데 클라우드플레어에서 추가한 `Cf-Connecting-Ip` 필드와 `X-Forwarded-For` 필드의 첫번째 값이다.
 
@@ -49,7 +49,7 @@ categories: ""
 
 아이피는 다르지만 다음과 같은 구조를 지닌다.
 
-![Untitled](/images/client-ip/Untitled%202.png)
+![Untitled](images/Untitled%202.png)
 
 프록시를 하나 지날때 기존의 RemoteAddr 부분을 X-Forwarded-For 헤더에 append하고 자신의 IP가 RemoteAddr에 들어가는 형식이다.
 
@@ -126,7 +126,7 @@ X-Forwarded-For: &lt;변조하여 추가한 IP A&gt;, &lt;클라이언트의 실
 
 다음과 같은 자료들을 찾을 수 있었는데 그 중 흥미로운 몇가지 자료다.
 
-![Untitled](/images/client-ip/Untitled%203.png)
+![Untitled](images/Untitled%203.png)
 
 [https://blog.ircmaxell.com/2012/11/anatomy-of-attack-how-i-hacked.html](https://blog.ircmaxell.com/2012/11/anatomy-of-attack-how-i-hacked.html)
 
@@ -146,19 +146,19 @@ CTFd 처럼 프록시 홉을 제한하여 방지하는 로직이 있는 경우�
 
 평소에 즐겨쓰는 서비스이기에 선택해보았다.
 
-![Untitled](/images/client-ip/Untitled%204.png)
+![Untitled](images/Untitled%204.png)
 
 다음과 같이 proxy option를 선택하여 intercept를 진행했다.
 
-![Untitled](/images/client-ip/Untitled%205.png)
+![Untitled](images/Untitled%205.png)
 
 아무런 변조를 하지 않았을 떄 응답이다.
 
-![Untitled](/images/client-ip/Untitled%206.png)
+![Untitled](images/Untitled%206.png)
 
 요청 헤더에 강제로 값을 넣어보았다.
 
-![Untitled](/images/client-ip/Untitled%207.png)
+![Untitled](images/Untitled%207.png)
 
 분명 더 값은 조작되었다.
 
@@ -203,7 +203,7 @@ func (input *BeegoInput) IP() string {
 
 음.. 2번에 주석의 뜻을 짐작해보면 “우린 그냥 무지성으로 XXF 더 첫 번째 값 뺴올꺼임 ㅅㄱ ㅎ”
 
-![Untitled](/images/client-ip/Untitled%208.png)
+![Untitled](images/Untitled%208.png)
 
 다음은 저 `(*context.BeegoInput)(input).IP()` 구현체다.
 
