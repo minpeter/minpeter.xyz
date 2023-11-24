@@ -1,0 +1,168 @@
+{
+  "main": {
+    "id": "b3260770d8128cf1",
+    "type": "split",
+    "children": [
+      {
+        "id": "b2ee43aadbe0973a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fa3473f9918b6168",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1ca535fad17ae37d",
+    "type": "split",
+    "children": [
+      {
+        "id": "3fa21e0e9a1defe0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6aeed18aa00d58fa",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "8c6297aaaed6bed8",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "d15ad5fd92ccd02b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "56038acf42722a8e",
+    "type": "split",
+    "children": [
+      {
+        "id": "9fb10aac8b891248",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "af5d24a8af8f7095",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "eed91cd9eb457652",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "926217bf181691ab",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "536e5d0dd613dd2f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:퀵 스위처 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 데일리 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false
+    }
+  },
+  "active": "fa3473f9918b6168",
+  "lastOpenFiles": [
+    "2023-11-21-mdx 블로그 컴포넌트 실험/images/mdx-blog-test-1.png",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/images/ddd.png",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/images/mdx-blog-test.png",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124171114.png",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124171020.png",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/images/chrome-tabs.png",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124170432.png",
+    "Pasted image 20231124170154.png.md",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124170143.png",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124170154.png",
+    "Pasted image 20231124170013.png",
+    "2023-03-12-Traefik을 사용한 서비스 프록시 설정/traefik-proxy-setting.md",
+    "2022-10-03-안쓰는 노트북을 Proxmox 서버로 재활용/use-laptop-proxmox-server.md",
+    "2022-06-15-AWS 클라우드 소개/aws-introduction.md",
+    "2022-06-15-AWS 클라우드 소개/edge-pop.png"
+  ]
+}
