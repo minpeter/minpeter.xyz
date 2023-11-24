@@ -23,7 +23,7 @@ HTTP는 클라이언트-서버 기반의 세션을 갖지 않는 프로토콜이
 
 > https://images.google.com/
 
-스키마는 브라우저에게 HTTPS를 사용한다고 알렸고, [images.google.com](/images/http://images.google.com/dml)/ 의 경로로 기본리소스를 요청하였다.
+스키마는 브라우저에게 HTTPS를 사용한다고 알렸고, [images.google.com](https://images.google.com)/ 의 경로로 기본리소스를 요청하였다.
 
 ### 클라이언트 리소스 요청
 
@@ -89,7 +89,7 @@ XST 공격에서 공격자는 XSS 공격을 이용해 인증된 사용자의 인
 
 자 외우기 귀찮다 그냥 200, 404, 403 정도만 알아두자…
 
-[Hypertext Transfer Protocol (HTTP) Status Code Registry](/images/https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
+[Hypertext Transfer Protocol (HTTP) Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
 
 ## Go에서 웹 리소스 가져오기
 
@@ -216,8 +216,7 @@ httptest.NewServer 함수를 이용해 서버를 생성하는데 HandlerFunc으�
 
 다음 서버의 URL로 Get 헬퍼 함수로 요청을 보내지만 타임아웃이 존재하지 않기에 테스트시간이 종료될때까지 갇히게 된다.
 
-![테스트 최대 시간 30초로 설정, 오류와 함께 30초에 종료된걸 볼 수 있다.
-책에서는 이걸 Go테스트 러너가 타임아웃되어 테스트를 중단하고 스택 트레이스를 출력했다 고 표현했다.](images/Untitled%201.png)
+![](images/Untitled-1.png)
 
 테스트 최대 시간 30초로 설정, 오류와 함께 30초에 종료된걸 볼 수 있다.
 책에서는 이걸 Go테스트 러너가 타임아웃되어 테스트를 중단하고 스택 트레이스를 출력했다 고 표현했다.
@@ -250,7 +249,7 @@ func TestBlockIndefinitelyWithTimeout(t *testing.T) {
 
 실행 결과는 다음과 같다.
 
-![5초 안에 끝났으며 자동으로 cancel 처리해 오류도 출력되지 않음](images/Untitled%202.png)
+![5초 안에 끝났으며 자동으로 cancel 처리해 오류도 출력되지 않음](images/Untitled-2.png)
 
 5초 안에 끝났으며 자동으로 cancel 처리해 오류도 출력되지 않음
 

