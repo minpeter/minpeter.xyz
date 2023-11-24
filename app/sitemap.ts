@@ -7,7 +7,7 @@ export default function sitemap() {
 
   const post = posts.map((post) => {
     return {
-      url: `url/${post.id}`,
+      url: `${url}/${post.id}`,
       lastModified: new Date(post.published),
       changeFrequency: "daily",
       priority: 0.7,
