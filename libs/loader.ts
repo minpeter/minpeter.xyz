@@ -45,7 +45,7 @@ export function getAllPosts(): BlogListProps[] {
   for (const dirName of dirNames) {
     const dirPath = path.join(postRootPath, dirName);
     if (!fs.statSync(dirPath).isDirectory()) continue;
-    if (dirName === ".obsidian") continue;
+    if (/^\./.test(dirName)) continue;
 
     const filePath = path.join(
       dirPath,
