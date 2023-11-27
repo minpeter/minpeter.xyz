@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2021-present, FriendliAI Inc. All rights reserved.
- */
-
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
