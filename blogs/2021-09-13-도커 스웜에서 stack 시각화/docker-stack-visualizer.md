@@ -8,7 +8,6 @@ tags:
   - visualizer
 description: Docker swarm 모드에서 노드와 컨테이너 분포를 시각적으로 확인하는 visualizer
 ---
-
 ## 개요
 
 visualizer는 2016 dockercon에서 stack기능 소개를 위해 만들어진 툴이다.  

@@ -1,7 +1,10 @@
 {
   "newFileLocation": "root",
   "useMarkdownLinks": true,
-  "attachmentFolderPath": "./images",
+  "attachmentFolderPath": "./assets",
   "promptDelete": false,
-  "newLinkFormat": "relative"
+  "newLinkFormat": "relative",
+  "vimMode": false,
+  "defaultViewMode": "source",
+  "alwaysUpdateLinks": true
 }

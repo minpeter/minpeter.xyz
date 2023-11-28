@@ -1,5 +1,5 @@
 ---
-title: Jekyll 그리고 github-pages
+title: Jekyll 그리고 github pages
 date: 2021-08-22 22:21:00 +0900
 tags:
   - github
@@ -11,72 +11,69 @@ categories: blog
 description: GitHub Pages에 Jekyll을 이용한 블로그 제작과 테마 선택부터 배포까지의 과정 기록
 ---
 
-github-pages.. 벌써 3~4번은 시도했지만 jekyll를 이용해서 시도한건 전부 실패했었다.
+github pages.. 벌써 3~4번은 시도했지만, jekyll를 이용해서 시도한 건 전부 실패했었다.
 
-마음에 드는 테마는 설정이 어렵거나 프로그래밍을 접한지 얼마되지 않아  jekyll이 어떻게 작동하는지도 파악이 안됐다.
+마음에 드는 테마는 설정이 어렵거나 프로그래밍을 접한 지 얼마 되지 않아  jekyll이 어떻게 작동하는지도 파악이 안 됐다.
 
-그래서 notion이나 아이패드 일기앱에 메모나 그날 배운걸 적어두곤 했는데, 생각해보니 나중에 포트폴리오나 다른 사람에게 보여줄때 불편함이 예상되었다.
+그래서 노션이나 아이패드 노트앱에 메모나 그날 배운 걸 적어두곤 했는데, 생각해 보니 포트폴리오나 다른 사람에게 보여줄 때 불편함이 예상되었다.
 
-마침 학교에서 선배님이 개발블로그를 만들어 두면 좋을 것 같다고 조언해 주셨고 다시 github-pages에 도전하기로 했다!! 🙌
+마침 학교에서 선배님이 개발 블로그를 만들어 두면 좋을 것 같다고 조언해 주셨고 다시 github pages에 도전하기로 했다!!  🙌
 
-가장 먼저 해야될건 테마를 골라야되는데 처음에는 [no-style-please](https://github.com/riggraz/no-style-please)라는 테마를 사용하고 싶었는데 이 테마가 생각보다 설정하기 어려워서 [jekyll-theme-chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)라는 테마를 이용하게 됬다. (star도 많은 편이고 fork도 1.8k나 됐다!)
+가장 먼저 해야 할 건 테마를 골라야되는데 처음에는 [no-style-please](https://github.com/riggraz/no-style-please)라는 테마를 사용하고 싶었는데 이 테마가 생각보다 설정하기 어려워서 [jekyll-theme-chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)라는 테마를 이용하게 됐다. (star도 많은 편이고 fork도 1.8k나 됐다!)
 
 테마 골랐고 다음으로는.. 걍 테마에 README 파일 읽으면서 만들면된다 :)
 
-이렇게 끝내면 아마도 To day I Lean (TIL)도 아니고 블로그 글도 아니겠지!?
-
-그래서 작성해보았다! chirpy 테마를 이용한 github pages blog 제작방법!!
-
-일단 github-pages를 사용하는 방법은 생각보다 많은데 그 중 한가지 방법을 소개하는 것이니 감안하고 보는 것이 좋을 것 같다.
+이제 내가 블로그를 구축한 방법에 대해 소개하도록 하겠다. github pages를 사용하는 방법은 생각보다 많은데 그 중 한가지 방법을 소개하는 것이니 감안하고 보는 것이 좋을 것 같다.
 
 ## Ruby 설치하기
 
-루비를 설치하는 방법은 여러가지가 있다.
-나는 루비를 사용하지도 사용할줄도 모른다.
-하지만 검색을 해보니 rvm이라는 루비 버전 메니저가 있었는데, NodeJS에 nvm처럼 편리할것이라고 예상되어 rvm을 이용한 설치를 진행하였다!!
-~~이게 실수일꺼라고는 생각을 안했었지..~~
+나는 루비를 사용하지도 사용할 줄도 모르지만 대충 검색해보니 설치하는 방법이 여러개였다.
+그 중 rvm이라는 루비 버전 메니저가 있었는데, NodeJS에 nvm처럼 편리할것이라고 예상되어 rvm을 이용한 설치를 진행하였다.
+**zsh + oh my zsh 환경을 사용하는 경우 rvm이 아닌 다른 방법을 이용하여 설치하는 것을 추천한다**
 
 추천은 [rvm.io](https://rvm.io/rvm/install)의 공식 문서를 참고하는것이지만 간단하게 설명하면
 
 ```bash
-$ gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB #install GPG keys
+gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 ```
 
 ```bash
-$ curl -sSL https://get.rvm.io | bash
+curl -sSL https://get.rvm.io | bash -s stable --ruby
 ```
 
-한 뒤에 터미널을 한번 재시작해주면 rvm명령어가 작동할 것이다.
+한 뒤에 터미널을 한번 재시작해주면 rvm 명령어가 작동할 것이다.
 
-킹치만.. 여기시 한가지 작은 문제가 발생하는데 zsh을 이용할경우 [zsh 설치과정](https://rvm.io/integration/zsh)를 통해 설정을 해야되는데 이게 어려울 뿐만 아니라 거의 모든 zsh 유저가 사용하는 oh-my-zsh를 이용할 경우 공식페이지에서 직접 rvm를 안쓰는걸 추천한다고 하니..
+하지만.. 여기시 한가지 작은 문제가 발생하는데 zsh을 이용할 경우 [zsh 설치과정](https://rvm.io/integration/zsh)를 통해 설정을 해야되는데 이게 어려울 뿐만 아니라 거의 모든 zsh 유저가 사용하는 oh-my-zsh를 이용할 경우 공식페이지에서 직접 rvm를 안쓰는걸 추천한다고 하니..
 
 zsh + oh-my-zsh 조합을 사용하는 나로써는 최악이였다.
+[![](assets/zsh+ohmyzsh-bug.png)](https://rvm.io/integration/zsh)
 
 사실 이걸 몰랐을때만 하더라고도
 
 ```bash
-$ curl -sSL https://get.rvm.io | zsh
+curl -sSL https://get.rvm.io | zsh
 ```
 
 명령어를 통해 설치했는데 모르고 사용하다보니 문제가 생겼다..
 
 터미널 실행시 rvm이 자동실행이 안되고 매번 수동으로 시작을 해줘야되는...
 
+그냥 rvm 말고 다른거 쓰자..
+
 ## jekyll, bundler 설치하기 & 프로젝트 만들기
 
-일단 설치한 뒤로는 문제가 없었다, 사실 본인도 루비를 몰라서 무슨 문제인지 모르겠다....
-이에 대해서는 나중에 더 알아보기로 하고 이어서 설명하자면 아래 명령어를 실행하여 기본 블로그 템플릿을 생성하여 준다.
+rvm 문제에 대해서는 나중에 더 알아보기로 하고 이어서 설명하자면 아래 명령어를 실행하여 기본 블로그 템플릿을 생성하여 준다.
 
 ```bash
-$ gem install jekyll bundler # jekyll, bundler 설치
-$ jekyll new username.github.io #username에는 자신의 github id를 입력
-$ cd username.github.io #username.github.io 폴더로 이동
+gem install jekyll bundler # jekyll, bundler 설치
+jekyll new username.github.io #username에는 자신의 github id를 입력
+cd username.github.io #username.github.io 폴더로 이동
 ```
 
 여기까지 실행했다면 기본적으로 설정되어있는 테마로 블로그를 실행시킬수 있는데 다음 명령어를 입력하면 된다.
 
 ```bash
-$ bundle exec jekyll serve #jekyll 서버 실행
+bundle exec jekyll serve #jekyll 서버 실행
 ```
 
 이후 브라우저로 127.0.0.1:4000에 접속하면 블로그가 보일 것이다.
@@ -101,13 +98,13 @@ theme: jekyll-theme-chirpy
 그리고 아래 명령을 실행하자
 
 ```bash
-$ bundle
+bundle
 ```
 
 다음으로는 조금 까다로운 단계인데
 
 ```bash
-$ cd "$(bundle info --path jekyll-theme-chirpy)"
+cd "$(bundle info --path jekyll-theme-chirpy)"
 ```
 
 명령으로 chirpy테마가 설치된 폴더로 이동하고 해당 디렉토리의
@@ -129,7 +126,7 @@ $ cd "$(bundle info --path jekyll-theme-chirpy)"
 - 참고로 index.md 파일이 존재할경우 삭제해야 정상적으로 작동된다.
 - 게시글 작성은 \_posts 디렉토리에 `날짜-게시글재목.md` 형식으로 생성하면 된다.
 
-## github-pages에 배포하기
+## github pages에 배포하기
 
 이 부분에서 난 한가지 결심을 했다.
 사실 많은 (많지는 않다) 정적 사이트 생성기 중에서 처음보는 ruby의 jekyll를 고른 이유는 github pages에서 강력하게 지원하고 있어서인데.. 내가 고른 테마는 깃허브 내의 어떤 빌드 옵션으로 인해 바로 빌드가 불가능하다고 한다.
@@ -138,6 +135,12 @@ $ cd "$(bundle info --path jekyll-theme-chirpy)"
 actions으로 빌드한 뒤에 빌드내용을 따로 브랜치를 만들어서 해당 브랜치를 github pages에 등록한다는 것인데...
 사실 이를 이용하면 다른 정적사이트 생성기를 사용해도 문제가 없다!!
 
-따라서! rvm의 zsh issue, github pages의 비밀이 더해져.. 이 블로그는 한동안 사용하다가 go로 만들어진 사이트 생성기 HUGO로 이동할까 생각중이다..
+따라서! rvm의 zsh issue, github pages의 비밀이 더해져.. 이 블로그는 한동안 사용하다가 go로 만들어진 사이트 생성기 hugo로 이동할까 생각중이다..
 
 ~~솔직히 RVM oh-my-zsh은 선넘었지..ㅜ~~
+
+
+---
+
+2023년 11월 27일 추가  
+저는 Next.js로 블로그를 만들어서 쓰지만 정적 사이트 생성기를 이용해 github pages에 사이트를 배포할 생각이라면 Github Action를 이용하여 배포하는게 추천 옵션이다. 이 글에서 테마 설정 부분은 아직 따라해도 좋지만 배포 부분은 다른 블로그를 찾아서 설정하는게 좋을 것이다. (아 뭐야 다시 읽어보니까 어쳐피 설명을 안적어 뒀네..?)

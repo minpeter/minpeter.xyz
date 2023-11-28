@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b2ee43aadbe0973a",
+        "id": "77fdf5ca0c787905",
         "type": "tabs",
         "children": [
           {
-            "id": "fa3473f9918b6168",
+            "id": "5ab06aef0689c56b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx",
+                "file": "2021-09-13-도커 스웜에서 stack 시각화/docker-stack-visualizer.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 228.5
   },
   "right": {
     "id": "56038acf42722a8e",
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx",
+                "file": "2021-09-13-도커 스웜에서 stack 시각화/docker-stack-visualizer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx",
+                "file": "2021-09-13-도커 스웜에서 stack 시각화/docker-stack-visualizer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx"
+                "file": "2021-09-13-도커 스웜에서 stack 시각화/docker-stack-visualizer.md"
               }
             }
           }
@@ -146,23 +146,29 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "fa3473f9918b6168",
+  "active": "5ab06aef0689c56b",
   "lastOpenFiles": [
+    "2021-08-30-T470 해킨토시 후기/t470-hackintosh-review.md",
+    "2021-08-28-리눅스 이주 후 원도우로 복귀/linux-return-windows.md",
+    "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx",
+    "2021-08-22-Jekyll 그리고 github pages/Jekyll-github-pages.md",
+    "2021-08-22-Jekyll 그리고 github pages/assets/zsh+ohmyzsh-bug.png",
+    "2021-08-22-Jekyll 그리고 github pages/assets",
+    "WSL Arch distro 설정/wsl-arch-distro-setting.md",
+    "edge의 독재에서 벗어나기 (TIL)/esc-from-edge.md",
+    "2022-05-04-AWS 공부하게 된 계기/why-study-aws.md",
     "2023-11-21-mdx 블로그 컴포넌트 실험/images/mdx-blog-test-1.png",
     "2023-11-21-mdx 블로그 컴포넌트 실험/images/ddd.png",
     "2023-11-21-mdx 블로그 컴포넌트 실험/images/mdx-blog-test.png",
     "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124171114.png",
     "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124171020.png",
     "2023-11-21-mdx 블로그 컴포넌트 실험/images/chrome-tabs.png",
-    "2023-11-21-mdx 블로그 컴포넌트 실험/mdx-blog-test.mdx",
     "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124170432.png",
     "Pasted image 20231124170154.png.md",
     "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124170143.png",
     "2023-11-21-mdx 블로그 컴포넌트 실험/images/Pasted image 20231124170154.png",
-    "Pasted image 20231124170013.png",
     "2023-03-12-Traefik을 사용한 서비스 프록시 설정/traefik-proxy-setting.md",
     "2022-10-03-안쓰는 노트북을 Proxmox 서버로 재활용/use-laptop-proxmox-server.md",
-    "2022-06-15-AWS 클라우드 소개/aws-introduction.md",
-    "2022-06-15-AWS 클라우드 소개/edge-pop.png"
+    "2022-06-15-AWS 클라우드 소개/aws-introduction.md"
   ]
 }

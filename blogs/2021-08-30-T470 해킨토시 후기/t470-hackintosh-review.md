@@ -6,6 +6,7 @@ tags:
   - MacOS
   - TIL
   - thinkpad
+description: 해킨토시 하려고 노트북 분해하다 하판 날라먹은 썰
 ---
 
 ## 제목에 대해서
