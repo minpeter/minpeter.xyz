@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
-export function Button() {
+export function SimpleButton() {
   const [toggle, setToggle] = useState(false);
   const [count, setCount] = useState(0);
 
   return (
-    <button
-      className="bg-slate-700 rounded-md px-4 py-2"
+    <Button
       onClick={() => {
         setToggle(!toggle);
         setCount(count + 1);
@@ -17,7 +17,7 @@ export function Button() {
         : toggle
         ? "You pushed me!!"
         : "Push me!!"}
-    </button>
+    </Button>
   );
 }
 

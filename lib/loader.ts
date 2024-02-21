@@ -6,7 +6,6 @@ import { bundleMDX } from "mdx-bundler";
 
 import remarkMdxImages from "remark-mdx-images";
 import remarkGfm from "remark-gfm";
-import rehypePrism from "rehype-prism-plus";
 
 export interface BlogProps {
   id: string;
@@ -88,7 +87,6 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
     },
     mdxOptions(options) {
       options.remarkPlugins = [remarkGfm, remarkMdxImages];
-      options.rehypePlugins = [rehypePrism];
       return options;
     },
     esbuildOptions: (options) => {

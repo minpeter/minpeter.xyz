@@ -3,6 +3,9 @@
 import { useMemo } from "react";
 import Image from "next/image";
 
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+
 import {
   Table,
   TableBody,
@@ -53,12 +56,7 @@ export default function PostContent({ code }: any) {
         ),
 
         ul: (props: any) => <ul {...props} className="list-disc pl-8" />,
-        pre: (props: any) => (
-          <pre
-            {...props}
-            className="scroll-m-20 bg-gray-100 p-4 rounded-md overflow-x-auto py-4"
-          />
-        ),
+
         hr: (props: any) => <hr {...props} className="my-8" />,
         blockquote: (props: any) => (
           <blockquote
@@ -77,6 +75,25 @@ export default function PostContent({ code }: any) {
             alt={props.alt}
           />
         ),
+
+        code: (props: any) => (
+          <code
+            {...props}
+            className="p-1 rounded-md text-sm break-all bg-gray-800"
+          />
+        ),
+
+        pre: (props: any) => {
+          console.log(props);
+          return (
+            <SyntaxHighlighter
+              style={docco}
+              className="rounded-md p-4 bg-gray-800"
+            >
+              {props.children.props.children}
+            </SyntaxHighlighter>
+          );
+        },
       }}
     />
   );
