@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllPosts } from "@/libs/loader";
+import { getAllPosts } from "@/lib/loader";
 
 import Header from "@/components/header";
 

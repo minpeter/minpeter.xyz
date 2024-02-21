@@ -39,7 +39,7 @@ function hashAndId(filePath: string): { hash: string; id: string } {
 
 export function getAllPosts(): BlogListProps[] {
   let posts: BlogListProps[] = [];
-  const postRootPath = path.join(process.cwd(), "blogs");
+  const postRootPath = path.join(process.cwd(), "content");
   const dirNames = fs.readdirSync(postRootPath);
 
   for (const dirName of dirNames) {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
-import { getPostById, getAllPosts } from "@/libs/loader";
+import { getPostById, getAllPosts } from "@/lib/loader";
 
 import "@/styles/prism-one-dark.css";
 import "@/styles/code-block-custom.css";

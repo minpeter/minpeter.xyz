@@ -1,4 +1,4 @@
-import { getAllPosts } from "@/libs/loader";
+import { getAllPosts } from "@/lib/loader";
 
 export default function sitemap() {
   const posts = getAllPosts();

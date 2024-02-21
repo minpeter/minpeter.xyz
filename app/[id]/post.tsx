@@ -2,8 +2,6 @@
 
 import { useMemo } from "react";
 
-import "@/styles/posts.css";
-
 import { getMDXComponent } from "mdx-bundler/client";
 
 export default function PostContent({ code }: any) {
