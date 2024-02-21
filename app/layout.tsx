@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/styles/globals.css";
 
+import { Inter as FontSans } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+import { ThemeProvider } from "@/components/theme-provider";
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
 export const metadata: Metadata = {
-  title: "minpeter's blog",
+  title: "minpeter",
   description: "minpeter's blog - a blog about development",
 };
 
@@ -13,13 +24,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="kr"
-      className="scrollbar-hide bg-neutral-900 text-white max-w-3xl mx-auto py-20 px-4"
-    >
-      <body>
-        {children}
+    <html lang="kr">
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="container flex min-h-screen max-w-2xl flex-col py-8">
+            {children}
+          </div>
+        </ThemeProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 
 import { getPostById, getAllPosts } from "@/libs/loader";
 
@@ -34,27 +35,30 @@ export default async function Post({ params }: any) {
   const post = await getPostById(params.id);
 
   return (
-    <article className="prose prose-sm md:prose-base lg:prose-lg prose-slate !prose-invert mx-auto break-words">
+    <article>
       {!post ? (
         <>
-          <h1 className="flex flex-row font-bold text-3xl sm:text-4xl lg:text-5xl">
-            404 :/
-          </h1>
+          <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+            404, NOT FOUND :/
+          </h2>
 
-          <p>존재하지 않는 페이지입니다.</p>
-          <p>다른 글을 읽어보시는건 어떨까요?</p>
-          <Link href="/">
-            <button className="bg-gray-800 text-white px-4 py-2 rounded-md mt-4">
-              홈으로
-            </button>
-          </Link>
+          <div className="py-5 flex flex-col gap-4">
+            <p>
+              This page doesn{"'"}t exist.
+              <br />
+              How about reading another article?
+            </p>
+            <Link href="/" className={buttonVariants({ variant: "secondary" })}>
+              Go to Home
+            </Link>
+          </div>
         </>
       ) : (
         <>
-          <h1 className="flex flex-row font-bold text-3xl sm:text-4xl lg:text-5xl">
+          <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             {post.frontmatter.title}
-          </h1>
-          <div className="py-4">
+          </h2>
+          <div className="py-5">
             <span className="text-gray-400">{post.published}</span>
             <span className="px-2">|</span>
             <span className="text-gray-400">{post.hash}</span>
