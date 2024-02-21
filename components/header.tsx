@@ -6,12 +6,15 @@ import { buttonVariants } from "@/components/ui/button";
 
 import { ModeToggle } from "@/components/theme-toggle";
 
+import AnimatedName from "./animated-name";
+
 export default function Header() {
   return (
     <header>
       <div className="flex items-center justify-between py-4">
         <Link href="/">
-          <span className="text-lg font-bold">minpeter - 민웅기</span>
+          <span className="text-lg font-bold"></span>
+          <AnimatedName name="minpeter - 민웅기" />
           <p>software engineer 🕊️</p>
         </Link>
         <div className="flex">
