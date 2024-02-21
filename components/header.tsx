@@ -13,7 +13,6 @@ export default function Header() {
     <header>
       <div className="flex items-center justify-between py-4">
         <Link href="/">
-          <span className="text-lg font-bold"></span>
           <AnimatedName name="minpeter - 민웅기" />
           <p>software engineer 🕊️</p>
         </Link>
@@ -27,7 +26,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="https://instagram.com/minpeter"
+            href="https://instagram.com/minpeter2"
             target="_blank"
             className={buttonVariants({ variant: "ghost", size: "icon" })}
           >
