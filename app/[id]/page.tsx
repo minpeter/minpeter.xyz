@@ -2,6 +2,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
 import { getPostById, getAllPosts } from "@/lib/loader";
+import { Badge } from "@/components/ui/badge";
 
 import "@/styles/prism-one-dark.css";
 import "@/styles/code-block-custom.css";
@@ -58,10 +59,11 @@ export default async function Post({ params }: any) {
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             {post.frontmatter.title}
           </h2>
-          <div className="py-5">
-            <span className="text-gray-400">{post.published}</span>
-            <span className="px-2">|</span>
-            <span className="text-gray-400">{post.hash}</span>
+          <div className="py-5 flex gap-2">
+            <Badge>{post.published}</Badge>
+            <Badge variant="secondary" className="text-gray-400">
+              {post.hash}
+            </Badge>
           </div>
 
           {post.content && <PostContent code={post.content} />}
