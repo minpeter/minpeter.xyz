@@ -3,9 +3,7 @@
 import { useMemo } from "react";
 import Image from "next/image";
 
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-
+import { CodeBlock } from "@/components/code-block";
 import {
   Table,
   TableBody,
@@ -40,7 +38,7 @@ export default function PostContent({ code }: any) {
             className="scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0"
           />
         ),
-        p: (props: any) => <p {...props} className="py-5" />,
+        p: (props: any) => <p {...props} className="py-3" />,
         table: (props: any) => <Table {...props} className="my-4" />, // "w-full" is not a valid class name
         th: (props: any) => <TableHead {...props} />,
         td: (props: any) => <TableCell {...props} />,
@@ -76,23 +74,11 @@ export default function PostContent({ code }: any) {
           />
         ),
 
-        code: (props: any) => (
-          <code
-            {...props}
-            className="p-1 rounded-md text-sm break-all bg-gray-800"
-          />
-        ),
+        code: ({ children, className }: any) => {
+          const match = /language-(\w+)/.exec(className || "");
+          const language = match ? match[1] : "";
 
-        pre: (props: any) => {
-          console.log(props);
-          return (
-            <SyntaxHighlighter
-              style={docco}
-              className="rounded-md p-4 bg-gray-800"
-            >
-              {props.children.props.children}
-            </SyntaxHighlighter>
-          );
+          return CodeBlock({ content: children, language });
         },
       }}
     />

@@ -30,27 +30,24 @@ export function Ip() {
     );
   }, []);
 
-  return <div className="text-white">Your IP: {ip ? ip : "Loading..."}</div>;
+  return <span>Your IP: {ip ? ip : "Loading..."}</span>;
 }
 
 export function Counter() {
   const [count, setCount] = useState(0);
 
   return (
-    <div>
-      <div className="text-white">
+    <div className="space-y-2">
+      <p>
         Count: {count}
         {count == 82 || count == 802 ? " - 🩷" : ""}
+      </p>
+      <div className="space-x-1">
+        <Button onClick={() => setCount(count + 1)}>Count Up</Button>
+        <Button variant={"outline"} onClick={() => setCount(0)}>
+          Reset
+        </Button>
       </div>
-      <button
-        className="bg-slate-700 rounded-md px-4 py-2"
-        onClick={() => setCount(count + 1)}
-      >
-        Count Up
-      </button>
-      <button className="px-4 py-2" onClick={() => setCount(0)}>
-        Reset
-      </button>
     </div>
   );
 }
