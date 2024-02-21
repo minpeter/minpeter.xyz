@@ -16,30 +16,44 @@ import Typing from "@/components/typing";
 
 잘 동작하는 것을 보니 MDX가 잘 적용되었다는 걸 알 수 있다.
 
-import { Button, Ip, Counter } from "./components";
+import { SimpleButton, Ip, Counter } from "./components";
 
 이제 블로그에서 컴포넌트를 사용할 수 있게 되어 몇가지 실험을 해보고자 한다.
+
+우선 인라인 코드 블럭 테스트 `console.log("Hello, World!")` 를 해보자.  
+다음은 일반 코드 블럭 테스트
+
+```
+console.log("Hello, World!")
+```
 
 ---
 
 간단한 버튼 컴포넌트
 
 ```jsx
-export function Button() {
+export function SimpleButton() {
   const [toggle, setToggle] = useState(false);
+  const [count, setCount] = useState(0);
 
   return (
-    <button
-      className="bg-slate-700 rounded-md px-4 py-2"
-      onClick={() => setToggle(!toggle)}
+    <Button
+      onClick={() => {
+        setToggle(!toggle);
+        setCount(count + 1);
+      }}
     >
-      {toggle ? "You pushed me!!" : "Push Me :)"}
-    </button>
+      {count >= 5
+        ? "Assertive - 서윤 "
+        : toggle
+        ? "You pushed me!!"
+        : "Push me!!"}
+    </Button>
   );
 }
 ```
 
-<Button />
+<SimpleButton />
 
 ---
 
@@ -55,7 +69,7 @@ export function Ip() {
     );
   }, []);
 
-  return <div className="text-white">Your IP: {ip ? ip : "Loading..."}</div>;
+  return <span>Your IP: {ip ? ip : "Loading..."}</span>;
 }
 ```
 
@@ -66,21 +80,18 @@ export function Ip() {
 간단한 카운터 컴포넌트
 
 ```jsx
-export functionCounter() {
+export function Counter() {
   const [count, setCount] = useState(0);
 
   return (
-    <div>
-      <div className="text-white">Count: {count}</div>
-      <button
-        className="bg-slate-700 rounded-md px-4 py-2"
-        onClick={() => setCount(count + 1)}
-      >
-        Count Up
-      </button>
-      <button className="px-4 py-2" onClick={() => setCount(0)}>
-        Reset
-      </button>
+    <div className="space-y-2">
+      <p>Count: {count}</p>
+      <div className="space-x-1">
+        <Button onClick={() => setCount(count + 1)}>Count Up</Button>
+        <Button variant={"outline"} onClick={() => setCount(0)}>
+          Reset
+        </Button>
+      </div>
     </div>
   );
 }

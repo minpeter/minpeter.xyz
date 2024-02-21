@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import Image from "next/image";
 
+import { CodeBlock } from "@/components/code-block";
 import {
   Table,
   TableBody,
@@ -37,7 +38,7 @@ export default function PostContent({ code }: any) {
             className="scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0"
           />
         ),
-        p: (props: any) => <p {...props} className="py-5" />,
+        p: (props: any) => <p {...props} className="py-3" />,
         table: (props: any) => <Table {...props} className="my-4" />, // "w-full" is not a valid class name
         th: (props: any) => <TableHead {...props} />,
         td: (props: any) => <TableCell {...props} />,
@@ -53,12 +54,7 @@ export default function PostContent({ code }: any) {
         ),
 
         ul: (props: any) => <ul {...props} className="list-disc pl-8" />,
-        pre: (props: any) => (
-          <pre
-            {...props}
-            className="scroll-m-20 bg-gray-100 p-4 rounded-md overflow-x-auto py-4"
-          />
-        ),
+
         hr: (props: any) => <hr {...props} className="my-8" />,
         blockquote: (props: any) => (
           <blockquote
@@ -77,6 +73,13 @@ export default function PostContent({ code }: any) {
             alt={props.alt}
           />
         ),
+
+        code: ({ children, className }: any) => {
+          const match = /language-(\w+)/.exec(className || "");
+          const language = match ? match[1] : "";
+
+          return CodeBlock({ content: children, language });
+        },
       }}
     />
   );
