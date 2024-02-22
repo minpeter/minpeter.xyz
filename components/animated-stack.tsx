@@ -15,6 +15,7 @@ import gohperDummy from "@/assets/images/crash-dummy.png";
 import defaultGo from "@/assets/images/Go.png";
 import Arch from "@/assets/images/Arch Linux.png";
 import K8s from "@/assets/images/Kubernetes.png";
+import cloudflare from "@/assets/images/Cloudflare.png";
 
 export const Playground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -75,6 +76,16 @@ export const Playground = () => {
       },
     });
 
+    var CF = Bodies.rectangle(100, 50, 80, 45, {
+      render: {
+        sprite: {
+          texture: cloudflare.src,
+          xScale: 0.15,
+          yScale: 0.15,
+        },
+      },
+    });
+
     const button = Bodies.rectangle(
       playgroundWidth / 2,
       playgroundHeight - wallThickness / 4,
@@ -129,6 +140,7 @@ export const Playground = () => {
       boxB,
       gohper,
       kube,
+      CF,
       button,
       top,
       left,
@@ -163,7 +175,7 @@ export const Playground = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="border-2 border-white rounded-xl"
+      className="border-2 rounded-xl"
       width={playgroundWidth}
       height={playgroundHeight}
     />
