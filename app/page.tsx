@@ -1,3 +1,5 @@
+import { Playground } from "@/components/aabb";
+
 export default function Page() {
   return (
     <>
@@ -13,6 +15,7 @@ export default function Page() {
             경험을 중요시하며 사용자에게 최고의 경험을 제공하기 위해 노력합니다.
           </p>
         </section>
+        <Playground />
       </main>
     </>
   );
