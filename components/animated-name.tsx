@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ{}</>민쾹あ쵭ゆさつ퀴なまく뤱ふ";
 
 // original source: https://github.com/wiscaksono/wiscaksono-site/blob/master/src/components/molecules/animated-name.tsx
 // license: on github.com/wiscaksono/wiscaksono-site
@@ -30,7 +30,7 @@ export default function AnimatedName({ name }: { name: string }) {
             if (index < iteration) {
               return text[index];
             }
-            return letters[Math.floor(Math.random() * 26)];
+            return letters[Math.floor(Math.random() * letters.length)];
           })
           .join("")
       );

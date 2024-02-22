@@ -1,30 +1,17 @@
-import Link from "next/link";
-import { getAllPosts } from "@/lib/loader";
-
-import Header from "@/components/header";
-
-export default function Home() {
-  const posts = getAllPosts();
-
+export default function Page() {
   return (
     <>
-      <Header />
       <main className="flex flex-col space-y-2">
         <section className="py-5">
-          <div className="py-2">
-            {posts.map((blog) => (
-              <Link href={"/" + blog.id} key={blog.id}>
-                <div className="py-2 gap-2">
-                  <h3 className="text-lg font-bold">
-                    {blog.frontmatter.title}
-                  </h3>
-                  <p className="text-gray-400 ">
-                    {blog.frontmatter.description}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+            안녕하세요, 민웅기입니다 🤙
+          </h4>
+
+          <p className="scroll-m-20">
+            현재는 프론트엔드 개발자로 일하고 있습니다. 프론트엔드 개발자로서
+            빠르게 변화하는 기술을 배우고 적용하는 것을 즐깁니다. 또한, 사용자
+            경험을 중요시하며 사용자에게 최고의 경험을 제공하기 위해 노력합니다.
+          </p>
         </section>
       </main>
     </>

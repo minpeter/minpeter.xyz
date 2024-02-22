@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/styles/globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 
+import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const fontSans = FontSans({
@@ -38,8 +40,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="container flex min-h-screen max-w-2xl flex-col py-8">
+            <Header />
             {children}
           </div>
+          <Toaster />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
