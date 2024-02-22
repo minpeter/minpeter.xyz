@@ -11,17 +11,26 @@ import {
   Runner,
 } from "matter-js";
 
-import gohperDummy from "@/assets/images/crash-dummy.png";
+import traefik from "@/assets/images/Traefik Proxy.png";
 import defaultGo from "@/assets/images/Go.png";
 import Arch from "@/assets/images/Arch Linux.png";
 import K8s from "@/assets/images/Kubernetes.png";
 import cloudflare from "@/assets/images/Cloudflare.png";
+import { cn } from "@/lib/utils";
 
-export const Playground = () => {
+export function Playground({
+  w,
+  h,
+  className,
+}: {
+  w: number;
+  h: number;
+  className?: string;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const playgroundHeight = 300;
-  const playgroundWidth = 500;
+  const playgroundHeight = h;
+  const playgroundWidth = w;
   const wallThickness = 10;
 
   useEffect(() => {
@@ -70,7 +79,7 @@ export const Playground = () => {
     var gohper = Bodies.circle(100, 100, 40, {
       render: {
         sprite: {
-          texture: gohperDummy.src,
+          texture: traefik.src,
           xScale: 0.15,
           yScale: 0.15,
         },
@@ -176,9 +185,12 @@ export const Playground = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="border-2 rounded-xl"
+      className={cn("border-2 rounded-xl", className)}
       width={playgroundWidth}
       height={playgroundHeight}
+      style={{
+        filter: "grayscale(1)",
+      }}
     />
   );
-};
+}
