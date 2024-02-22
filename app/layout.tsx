@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/styles/globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,7 @@ export default function RootLayout({
             <Header />
             {children}
           </div>
+          <Toaster />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />

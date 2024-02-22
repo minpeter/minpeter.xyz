@@ -38,7 +38,7 @@ export default async function Post({ params }: any) {
   const post = await getPostById(params.id);
 
   return (
-    <article>
+    <article className="py-5">
       {!post ? (
         <>
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">

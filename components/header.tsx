@@ -1,3 +1,6 @@
+"use client";
+import { useToast } from "@/components/ui/use-toast";
+
 import Link from "next/link";
 
 import { GitHubLogoIcon, InstagramLogoIcon } from "@radix-ui/react-icons";
@@ -9,6 +12,8 @@ import { ModeToggle } from "@/components/theme-toggle";
 import AnimatedName from "./animated-name";
 
 export default function Header() {
+  const { toast } = useToast();
+
   return (
     <header>
       <div className="flex items-center justify-between py-4">
@@ -39,7 +44,16 @@ export default function Header() {
           <div className="flex gap-4">
             <Link href="/work">work</Link>
             <Link href="/blog">blog</Link>
-            <Link href="/guestbook">guestbook</Link>
+            <div
+              onClick={() =>
+                toast({
+                  title: "Coming soon",
+                  description: "This feature is not available yet",
+                })
+              }
+            >
+              guestbook
+            </div>
           </div>
         </div>
       </div>
