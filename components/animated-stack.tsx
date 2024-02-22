@@ -153,7 +153,7 @@ export const Playground = () => {
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
       constraint: {
-        stiffness: 0.15,
+        stiffness: 0.05,
         render: {
           visible: false,
         },
