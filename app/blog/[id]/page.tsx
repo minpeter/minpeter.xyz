@@ -9,6 +9,7 @@ import "@/styles/prism-one-dark.css";
 import "@/styles/code-block-custom.css";
 
 import PostContent from "./post";
+import Header from "@/components/header";
 
 export function generateStaticParams() {
   const posts = getAllPosts();
@@ -50,22 +51,16 @@ export default async function Post({ params }: any) {
               <br />
               How about reading another article?
             </p>
-            <Link href="/" className={buttonVariants({ variant: "secondary" })}>
-              Go to Home
+            <Link
+              href="/blog"
+              className={buttonVariants({ variant: "secondary" })}
+            >
+              Go to blog list
             </Link>
           </div>
         </>
       ) : (
         <>
-          {/* < home button */}
-          {/* if hover, change color */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 mb-5 hover:text-gray-600"
-          >
-            <ChevronLeftIcon className="w-5 h-5" />
-            Home
-          </Link>
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             {post.frontmatter.title}
           </h2>

@@ -6,6 +6,7 @@ import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 
+import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const fontSans = FontSans({
@@ -38,6 +39,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="container flex min-h-screen max-w-2xl flex-col py-8">
+            <Header />
             {children}
           </div>
         </ThemeProvider>
