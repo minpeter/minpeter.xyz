@@ -1,4 +1,4 @@
-import { Playground } from "@/components/aabb";
+import { Playground } from "@/components/animated-stack";
 
 export default function Page() {
   return (
@@ -14,6 +14,8 @@ export default function Page() {
             빠르게 변화하는 기술을 배우고 적용하는 것을 즐깁니다. 또한, 사용자
             경험을 중요시하며 사용자에게 최고의 경험을 제공하기 위해 노력합니다.
           </p>
+
+          <p>프론트엔드지만 고랭을 좋아합니다. 고랭은 사랑입니다.</p>
         </section>
         <Playground />
       </main>

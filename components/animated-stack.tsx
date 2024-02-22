@@ -9,7 +9,6 @@ import {
   Mouse,
   MouseConstraint,
   Runner,
-  Svg,
 } from "matter-js";
 
 import gohperDummy from "@/assets/images/crash-dummy.png";
@@ -17,9 +16,9 @@ import gohperDummy from "@/assets/images/crash-dummy.png";
 export const Playground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const playgroundHeight = 800;
-  const playgroundWidth = 560;
-  const wallThickness = 60;
+  const playgroundHeight = 400;
+  const playgroundWidth = 500;
+  const wallThickness = 10;
 
   useEffect(() => {
     const engine = Engine.create();
@@ -29,19 +28,36 @@ export const Playground = () => {
       options: {
         width: playgroundWidth,
         height: playgroundHeight,
+        background: "transparent",
         wireframes: false,
       },
     });
 
-    var boxA = Bodies.rectangle(400, 200, 80, 80);
-    var boxB = Bodies.rectangle(450, 50, 80, 80);
-
-    var gohper = Bodies.rectangle(200, 200, 80, 80, {
+    var boxA = Bodies.rectangle(150, 100, 80, 80, {
       render: {
         sprite: {
           texture: gohperDummy.src,
-          xScale: 0.2,
-          yScale: 0.2,
+          xScale: 0.15,
+          yScale: 0.15,
+        },
+      },
+    });
+    var boxB = Bodies.rectangle(100, 100, 80, 80, {
+      render: {
+        sprite: {
+          texture: gohperDummy.src,
+          xScale: 0.15,
+          yScale: 0.15,
+        },
+      },
+    });
+
+    var gohper = Bodies.rectangle(50, 100, 80, 80, {
+      render: {
+        sprite: {
+          texture: gohperDummy.src,
+          xScale: 0.15,
+          yScale: 0.15,
         },
       },
     });
@@ -103,7 +119,7 @@ export const Playground = () => {
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
       constraint: {
-        stiffness: 0.2,
+        stiffness: 0.15,
         render: {
           visible: false,
         },
@@ -122,5 +138,7 @@ export const Playground = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} />;
+  return (
+    <canvas ref={canvasRef} className="border-2 border-white rounded-xl" />
+  );
 };
