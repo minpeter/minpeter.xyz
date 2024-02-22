@@ -20,7 +20,7 @@ import cloudflare from "@/assets/images/Cloudflare.png";
 export const Playground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const playgroundHeight = 270;
+  const playgroundHeight = 300;
   const playgroundWidth = 500;
   const wallThickness = 10;
 
@@ -37,7 +37,7 @@ export const Playground = () => {
       },
     });
 
-    var boxA = Bodies.rectangle(150, 100, 80, 80, {
+    var boxA = Bodies.circle(200, 200, 40, {
       render: {
         sprite: {
           texture: Arch.src,
@@ -46,7 +46,8 @@ export const Playground = () => {
         },
       },
     });
-    var boxB = Bodies.rectangle(100, 100, 80, 80, {
+
+    var boxB = Bodies.circle(200, 200, 40, {
       render: {
         sprite: {
           texture: defaultGo.src,
@@ -56,7 +57,7 @@ export const Playground = () => {
       },
     });
 
-    var kube = Bodies.circle(200, 200, 40, {
+    var kube = Bodies.circle(100, 100, 40, {
       render: {
         sprite: {
           texture: K8s.src,
@@ -66,7 +67,7 @@ export const Playground = () => {
       },
     });
 
-    var gohper = Bodies.rectangle(50, 100, 80, 80, {
+    var gohper = Bodies.circle(100, 100, 40, {
       render: {
         sprite: {
           texture: gohperDummy.src,
@@ -76,7 +77,7 @@ export const Playground = () => {
       },
     });
 
-    var CF = Bodies.rectangle(100, 50, 80, 45, {
+    var CF = Bodies.circle(100, 100, 40, {
       render: {
         sprite: {
           texture: cloudflare.src,
