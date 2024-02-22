@@ -26,7 +26,7 @@ export function CodeBlock({
       </SyntaxHighlighter>
     </>
   ) : (
-    <code className="bg-neutral-300 text-black px-2 py-1 rounded-md">
+    <code className="bg-gray-500 text-white px-1 py-0.5 mx-0.5 rounded-md text-sm break-all">
       {content}
     </code>
   );

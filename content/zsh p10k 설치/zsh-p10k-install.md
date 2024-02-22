@@ -16,32 +16,34 @@ zsh은 bash같은 친구를 대체하는 심미적인 부분을 더해주는 쉘
 
 ## zsh 설치하기
 
-`sudo apt-get install zsh`  
+`sudo apt-get install zsh`
+
 대부분 다른 배포판도 패키지 관리자만 변경하면 동작한다.
 
-예를 들면 arch에서는  
-`sudo pacman -S zsh`
+예를 들면 arch에서는 `sudo pacman -S zsh`
 
-fedora에서는  
-`sudo dnf install zsh`
+fedora에서는 `sudo dnf install zsh` 으로 설치할 수 있다.
 
 ## oh-my-zsh 설치하기
 
-`sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
+```bash
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
 
 그렇다 모든 베포판이 동일할 것이라고 예상이 된다.  
-중간에 zsh을 기본쉘로 변경한다고 패스워드를 입력하라고 하는데.. 당연히 입력해주자
+중간에 zsh을 기본쉘로 변경한다고 패스워드를 입력하라고 하는데 당연히 입력해주자
 
 ## power level 10k (p10k) 설치
 
-`git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k`
+```bash
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+```
 
 이 친구도 oh-my-zsh만 설치되있다면 정상적으로 작동한다.
 
 ## p10k theme 적용
 
-`vim ~/.zshrc`  
-다른 편집기가 편하면 그거 쓰면 된다.
+`vim ~/.zshrc` 다른 편집기가 편하면 해당 편집기를 이용하면 된다.
 
 `ZSH_THEME="robbyrussell"` -> `ZSH_THEME="powerlevel10k/powerlevel10k"`
 로 수정해주면 된다
@@ -49,11 +51,11 @@ fedora에서는
 ## font 설치
 
 여기서 폰트를 선택해야된다.  
-기본적으로 powerline 폰트만 포함된 고정폭폰트면 뭐든 상관없으나 `D2coding`, `MesloLGS NF`, `Fira Code` 중에서 선택하는 걸 추천한다.
+기본적으로 powerline를 포함된 고정폭 폰트면 뭐든 상관없으나 `D2coding`, `MesloLGS NF`, `Fira Code` 중에서 선택하는 걸 추천한다.
 
 참고로 `MesloLGS NF`가 p10k 공식 폰트며 해당 폰트 설치시 아이콘을 표시하는 옵션이 생성된다.
 
-이부분은 운영체제, 설치환경 등에 따라 다르니 각자 폰트 설치법, 터미널 폰트 설정법을 찾아 설정하기 바란다
+이 부분은 운영체제, 설치환경 등에 따라 다르니 각자 폰트 설치법, 터미널 폰트 설정법을 찾아 설정하기 바란다
 
 ## p10k setting
 
