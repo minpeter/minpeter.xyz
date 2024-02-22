@@ -16,7 +16,7 @@ export default function Header() {
 
   return (
     <header>
-      <div className="flex items-center justify-between py-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between py-4">
         <Link href="/" className="flex flex-col gap-3">
           <AnimatedName name="minpeter - 민웅기" />
           <p>software engineer 🕊️</p>

@@ -12,11 +12,14 @@ import {
 } from "matter-js";
 
 import gohperDummy from "@/assets/images/crash-dummy.png";
+import defaultGo from "@/assets/images/Go.png";
+import Arch from "@/assets/images/Arch Linux.png";
+import K8s from "@/assets/images/Kubernetes.png";
 
 export const Playground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const playgroundHeight = 400;
+  const playgroundHeight = 270;
   const playgroundWidth = 500;
   const wallThickness = 10;
 
@@ -36,7 +39,7 @@ export const Playground = () => {
     var boxA = Bodies.rectangle(150, 100, 80, 80, {
       render: {
         sprite: {
-          texture: gohperDummy.src,
+          texture: Arch.src,
           xScale: 0.15,
           yScale: 0.15,
         },
@@ -45,7 +48,17 @@ export const Playground = () => {
     var boxB = Bodies.rectangle(100, 100, 80, 80, {
       render: {
         sprite: {
-          texture: gohperDummy.src,
+          texture: defaultGo.src,
+          xScale: 0.15,
+          yScale: 0.15,
+        },
+      },
+    });
+
+    var kube = Bodies.circle(200, 200, 40, {
+      render: {
+        sprite: {
+          texture: K8s.src,
           xScale: 0.15,
           yScale: 0.15,
         },
@@ -111,7 +124,16 @@ export const Playground = () => {
       }
     );
 
-    World.add(engine.world, [boxA, boxB, gohper, button, top, left, right]);
+    World.add(engine.world, [
+      boxA,
+      boxB,
+      gohper,
+      kube,
+      button,
+      top,
+      left,
+      right,
+    ]);
     Render.run(render);
     const runner = Runner.run(engine);
 
@@ -139,6 +161,11 @@ export const Playground = () => {
   }, []);
 
   return (
-    <canvas ref={canvasRef} className="border-2 border-white rounded-xl" />
+    <canvas
+      ref={canvasRef}
+      className="border-2 border-white rounded-xl"
+      width={playgroundWidth}
+      height={playgroundHeight}
+    />
   );
 };
