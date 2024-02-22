@@ -17,7 +17,7 @@ export default function Header() {
           <p>software engineer 🕊️</p>
         </Link>
         <div className="flex flex-col justify-end items-end">
-          <div className="flex">
+          <div className="flex mr-[-0.7rem]">
             <Link
               href="https://github.com/minpeter"
               target="_blank"
