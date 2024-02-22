@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
 import { getPostById, getAllPosts } from "@/lib/loader";
 import { Badge } from "@/components/ui/badge";
@@ -56,6 +57,15 @@ export default async function Post({ params }: any) {
         </>
       ) : (
         <>
+          {/* < home button */}
+          {/* if hover, change color */}
+          <Link
+            href="/"
+            className="flex items-center gap-2 mb-5 hover:text-gray-600"
+          >
+            <ChevronLeftIcon className="w-5 h-5" />
+            Home
+          </Link>
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             {post.frontmatter.title}
           </h2>
