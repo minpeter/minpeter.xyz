@@ -11,6 +11,8 @@ import {
   Runner,
 } from "matter-js";
 
+import { Card } from "@/components/ui/card";
+
 import traefik from "@/assets/images/Traefik Proxy.png";
 import defaultGo from "@/assets/images/Go.png";
 import Arch from "@/assets/images/Arch Linux.png";
@@ -183,14 +185,15 @@ export function Playground({
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={cn("border-2 rounded-xl", className)}
-      width={playgroundWidth}
-      height={playgroundHeight}
-      style={{
-        filter: "grayscale(1)",
-      }}
-    />
+    <Card className={cn("h-fit", className)}>
+      <canvas
+        ref={canvasRef}
+        width={playgroundWidth}
+        height={playgroundHeight}
+        style={{
+          filter: "grayscale(1)",
+        }}
+      />
+    </Card>
   );
 }

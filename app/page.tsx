@@ -2,20 +2,23 @@
 
 import { Playground } from "@/components/animated-stack";
 
-import mainImage from "@/assets/images/main-image.png";
+import mainImage1 from "@/assets/images/main-image-1.jpg";
+import mainImage2 from "@/assets/images/main-image-2.png";
+import mainImage3 from "@/assets/images/main-image-3.png";
+
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 import Image from "next/image";
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+
 import { useState } from "react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 export default function Page() {
   const [grayscale, setGrayscale] = useState("grayscale(1)");
@@ -41,17 +44,36 @@ export default function Page() {
               </Card>
 
               <Playground w={500} h={200} className="block sm:hidden" />
-
-              <Image
-                src={mainImage}
-                alt="main"
-                style={{ filter: grayscale, transition: "filter 1s" }}
-                className="rounded-xl"
-                onMouseEnter={() => setGrayscale("grayscale(0)")}
-                onMouseLeave={() => setGrayscale("grayscale(70%)")}
-              />
+              <Carousel>
+                <CarouselContent>
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <CarouselItem key={index}>
+                      <AspectRatio ratio={5 / 5}>
+                        <Image
+                          fill
+                          className="rounded-xl object-cover"
+                          src={
+                            index === 0
+                              ? mainImage1
+                              : index === 1
+                              ? mainImage2
+                              : mainImage3
+                          }
+                          alt="main"
+                          style={{
+                            filter: grayscale,
+                            transition: "filter 1s",
+                          }}
+                          onMouseEnter={() => setGrayscale("grayscale(0)")}
+                          onMouseLeave={() => setGrayscale("grayscale(70%)")}
+                        />
+                      </AspectRatio>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
             </div>
-            <Playground w={300} h={400} className="hidden sm:block" />
+            <Playground w={300} h={440} className="hidden sm:block" />
           </div>
         </section>
       </main>
