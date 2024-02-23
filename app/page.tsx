@@ -66,6 +66,7 @@ export default function Page() {
                           }}
                           onMouseEnter={() => setGrayscale("grayscale(0)")}
                           onMouseLeave={() => setGrayscale("grayscale(70%)")}
+                          onTouchEnd={() => setGrayscale("grayscale(70%)")}
                         />
                       </AspectRatio>
                     </CarouselItem>
