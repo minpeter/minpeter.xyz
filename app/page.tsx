@@ -51,7 +51,7 @@ export default function Page() {
                       <AspectRatio ratio={5 / 5}>
                         <Image
                           fill
-                          className="rounded-xl object-cover"
+                          className="rounded-lg object-cover"
                           src={
                             index === 0
                               ? mainImage1
