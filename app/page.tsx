@@ -8,6 +8,15 @@ import Image from "next/image";
 
 import { useState } from "react";
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 export default function Page() {
   const [grayscale, setGrayscale] = useState("grayscale(1)");
   return (
@@ -19,15 +28,17 @@ export default function Page() {
           </h4>
           <div className="flex gap-5 sm:flex-row flex-col">
             <div className="flex flex-col gap-5">
-              <p className="rounded-xl p-4 bg-neutral-900">
-                현재는 프론트엔드 개발자로 일하고 있습니다.
-                <br />
-                프론트엔드 개발자로서 빠르게 변화하는 기술을 배우고 적용하는
-                것을 즐깁니다.
-                <br />
-                또한, 사용자 경험을 중요시하며 사용자에게 최고의 경험을 제공하기
-                위해 노력합니다.
-              </p>
+              <Card>
+                <p className="rounded-xl p-4 text-sm">
+                  현재는 프론트엔드 개발자로 일하고 있습니다.
+                  <br />
+                  프론트엔드 개발자로서 빠르게 변화하는 기술을 배우고 적용하는
+                  것을 즐깁니다.
+                  <br />
+                  또한, 사용자 경험을 중요시하며 사용자에게 최고의 경험을
+                  제공하기 위해 노력합니다.
+                </p>
+              </Card>
 
               <Playground w={500} h={200} className="block sm:hidden" />
 
@@ -40,7 +51,7 @@ export default function Page() {
                 onMouseLeave={() => setGrayscale("grayscale(70%)")}
               />
             </div>
-            <Playground w={300} h={500} className="hidden sm:block" />
+            <Playground w={300} h={400} className="hidden sm:block" />
           </div>
         </section>
       </main>

@@ -46,7 +46,7 @@ export function Playground({
       },
     });
 
-    var boxA = Bodies.circle(200, 200, 40, {
+    var boxA = Bodies.circle(100, 100, 40, {
       render: {
         sprite: {
           texture: Arch.src,
@@ -56,7 +56,7 @@ export function Playground({
       },
     });
 
-    var boxB = Bodies.circle(200, 200, 40, {
+    var boxB = Bodies.circle(100, 100, 40, {
       render: {
         sprite: {
           texture: defaultGo.src,
