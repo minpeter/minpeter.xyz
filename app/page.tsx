@@ -2,10 +2,6 @@
 
 import { Playground } from "@/components/animated-stack";
 
-import mainImage1 from "@/assets/images/main-image-1.jpg";
-import mainImage2 from "@/assets/images/main-image-2.png";
-import mainImage3 from "@/assets/images/main-image-3.png";
-
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 import Image from "next/image";
@@ -19,6 +15,8 @@ import {
 import { useState } from "react";
 
 import { Card } from "@/components/ui/card";
+
+const mainImages = ["main-image-1.jpg", "main-image-2.png", "main-image-3.png"];
 
 export default function Page() {
   const [grayscale, setGrayscale] = useState("grayscale(1)");
@@ -44,6 +42,7 @@ export default function Page() {
               </Card>
 
               <Playground w={500} h={200} className="block sm:hidden" />
+
               <Carousel>
                 <CarouselContent>
                   {Array.from({ length: 3 }).map((_, index) => (
@@ -51,22 +50,18 @@ export default function Page() {
                       <AspectRatio ratio={5 / 5}>
                         <Image
                           fill
-                          className="rounded-lg object-cover"
-                          src={
-                            index === 0
-                              ? mainImage1
-                              : index === 1
-                              ? mainImage2
-                              : mainImage3
-                          }
+                          className="rounded-xl object-cover border shadow-sm"
+                          placeholder="blur"
+                          quality={5}
+                          src={require(`@/assets/images/${mainImages[index]}`)}
                           alt="main"
                           style={{
                             filter: grayscale,
-                            transition: "filter 1s",
+                            transition: "filter 0.4s",
                           }}
                           onMouseEnter={() => setGrayscale("grayscale(0)")}
-                          onMouseLeave={() => setGrayscale("grayscale(70%)")}
-                          onTouchEnd={() => setGrayscale("grayscale(70%)")}
+                          onMouseLeave={() => setGrayscale("grayscale(1)")}
+                          onTouchEnd={() => setGrayscale("grayscale(1)")}
                         />
                       </AspectRatio>
                     </CarouselItem>

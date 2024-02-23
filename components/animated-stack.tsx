@@ -1,24 +1,48 @@
 "use client";
+
 import React, { useEffect, useRef } from "react";
 import {
   World,
   Engine,
   Render,
   Bodies,
-  Events,
   Mouse,
   MouseConstraint,
   Runner,
 } from "matter-js";
 
-import {} from "@/components/ui/card";
-
-import traefik from "@/assets/images/Traefik Proxy.png";
-import defaultGo from "@/assets/images/Go.png";
-import Arch from "@/assets/images/Arch Linux.png";
-import K8s from "@/assets/images/Kubernetes.png";
-import cloudflare from "@/assets/images/Cloudflare.png";
 import { cn } from "@/lib/utils";
+
+const stackIcon = [
+  "AWS.png",
+  "Arch Linux.png",
+  "Oh my zsh.png",
+  "Cloudflare.png",
+  "Podman.png",
+  "Docker.png",
+  "PostgresSQL.png",
+  "Figma.png",
+  "Python.png",
+  "GIMP.png",
+  "Raspberry Pi.png",
+  "Git.png",
+  "React.png",
+  "GitHub Actions.png",
+  "Redis.png",
+  "GitHub.png",
+  "Tailwind CSS.png",
+  "Go.png",
+  "Traefik Proxy.png",
+  "HTML5.png",
+  "TypeScript.png",
+  "Homebrew.png",
+  "Insomnia.png",
+  "Vim.png",
+  "Kubernetes.png",
+  "Visual Studio Code (VS Code).png",
+  "Linux.png",
+  "Vite.js.png",
+];
 
 export function Playground({
   w,
@@ -31,9 +55,65 @@ export function Playground({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const playgroundHeight = h;
-  const playgroundWidth = w;
-  const wallThickness = 10;
+  const wallProperties = {
+    isStatic: true,
+    render: {
+      visible: true,
+    },
+  };
+  const wallThickness = 100;
+  const wallOffset = -(wallThickness / 2);
+  const wallSafeZone = 100;
+  const wallPositions = [
+    {
+      x: w / 2,
+      y: h - wallOffset,
+      w: w + wallSafeZone,
+      h: wallThickness,
+    },
+    {
+      x: w / 2,
+      y: wallOffset,
+      w: w + wallSafeZone,
+      h: wallThickness,
+    },
+    {
+      x: wallOffset,
+      y: h / 2,
+      w: wallThickness,
+      h: h + wallSafeZone,
+    },
+    {
+      x: w - wallOffset,
+      y: h / 2,
+      w: wallThickness,
+      h: h + wallSafeZone,
+    },
+  ];
+
+  const walls = wallPositions.map((position) => {
+    return Bodies.rectangle(
+      position.x,
+      position.y,
+      position.w,
+      position.h,
+      wallProperties
+    );
+  });
+
+  const iconSize = 30;
+  const iconScale = iconSize / 300;
+  const boxs = stackIcon.map((icon, _) => {
+    return Bodies.circle(100, 100, iconSize, {
+      render: {
+        sprite: {
+          texture: require(`@/assets/images/stack-icon/${icon}`).default.src,
+          xScale: iconScale,
+          yScale: iconScale,
+        },
+      },
+    });
+  });
 
   useEffect(() => {
     const engine = Engine.create();
@@ -41,125 +121,12 @@ export function Playground({
       engine,
       canvas: canvasRef.current!,
       options: {
-        width: playgroundWidth,
-        height: playgroundHeight,
+        width: w,
+        height: h,
         background: "transparent",
         wireframes: false,
       },
     });
-
-    var boxA = Bodies.circle(100, 100, 40, {
-      render: {
-        sprite: {
-          texture: Arch.src,
-          xScale: 0.15,
-          yScale: 0.15,
-        },
-      },
-    });
-
-    var boxB = Bodies.circle(100, 100, 40, {
-      render: {
-        sprite: {
-          texture: defaultGo.src,
-          xScale: 0.15,
-          yScale: 0.15,
-        },
-      },
-    });
-
-    var kube = Bodies.circle(100, 100, 40, {
-      render: {
-        sprite: {
-          texture: K8s.src,
-          xScale: 0.15,
-          yScale: 0.15,
-        },
-      },
-    });
-
-    var gohper = Bodies.circle(100, 100, 40, {
-      render: {
-        sprite: {
-          texture: traefik.src,
-          xScale: 0.15,
-          yScale: 0.15,
-        },
-      },
-    });
-
-    var CF = Bodies.circle(100, 100, 40, {
-      render: {
-        sprite: {
-          texture: cloudflare.src,
-          xScale: 0.15,
-          yScale: 0.15,
-        },
-      },
-    });
-
-    const button = Bodies.rectangle(
-      playgroundWidth / 2,
-      playgroundHeight - wallThickness / 4,
-      playgroundWidth + 100,
-      wallThickness,
-      {
-        isStatic: true,
-        render: {
-          visible: false,
-        },
-      }
-    );
-    const top = Bodies.rectangle(
-      playgroundWidth / 2,
-      wallThickness / 4,
-      playgroundWidth + 100,
-      wallThickness,
-      {
-        isStatic: true,
-        render: {
-          visible: false,
-        },
-      }
-    );
-    const left = Bodies.rectangle(
-      wallThickness / 4,
-      playgroundHeight / 2,
-      wallThickness,
-      playgroundHeight + 100,
-      {
-        isStatic: true,
-        render: {
-          visible: false,
-        },
-      }
-    );
-    const right = Bodies.rectangle(
-      playgroundWidth - wallThickness / 4,
-      playgroundHeight / 2,
-      wallThickness,
-      playgroundHeight + 100,
-      {
-        isStatic: true,
-        render: {
-          visible: false,
-        },
-      }
-    );
-
-    World.add(engine.world, [
-      boxA,
-      boxB,
-      gohper,
-      kube,
-      CF,
-      button,
-      top,
-      left,
-      right,
-    ]);
-    Render.run(render);
-    const runner = Runner.run(engine);
 
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
@@ -172,27 +139,31 @@ export function Playground({
       },
     });
 
-    Events.on(engine.world, "collisionStart", (event) => {
-      console.log(event);
-    });
+    // boxs에서 랜덤으로 반절만 선택
+    World.add(engine.world, [
+      ...walls,
+      mouseConstraint,
+      ...boxs.sort(() => Math.random() - 0.5).slice(0, 10),
+    ]);
 
-    World.add(engine.world, mouseConstraint);
+    Render.run(render);
+    const runner = Runner.run(engine);
 
     return () => {
       Runner.stop(runner);
       Render.stop(render);
     };
-  }, []);
+  }, [w, h]);
 
   return (
     <canvas
       ref={canvasRef}
-      width={playgroundWidth}
+      width={w}
+      height={h}
       className={cn(
         "rounded-lg border bg-card text-card-foreground shadow-sm",
         className
       )}
-      height={playgroundHeight}
       style={{
         filter: "grayscale(1)",
       }}
