@@ -14,13 +14,12 @@ import { buttonVariants } from "@/components/ui/button";
 import { ModeToggle } from "@/components/theme-toggle";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import AnimatedName from "./animated-name";
 
@@ -31,13 +30,12 @@ export default function Header() {
     <header>
       <div className="flex flex-row items-center justify-between py-4">
         <Link href="/" className="flex flex-col gap-3">
-          <AnimatedName name="minpeter - 민웅기" />
+          <AnimatedName name="minpeter" />
           <p>software engineer 🕊️</p>
         </Link>
 
         {/* mobile navbar */}
-
-        <div className="flex sm:hidden">
+        <div className="grid grid-cols-2 sm:hidden">
           <Link
             href="https://github.com/minpeter"
             target="_blank"
@@ -62,33 +60,31 @@ export default function Header() {
 
           <ModeToggle />
 
-          <Popover>
-            <PopoverTrigger asChild>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="sm:hidden">
                 <HamburgerMenuIcon className="h-6 w-6" />
               </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-fit mr-8 sm:hidden">
-              <div className="grid gap-4">
-                <div className="flex-col justify-end items-end flex">
-                  <div className="flex gap-4">
-                    <Link href="/work">work</Link>
-                    <Link href="/blog">blog</Link>
-                    <div
-                      onClick={() =>
-                        toast({
-                          title: "Coming soon",
-                          description: "This feature is not available yet",
-                        })
-                      }
-                    >
-                      guestbook
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <Link href="/work">work</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/blog">blog</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() =>
+                  toast({
+                    title: "Coming soon",
+                    description: "This feature is not available yet",
+                  })
+                }
+              >
+                guestbook
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* desktop navbar */}
