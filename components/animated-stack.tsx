@@ -58,7 +58,7 @@ export function Playground({
   const wallProperties = {
     isStatic: true,
     render: {
-      visible: true,
+      visible: false,
     },
   };
   const wallThickness = 100;
