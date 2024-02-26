@@ -43,7 +43,7 @@ export default function Header() {
         // 해더 컨테이너
         "container flex max-w-2xl flex-col",
         // 아크릴 효과
-        "bg-opacity-60 backdrop-filter backdrop-blur-md"
+        "backdrop-filter backdrop-blur-lg"
       )}
     >
       <div className="flex flex-row items-center justify-between py-4">
@@ -101,7 +101,10 @@ export default function Header() {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem className="flex justify-between items-center">
+            <DropdownMenuItem
+              className="flex justify-between items-center"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
               {theme === "dark" ? "Dark" : "Light"}
               <SmallSwitch
                 className="w-8 h-4"
