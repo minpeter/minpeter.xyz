@@ -66,7 +66,7 @@ export default function PostContent({ code }: any) {
         img: (props: any) => (
           <Image
             {...props}
-            className="rounded-lg py-2"
+            className="rounded-lg object-cover border shadow-sm"
             layout="responsive"
             width={500}
             height={300}

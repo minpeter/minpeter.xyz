@@ -39,8 +39,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           <div className="container flex min-h-screen max-w-2xl flex-col py-8">
-            <Header />
             {children}
           </div>
           <Toaster />

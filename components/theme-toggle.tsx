@@ -14,6 +14,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+// switch
+
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+
 export function ModeToggle() {
   const { setTheme } = useTheme();
 
@@ -39,4 +44,10 @@ export function ModeToggle() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
+}
+
+export function ModeSwitch() {
+  const { theme, setTheme } = useTheme();
+
+  return <div className="flex justify-between items-center"></div>;
 }
