@@ -4,7 +4,7 @@ content:
     type: collection
     path: 'content'
     view:
-      fields: [ title, date, description]
+      fields: [ title ]
     fields:
       - name: date
         label: Date
