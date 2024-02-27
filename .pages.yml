@@ -1,12 +1,7 @@
 
-# media:
-#  input: public/images
-#  output: /images
-
 media:
-  input: content
-  output: assets
-  categories: [ image ]
+ input: public/images
+ output: /images
 content:
   - name: posts
     label: Posts
