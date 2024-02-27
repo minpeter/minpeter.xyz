@@ -3,6 +3,14 @@ media:
   input: public/images
   output: /images
 content:
+  - name: sep-image
+    label: SepImage
+    type: collection
+    path: 'content'
+    fields:
+      - name: image
+        label: image
+        type: image
   - name: posts
     label: Posts
     type: collection
