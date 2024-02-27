@@ -1,16 +1,13 @@
 ---
-title: Jekyll 그리고 github pages
 date: 2021-08-22 22:21:00 +0900
+title: Jekyll 그리고 github pages
+description: GitHub Pages에 Jekyll을 이용한 블로그 제작과 테마 선택부터 배포까지의 과정 기록
 tags:
-  - github
   - github
   - pages
   - jekyll
   - ruby
-categories: blog
-description: GitHub Pages에 Jekyll을 이용한 블로그 제작과 테마 선택부터 배포까지의 과정 기록
 ---
-
 github pages.. 벌써 3~4번은 시도했지만, jekyll를 이용해서 시도한 건 전부 실패했었다.
 
 마음에 드는 테마는 설정이 어렵거나 프로그래밍을 접한 지 얼마 되지 않아  jekyll이 어떻게 작동하는지도 파악이 안 됐다.
