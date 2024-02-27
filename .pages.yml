@@ -3,7 +3,6 @@ content:
     label: Posts
     type: collection
     path: 'content'
-    subfolders: false
     view:
       fields: [ title ]
     fields:
