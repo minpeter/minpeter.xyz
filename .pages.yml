@@ -2,7 +2,7 @@ content:
   - name: posts
     label: Posts
     type: collection
-    path: 'content'
+    path: 'content/*'
     view:
       fields: [ title ]
     fields:
