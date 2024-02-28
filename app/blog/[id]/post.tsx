@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import Image from "next/image";
 
-import { CodeBlock } from "@/components/code-block";
+import { CodeBlock } from "./code-block";
 import {
   Table,
   TableBody,
@@ -74,12 +74,15 @@ export default function PostContent({ code }: any) {
           />
         ),
 
-        code: ({ children, className }: any) => {
-          const match = /language-(\w+)/.exec(className || "");
-          const language = match ? match[1] : "";
-
-          return CodeBlock({ content: children, language });
+        code: ({ children }: any) => {
+          return CodeBlock({ content: children });
         },
+        pre: (props: any) => (
+          <pre
+            {...props}
+            className="my-4 overflow-scroll rounded-lg border bg-card text-card-foreground shadow-sm p-4"
+          />
+        ),
       }}
     />
   );
