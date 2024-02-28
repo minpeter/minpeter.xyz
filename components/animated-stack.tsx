@@ -55,66 +55,6 @@ export function Playground({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const wallProperties = {
-    isStatic: true,
-    render: {
-      visible: false,
-    },
-  };
-  const wallThickness = 100;
-  const wallOffset = -(wallThickness / 2);
-  const wallSafeZone = 100;
-  const wallPositions = [
-    {
-      x: w / 2,
-      y: h - wallOffset,
-      w: w + wallSafeZone,
-      h: wallThickness,
-    },
-    {
-      x: w / 2,
-      y: wallOffset,
-      w: w + wallSafeZone,
-      h: wallThickness,
-    },
-    {
-      x: wallOffset,
-      y: h / 2,
-      w: wallThickness,
-      h: h + wallSafeZone,
-    },
-    {
-      x: w - wallOffset,
-      y: h / 2,
-      w: wallThickness,
-      h: h + wallSafeZone,
-    },
-  ];
-
-  const walls = wallPositions.map((position) => {
-    return Bodies.rectangle(
-      position.x,
-      position.y,
-      position.w,
-      position.h,
-      wallProperties
-    );
-  });
-
-  const iconSize = 30;
-  const iconScale = iconSize / 300;
-  const boxs = stackIcon.map((icon, _) => {
-    return Bodies.circle(100, 100, iconSize, {
-      render: {
-        sprite: {
-          texture: require(`@/assets/images/stack-icon/${icon}`).default.src,
-          xScale: iconScale,
-          yScale: iconScale,
-        },
-      },
-    });
-  });
-
   useEffect(() => {
     const engine = Engine.create();
     const render = Render.create({
@@ -126,6 +66,66 @@ export function Playground({
         background: "transparent",
         wireframes: false,
       },
+    });
+
+    const wallProperties = {
+      isStatic: true,
+      render: {
+        visible: false,
+      },
+    };
+    const wallThickness = 100;
+    const wallOffset = -(wallThickness / 2);
+    const wallSafeZone = 100;
+    const wallPositions = [
+      {
+        x: w / 2,
+        y: h - wallOffset,
+        w: w + wallSafeZone,
+        h: wallThickness,
+      },
+      {
+        x: w / 2,
+        y: wallOffset,
+        w: w + wallSafeZone,
+        h: wallThickness,
+      },
+      {
+        x: wallOffset,
+        y: h / 2,
+        w: wallThickness,
+        h: h + wallSafeZone,
+      },
+      {
+        x: w - wallOffset,
+        y: h / 2,
+        w: wallThickness,
+        h: h + wallSafeZone,
+      },
+    ];
+
+    const walls = wallPositions.map((position) => {
+      return Bodies.rectangle(
+        position.x,
+        position.y,
+        position.w,
+        position.h,
+        wallProperties
+      );
+    });
+
+    const iconSize = 30;
+    const iconScale = iconSize / 300;
+    const boxs = stackIcon.map((icon, _) => {
+      return Bodies.circle(100, 100, iconSize, {
+        render: {
+          sprite: {
+            texture: require(`@/assets/images/stack-icon/${icon}`).default.src,
+            xScale: iconScale,
+            yScale: iconScale,
+          },
+        },
+      });
     });
 
     const mouse = Mouse.create(render.canvas);

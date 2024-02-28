@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
 import { getPostById, getAllPosts } from "@/lib/loader";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +8,6 @@ import "@/styles/prism-one-dark.css";
 import "@/styles/code-block-custom.css";
 
 import PostContent from "./post";
-import Header from "@/components/header";
 
 export function generateStaticParams() {
   const posts = getAllPosts();
