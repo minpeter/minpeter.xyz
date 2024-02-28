@@ -6,6 +6,9 @@
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import type { SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { codeVariants } from "./ui/typography";
+import { cn } from "@/lib/utils";
+import copy from "clipboard-copy";
 
 export function CodeBlock({
   content,
@@ -16,19 +19,25 @@ export function CodeBlock({
 }) {
   const isMultiline = content.includes("\n");
 
+  const handleCopyClick = async () => {
+    try {
+      await copy(content);
+    } catch (error) {
+      console.error("Failed to copy text to clipboard", error);
+    }
+  };
+
   return isMultiline ? (
-    <>
+    <div onClick={handleCopyClick}>
       <SyntaxHighlighter
         language={language === "" ? "markdown" : language}
         style={CodeBlockTheme}
       >
         {content}
       </SyntaxHighlighter>
-    </>
+    </div>
   ) : (
-    <code className="bg-gray-500 text-white px-1 py-0.5 mx-0.5 rounded-md text-sm break-all">
-      {content}
-    </code>
+    <code className={cn(codeVariants(), "break-all")}>{content}</code>
   );
 }
 

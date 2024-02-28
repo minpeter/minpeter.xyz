@@ -41,7 +41,7 @@ export default function RootLayout({
         >
           <Header />
           <div className="container flex min-h-screen max-w-2xl flex-col py-8">
-            {children}
+            <main className="flex flex-col space-y-2">{children}</main>
           </div>
           <Toaster />
         </ThemeProvider>

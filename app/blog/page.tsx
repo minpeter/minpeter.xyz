@@ -5,7 +5,7 @@ export default function Page() {
   const posts = getAllPosts();
 
   return (
-    <section className="py-5">
+    <section>
       {posts.map((blog) => (
         <Link href={"/blog/" + blog.id} key={blog.id}>
           <div className="pb-4 gap-2">
