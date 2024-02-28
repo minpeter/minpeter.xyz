@@ -7,13 +7,14 @@ export function SimpleButton() {
 
   return (
     <Button
+      variant={"secondary"}
       onClick={() => {
         setToggle(!toggle);
         setCount(count + 1);
       }}
     >
-      {count >= 5
-        ? "Assertive - 서윤 "
+      {count >= 8
+        ? "You pushed me 8 times!!"
         : toggle
         ? "You pushed me!!"
         : "Push me!!"}
@@ -43,7 +44,9 @@ export function Counter() {
         {count == 82 || count == 802 ? " - 🩷" : ""}
       </p>
       <div className="space-x-1">
-        <Button onClick={() => setCount(count + 1)}>Count Up</Button>
+        <Button variant={"secondary"} onClick={() => setCount(count + 1)}>
+          Count Up
+        </Button>
         <Button variant={"outline"} onClick={() => setCount(0)}>
           Reset
         </Button>

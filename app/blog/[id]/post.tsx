@@ -3,7 +3,11 @@
 import { useMemo } from "react";
 import Image from "next/image";
 
-import { CodeBlock } from "./code-block";
+import { codeVariants } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
+import copy from "clipboard-copy";
+import { highlight } from "sugar-high";
+
 import {
   Table,
   TableBody,
@@ -59,7 +63,12 @@ export default function PostContent({ code }: any) {
         blockquote: (props: any) => (
           <blockquote
             {...props}
-            className="scroll-m-20 border-l-4 border-gray-200 pl-4"
+            className={cn(
+              "scroll-m-20 border-l-4 border-gray-200 pl-4",
+              "max-w-96",
+              "[&>ul]:flex [&>ul]:justify-end",
+              "[&>ul>li]:list-none"
+            )}
           />
         ),
 
@@ -80,10 +89,43 @@ export default function PostContent({ code }: any) {
         pre: (props: any) => (
           <pre
             {...props}
-            className="my-4 overflow-scroll rounded-lg border bg-card text-card-foreground shadow-sm p-4"
+            className={cn(
+              "rounded-lg border bg-card text-card-foreground shadow-sm",
+              "my-4 p-4 overflow-scroll "
+            )}
           />
         ),
       }}
     />
+  );
+}
+
+async function handleCopyClick(content: string) {
+  try {
+    await copy(content);
+  } catch (error) {
+    console.error("Failed to copy text to clipboard", error);
+  }
+}
+
+export function CodeBlock({ content }: { content: string }) {
+  const isMultiline = content.includes("\n");
+
+  return isMultiline ? (
+    <code
+      onClick={() => {
+        handleCopyClick(content);
+      }}
+      dangerouslySetInnerHTML={{ __html: highlight(content) }}
+    />
+  ) : (
+    <code
+      onClick={() => {
+        handleCopyClick(content);
+      }}
+      className={cn(codeVariants(), "break-all")}
+    >
+      {content}
+    </code>
   );
 }
