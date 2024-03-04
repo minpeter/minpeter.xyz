@@ -109,7 +109,7 @@ export default function Header() {
               <SmallSwitch
                 className="w-8 h-4"
                 checked={theme === "light"}
-                onCheckedChange={(checked) =>
+                onCheckedChange={(checked: boolean) =>
                   setTheme(checked ? "light" : "dark")
                 }
               />
