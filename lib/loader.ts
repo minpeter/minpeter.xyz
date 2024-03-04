@@ -90,14 +90,20 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
       return options;
     },
     esbuildOptions: (options) => {
-      options.minify = true;
+      const imagePathPrefix = "dynamic";
+      options.outdir = path.join(process.cwd(), "public", imagePathPrefix, id);
+
       options.loader = {
         ...options.loader,
-        ".png": "dataurl",
-        ".jpg": "dataurl",
-        ".gif": "dataurl",
-        ".jpeg": "dataurl",
+        ".png": "file",
+        ".jpg": "file",
+        ".gif": "file",
+        ".jpeg": "file",
       };
+
+      options.publicPath = path.join("/", imagePathPrefix, id);
+
+      options.write = true;
       return options;
     },
   });
