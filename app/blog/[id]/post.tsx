@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table";
 
 import { getMDXComponent } from "mdx-bundler/client";
+import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 
 export default function PostContent({ code }: any) {
   const Component = useMemo(() => getMDXComponent(code), [code]);
@@ -84,7 +85,19 @@ export default function PostContent({ code }: any) {
         ),
 
         code: ({ children }: any) => {
-          return CodeBlock({ content: children });
+          const isMultiline = children.includes("\n");
+
+          return (
+            <code
+              onClick={() => {
+                handleCopyClick(children);
+              }}
+              className={isMultiline ? "" : cn(codeVariants(), "break-all")}
+              dangerouslySetInnerHTML={{
+                __html: isMultiline ? highlight(children) : children,
+              }}
+            />
+          );
         },
         pre: (props: any) => (
           <pre
@@ -106,26 +119,4 @@ async function handleCopyClick(content: string) {
   } catch (error) {
     console.error("Failed to copy text to clipboard", error);
   }
-}
-
-export function CodeBlock({ content }: { content: string }) {
-  const isMultiline = content.includes("\n");
-
-  return isMultiline ? (
-    <code
-      onClick={() => {
-        handleCopyClick(content);
-      }}
-      dangerouslySetInnerHTML={{ __html: highlight(content) }}
-    />
-  ) : (
-    <code
-      onClick={() => {
-        handleCopyClick(content);
-      }}
-      className={cn(codeVariants(), "break-all")}
-    >
-      {content}
-    </code>
-  );
 }
