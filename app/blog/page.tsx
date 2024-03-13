@@ -9,8 +9,10 @@ export default function Page() {
       {posts.map((blog) => (
         <Link href={"/blog/" + blog.id} key={blog.id}>
           <div className="pb-4 gap-2">
-            <h3 className="text-lg font-bold">{blog.frontmatter.title}</h3>
-            <p className="text-gray-400 ">{blog.frontmatter.description}</p>
+            <h3 className="font-bold">{blog.frontmatter.title}</h3>
+            <p className="text-gray-400 text-sm">
+              {blog.frontmatter.description} - {blog.published}
+            </p>
           </div>
         </Link>
       ))}

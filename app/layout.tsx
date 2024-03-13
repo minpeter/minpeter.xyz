@@ -4,21 +4,34 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/styles/globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
-import { Inter as FontSans } from "next/font/google";
+// import { Noto_Serif_KR as Serif } from "next/font/google";
+import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
 export const metadata: Metadata = {
   title: "minpeter",
   description: "minpeter's blog - a blog about development",
 };
+
+export const FontSans = localFont({
+  variable: "--font-sans",
+  src: [
+    {
+      path: "../assets/fonts/AritaBuri-Medium.woff2",
+
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/AritaBuri-SemiBold.woff2",
+      weight: "700",
+      style: "bold",
+    },
+  ],
+});
 
 export default function RootLayout({
   children,
@@ -28,10 +41,7 @@ export default function RootLayout({
   return (
     <html lang="kr">
       <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
+        className={cn("min-h-screen font-sans antialiased", FontSans.className)}
       >
         <ThemeProvider
           attribute="class"
