@@ -7,8 +7,8 @@ const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ{}</>민쾹あ쵭ゆさつ퀴なま�
 // original source: https://github.com/wiscaksono/wiscaksono-site/blob/master/src/components/molecules/animated-name.tsx
 // license: on github.com/wiscaksono/wiscaksono-site
 
-export default function AnimatedName({ name }: { name: string }) {
-  const [text, setText] = useState(name);
+export default function AnimatedText({ data }: { data: string }) {
+  const [text, setText] = useState(data);
   const [intervalId] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -39,7 +39,7 @@ export default function AnimatedName({ name }: { name: string }) {
 
       if (iteration < text.length) {
         iteration += 1 / 3;
-        setTimeout(animate, 30);
+        setTimeout(animate, 300 / data.length);
       } else {
         setIsAnimating(false);
       }

@@ -8,6 +8,7 @@ import "@/styles/prism-one-dark.css";
 import "@/styles/code-block-custom.css";
 
 import PostContent from "./post";
+import Header from "@/components/header";
 
 export function generateStaticParams() {
   const posts = getAllPosts();
@@ -59,9 +60,10 @@ export default async function Post({ params }: any) {
         </>
       ) : (
         <>
-          <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            {post.frontmatter.title}
-          </h2>
+          <Header
+            title={post.frontmatter.title}
+            description={post.frontmatter.description}
+          />
           <div className="py-5 flex gap-2">
             <Badge>{post.published}</Badge>
             <Badge variant="secondary" className="text-gray-400">

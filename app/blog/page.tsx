@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/loader";
+import Header from "@/components/header";
 
 export default function Page() {
   const posts = getAllPosts();
 
   return (
     <section>
+      <Header title="블로그" description="블로그 글 목록" />
       {posts.map((blog) => (
         <Link href={"/blog/" + blog.id} key={blog.id}>
           <div className="pb-4 gap-2">

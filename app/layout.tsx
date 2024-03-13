@@ -18,10 +18,10 @@ export const metadata: Metadata = {
 
 export const FontSans = localFont({
   variable: "--font-sans",
+  display: "fallback",
   src: [
     {
       path: "../assets/fonts/AritaBuri-Medium.woff2",
-
       weight: "400",
       style: "normal",
     },
@@ -45,11 +45,10 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
           <div className="container flex min-h-screen max-w-2xl flex-col py-8">
             <main className="flex flex-col space-y-2">{children}</main>
           </div>
