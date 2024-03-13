@@ -15,6 +15,11 @@
     scrollbar-width: none;
   }
 
+  ::selection {
+    background-color: var(--selection);
+  }
+
+
 
   :root {
 
@@ -29,6 +34,7 @@
     --sh-comment: #a19595;
 
 
+    --selection: hsla(0, 0%, 0%, .045);
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -52,6 +58,7 @@
   }
 
   .dark {
+    --selection: hsla(0, 0%, 100%, .077);
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
