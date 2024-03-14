@@ -33,7 +33,7 @@ export default async function Post({ params }: any) {
   const post = await getPostById(params.id);
 
   return (
-    <article>
+    <section>
       {!post ? (
         <>
           <Header
@@ -50,9 +50,11 @@ export default async function Post({ params }: any) {
             link={{ href: "/blog", text: "글 목록으로" }}
           />
 
-          {post.content && <PostContent code={post.content} />}
+          <article data-animate data-animate-speed="fast">
+            {post.content && <PostContent code={post.content} />}
+          </article>
         </>
       )}
-    </article>
+    </section>
   );
 }

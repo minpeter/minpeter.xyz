@@ -21,7 +21,7 @@ export default function Page() {
   return (
     <section>
       <Header title="블로그" description="블로그 글 목록." />
-      <div className="group/list">
+      <div data-animate data-animate-speed="slow" className="group/list">
         {yearList &&
           Object.keys(yearList)
             .reverse()
@@ -36,7 +36,11 @@ export default function Page() {
                   </h2>
                 </div>
                 {
-                  <ul className="space-y-2 w-full">
+                  <ul
+                    data-animate
+                    data-animate-speed="fast"
+                    className="space-y-3 w-full"
+                  >
                     {yearList[year].map((post: any) => (
                       <li
                         key={post.id}
