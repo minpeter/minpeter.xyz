@@ -31,31 +31,26 @@ export default function Header({
       className={"mb-10"}
     >
       <div className="flex items-center justify-between">
-        <AnimatedText data={title} />
+        <h1 className=" space-x-1">
+          <span className="text-bold">{title}</span>
+
+          {title !== "minpeter" && (
+            <>
+              <span className="text-sm text-gray-200">by</span>
+              <Link
+                className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100"
+                href="/"
+              >
+                민웅기
+              </Link>
+            </>
+          )}
+        </h1>
 
         <ModeToggle />
       </div>
 
       {description && <p className="text-sm text-gray-400">{description}</p>}
-
-      {!hideNavbar && (
-        <nav className="flex gap-1">
-          <span className="text-sm text-gray-200">by</span>
-          <Link
-            className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100"
-            href="/"
-          >
-            민웅기
-          </Link>
-          <span className="text-sm text-gray-200">﹒</span>
-          <Link
-            className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100"
-            href="/blog"
-          >
-            블로그
-          </Link>
-        </nav>
-      )}
     </header>
   );
 }
