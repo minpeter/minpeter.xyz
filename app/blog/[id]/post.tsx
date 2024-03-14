@@ -43,6 +43,7 @@ export default function PostContent({ code }: any) {
           />
         ),
         p: (props: any) => <p {...props} className="py-3 text-gray-400" />,
+        strong: (props: any) => <strong {...props} className="text-white" />,
         table: (props: any) => (
           <Table {...props} className="my-4 text-gray-400" />
         ), // "w-full" is not a valid class name
