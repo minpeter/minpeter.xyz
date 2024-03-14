@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/table";
 
 import { getMDXComponent } from "mdx-bundler/client";
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 
 export default function PostContent({ code }: any) {
   const Component = useMemo(() => getMDXComponent(code), [code]);
