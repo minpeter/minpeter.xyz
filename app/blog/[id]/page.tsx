@@ -1,10 +1,5 @@
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-
 import { getPostById, getAllPosts } from "@/lib/loader";
-import { Badge } from "@/components/ui/badge";
 
-import "@/styles/prism-one-dark.css";
 import "@/styles/code-block-custom.css";
 
 import PostContent from "./post";
@@ -40,23 +35,7 @@ export default async function Post({ params }: any) {
     <article>
       {!post ? (
         <>
-          <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            404, NOT FOUND :/
-          </h2>
-
-          <div className="py-5 flex flex-col gap-4">
-            <p>
-              This page doesn{"'"}t exist.
-              <br />
-              How about reading another article?
-            </p>
-            <Link
-              href="/blog"
-              className={buttonVariants({ variant: "secondary" })}
-            >
-              Go to blog list
-            </Link>
-          </div>
+          <Header title="404" description="page not found :/" />
         </>
       ) : (
         <>
@@ -64,12 +43,6 @@ export default async function Post({ params }: any) {
             title={post.frontmatter.title}
             description={post.frontmatter.description}
           />
-          <div className="py-5 flex gap-2">
-            <Badge>{post.published}</Badge>
-            <Badge variant="secondary" className="text-gray-400">
-              {post.hash}
-            </Badge>
-          </div>
 
           {post.content && <PostContent code={post.content} />}
         </>

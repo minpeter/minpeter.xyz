@@ -33,6 +33,16 @@
     --sh-keyword: #f47067;
     --sh-comment: #a19595;
 
+    /* --sh-class: #171717;
+    --sh-identifier: #697a8e;
+    --sh-sign: #8996a3;
+    --sh-property: #171717;
+    --sh-entity: #171717;
+    --sh-jsxliterals: #6f6f6f;
+    --sh-string: #6f6f6f;
+    --sh-keyword: #858585;
+    --sh-comment: #a19595; */
+
 
     --selection: hsla(0, 0%, 0%, .045);
     --background: 0 0% 100%;

@@ -27,23 +27,25 @@ export default function PostContent({ code }: any) {
         h1: (props: any) => (
           <h1
             {...props}
-            className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0"
+            className="scroll-m-20 border-b pb-2 text-base font-semibold tracking-tight first:mt-0"
           />
         ),
         h2: (props: any) => (
           <h2
             {...props}
-            className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0"
+            className="scroll-m-20 border-b pb-2 text-base font-semibold tracking-tight first:mt-0"
           />
         ),
         h3: (props: any) => (
           <h3
             {...props}
-            className="scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0"
+            className="scroll-m-20 border-b pb-2 text-base font-semibold tracking-tight first:mt-0"
           />
         ),
-        p: (props: any) => <p {...props} className="py-3" />,
-        table: (props: any) => <Table {...props} className="my-4" />, // "w-full" is not a valid class name
+        p: (props: any) => <p {...props} className="py-3 text-gray-400" />,
+        table: (props: any) => (
+          <Table {...props} className="my-4 text-gray-400" />
+        ), // "w-full" is not a valid class name
         th: (props: any) => <TableHead {...props} />,
         td: (props: any) => <TableCell {...props} />,
         tbody: (props: any) => <TableBody {...props} />,
@@ -53,11 +55,13 @@ export default function PostContent({ code }: any) {
         a: (props: any) => (
           <a
             {...props}
-            className="text-blue-600 hover:underline focus:underline"
+            className="text-gray-400 break-all underline hover:underline focus:underline"
           />
         ),
 
-        ul: (props: any) => <ul {...props} className="list-disc pl-8" />,
+        ul: (props: any) => <ul {...props} className="list-disc pl-8 " />,
+        ol: (props: any) => <ol {...props} className="list-decimal pl-8 " />,
+        li: (props: any) => <li {...props} className="text-gray-400" />,
 
         hr: (props: any) => <hr {...props} className="my-8" />,
         blockquote: (props: any) => (
