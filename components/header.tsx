@@ -15,7 +15,7 @@ type HeaderProps = {
 export default function Header({ title, description, link }: HeaderProps) {
   return (
     <header className={"mb-10"}>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-x-6">
         <h1 className=" space-x-1">
           <span className="text-bold">{title || "minpeter"}</span>
           {title !== undefined && (

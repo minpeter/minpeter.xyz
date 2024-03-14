@@ -17,3 +17,13 @@ export function formatYear(date: string) {
   const d = new Date(date);
   return d.getFullYear();
 }
+
+// 2022-1-1 -> February 1, 2022
+export function formatDateLong(date: string) {
+  const d = new Date(date);
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}

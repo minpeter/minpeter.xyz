@@ -5,6 +5,7 @@ import "@/styles/code-block-custom.css";
 import PostContent from "./post";
 import Header from "@/components/header";
 import { link } from "fs";
+import { formatDateLong } from "@/lib/utils";
 
 export function generateStaticParams() {
   const posts = getAllPosts();
@@ -46,11 +47,15 @@ export default async function Post({ params }: any) {
         <>
           <Header
             title={post.frontmatter.title}
-            description={post.frontmatter.description}
+            description={
+              post.frontmatter.description === undefined
+                ? formatDateLong(post.frontmatter.date)
+                : post.frontmatter.description
+            }
             link={{ href: "/blog", text: "글 목록으로" }}
           />
 
-          <article data-animate data-animate-speed="fast">
+          <article data-animate data-animate-speed="fast" className="mdx">
             {post.content && <PostContent code={post.content} />}
           </article>
         </>

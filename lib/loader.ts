@@ -6,6 +6,8 @@ import { bundleMDX } from "mdx-bundler";
 
 import remarkMdxImages from "remark-mdx-images";
 import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 export interface BlogProps {
   id: string;
@@ -87,6 +89,18 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
     },
     mdxOptions(options) {
       options.remarkPlugins = [remarkGfm, remarkMdxImages];
+      options.rehypePlugins = [
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: "wrap",
+            properties: {
+              className: ["anchor"],
+            },
+          },
+        ],
+      ];
       return options;
     },
     esbuildOptions: (options) => {

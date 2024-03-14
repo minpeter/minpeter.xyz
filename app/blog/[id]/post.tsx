@@ -24,18 +24,6 @@ export default function PostContent({ code }: any) {
   return (
     <Component
       components={{
-        h1: (props: any) => (
-          <h1
-            {...props}
-            className="scroll-m-20 border-b pb-2 text-base font-semibold tracking-tight first:mt-0"
-          />
-        ),
-        h2: (props: any) => (
-          <h2
-            {...props}
-            className="scroll-m-20 border-b pb-2 text-base font-semibold tracking-tight first:mt-0"
-          />
-        ),
         h3: (props: any) => (
           <h3
             {...props}
@@ -53,12 +41,12 @@ export default function PostContent({ code }: any) {
         thead: (props: any) => <TableHeader {...props} />,
         tr: (props: any) => <TableRow {...props} />,
 
-        a: (props: any) => (
-          <a
-            {...props}
-            className="text-gray-400 break-all underline hover:underline focus:underline"
-          />
-        ),
+        // a: (props: any) => (
+        //   <a
+        //     {...props}
+        //     className="text-gray-400 break-all underline hover:underline focus:underline"
+        //   />
+        // ),
 
         ul: (props: any) => <ul {...props} className="list-disc pl-8 " />,
         ol: (props: any) => <ol {...props} className="list-decimal pl-8 " />,
