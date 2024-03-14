@@ -1,5 +1,5 @@
 ---
-title: kubernetes on proxmox (1) - ubuntu 22.04 server template 만들기
+title: k8s via proxmox (1) - ubuntu server template 만들기
 date: 2022-10-03 20:19:00
 tags:
 categories: "home lab"
