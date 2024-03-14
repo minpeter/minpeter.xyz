@@ -10,6 +10,7 @@ import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "minpeter",
@@ -52,6 +53,7 @@ export default function RootLayout({
           <div className="container flex min-h-screen max-w-2xl flex-col py-8">
             <main className="flex flex-col space-y-2">{children}</main>
           </div>
+          <Footer />
           <Toaster />
         </ThemeProvider>
         <Analytics />
