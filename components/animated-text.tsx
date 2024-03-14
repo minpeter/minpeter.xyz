@@ -46,7 +46,7 @@ export default function AnimatedText({ data }: { data: string }) {
     };
 
     animate();
-  }, [intervalId, isAnimating, text]);
+  }, [intervalId, isAnimating, text, data]);
 
   useEffect(() => {
     const currentRef = ref.current;
