@@ -1,4 +1,5 @@
 import Header from "@/components/header";
+import { CookieIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 export default function Page() {
@@ -8,6 +9,7 @@ export default function Page() {
 
       <Link href="/blog" className="underline">
         내가 만든 블로그, 너를 위해 써봤지
+        <CookieIcon className="w-4 h-4 inline-block ml-1.5" />
       </Link>
     </section>
   );
