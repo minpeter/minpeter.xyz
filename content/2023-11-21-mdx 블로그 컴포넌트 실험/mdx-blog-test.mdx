@@ -8,14 +8,61 @@ description: 블로그 mdx 지원 기념 컴포넌트 실험실
 
 import Typing from "@/components/typing";
 
-# test h2
+**Headings:**
 
-## test h2
+# Heading 1
+
+## Heading 2
+
+**Paragraphs:**
+
+This is a paragraph.
+
+**Lists:**
+
+- List item 1
+- List item 2
+
+**Tables:**
+
+| Header | Content |
+| ------ | ------- |
+| Row 1  | Cell 1  |
+| Row 2  | Cell 2  |
+
+**Code:**
+
+```javascript
+console.log("Hello, World!");
+```
+
+`ping google.com`
+
+- Bold
+  \_Italic
+  ~~Strikethrough~~
+
+**Strong** and _Italics_
+
+[Link](/url)
+
+**Quotes:**
+
+> This is a quote.
+
+**Emphasis:**
+
+~~Strikethrough~~
+
+**3. 스타일**
+
+**Syntax Highlighting:**
 
 <Typing
   staticText="This article uses "
   dynamic={["Next.js", "MDX", "tailwind"]}
 />
+
 시작부터 이 **블로그 타이틀**에 사용한 컴포넌트를 사용해봤다.{" "}
 
 잘 동작하는 것을 보니 MDX가 잘 적용되었다는 걸 알 수 있다.
@@ -24,11 +71,13 @@ import { SimpleButton, Ip, Counter } from "./components";
 
 이제 블로그에서 컴포넌트를 사용할 수 있게 되어 몇가지 실험을 해보고자 한다.
 
-우선 인라인 코드 블럭 테스트 `console.log("Hello, World!")` 를 해보자.  
+우선 인라인 코드 블럭 테스트 `console.log("Hello, World!")` 를 해보자.
 다음은 일반 코드 블럭 테스트
 
 ```
+
 console.log("Hello, World!")
+
 ```
 
 ---
