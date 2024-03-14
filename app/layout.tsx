@@ -8,7 +8,6 @@ import { Toaster } from "@/components/ui/toaster";
 import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 
-import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
   description: "minpeter's blog - a blog about development",
 };
 
-export const FontSans = localFont({
+const FontSans = localFont({
   variable: "--font-sans",
   display: "fallback",
   src: [

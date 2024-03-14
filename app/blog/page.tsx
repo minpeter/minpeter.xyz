@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/loader";
 import Header from "@/components/header";
-import { formatDate, formatYear } from "@/lib/utils";
+import { cn, formatDate, formatYear } from "@/lib/utils";
 
 export default function Page() {
   const posts = getAllPosts();
@@ -40,15 +40,22 @@ export default function Page() {
                     {yearList[year].map((post: any) => (
                       <li
                         key={post.id}
-                        className="flex justify-between group/post"
+                        className="flex justify-between group/post space-x-4"
                       >
-                        <Link href={`/blog/${post.id}`} className={itemSytles}>
-                          {post.frontmatter.title}
+                        <Link href={`/blog/${post.id}`}>
+                          <span
+                            className={cn(
+                              itemSytles,
+                              "inline py-1 px-2 box-decoration-clone"
+                            )}
+                          >
+                            {post.frontmatter.title}
+                          </span>
                         </Link>
 
                         <time
                           dateTime={post.frontmatter.date}
-                          className={itemSytles}
+                          className={cn(itemSytles, "text-nowrap h-fit")}
                         >
                           {formatDate(post.frontmatter.date)}
                         </time>

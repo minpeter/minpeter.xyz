@@ -5,7 +5,6 @@ const nextConfig = {
   // static build settings
   // output: "export",
   // images: { unoptimized: true },
-
   images: {
     remotePatterns: [
       {

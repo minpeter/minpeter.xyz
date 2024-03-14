@@ -30,7 +30,9 @@ export default function Header({ title, description }: HeaderProps) {
 
         <ModeToggle />
       </div>
-      {description && <p className="text-sm text-gray-400">{description}</p>}
+      {description && (
+        <p className="text-sm text-gray-400 w-9/12">{description}</p>
+      )}
     </header>
   );
 }
