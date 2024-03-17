@@ -4,7 +4,6 @@ import "@/styles/code-block-custom.css";
 
 import PostContent from "./post";
 import Header from "@/components/header";
-import { link } from "fs";
 import { formatDateLong } from "@/lib/utils";
 
 export function generateStaticParams() {
