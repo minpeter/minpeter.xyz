@@ -20,7 +20,7 @@ export default function Page() {
 
   return (
     <section>
-      <Header title="블로그" description="블로그 글 목록." />
+      <Header title="블로그" description="내가 만든 블로그, 너를 위해 써봤지" />
       <div data-animate data-animate-speed="slow" className="group/list">
         {yearList &&
           Object.keys(yearList)
@@ -28,7 +28,7 @@ export default function Page() {
             .map((year) => (
               <div
                 key={year}
-                className="group/year flex border-t last-of-type:border-b border-gray-600 py-8"
+                className="group/year flex flex-col sm:flex-row gap-2 border-t last-of-type:border-b py-8"
               >
                 <div className="w-24">
                   <h2 className="w-fit px-2 rounded-md text-gray-400 group-hover/year:bg-secondary/100 group-hover/year:!opacity-100">
