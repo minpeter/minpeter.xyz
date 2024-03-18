@@ -5,7 +5,6 @@ import "@/styles/globals.css";
 import "@/styles/mdx.css";
 import { Toaster } from "@/components/ui/toaster";
 
-// import { Noto_Serif_KR as Serif } from "next/font/google";
 import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 
@@ -41,19 +40,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="kr">
-      <body
-        className={cn("min-h-screen antialiased", FontSans.className)}
-        // className={cn("min-h-screen font-sans antialiased")}
-      >
+      <body className={cn("antialiased", FontSans.className)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="container flex min-h-screen max-w-2xl flex-col py-8">
-            <main className="flex flex-col space-y-2">{children}</main>
-          </div>
+          <main className="container min-h-screen max-w-3xl py-12">
+            {children}
+          </main>
           <Footer />
           <Toaster />
         </ThemeProvider>

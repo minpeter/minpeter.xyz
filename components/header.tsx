@@ -13,7 +13,7 @@ type HeaderProps = {
 
 export default function Header({ title, description, link }: HeaderProps) {
   return (
-    <header className={"mb-10"}>
+    <header className="mb-10 space-y-1">
       {link ? (
         <div data-animate data-animate-speed="fast">
           <Link
