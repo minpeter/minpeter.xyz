@@ -6,6 +6,8 @@ import PostContent from "./post";
 import Header from "@/components/header";
 import { formatDateLong } from "@/lib/utils";
 
+import NewMetadata from "@/lib/metadata";
+
 export function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({
@@ -17,16 +19,16 @@ export async function generateMetadata({ params }: any) {
   const post = await getPostById(params.id);
 
   if (!post) {
-    return {
-      title: "404",
+    return NewMetadata({
+      title: "minpeter | 404",
       description: "Not found :/",
-    };
+    });
   }
 
-  return {
+  return NewMetadata({
     title: `minpeter | ${post.frontmatter.title}`,
     description: post.frontmatter.description,
-  };
+  });
 }
 
 export default async function Post({ params }: any) {

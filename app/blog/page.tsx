@@ -2,11 +2,12 @@ import Link from "next/link";
 import { getAllPosts } from "@/lib/loader";
 import Header from "@/components/header";
 import { cn, formatDate, formatYear } from "@/lib/utils";
+import NewMetadata from "@/lib/metadata";
 
-export const metadata = {
+export const metadata = NewMetadata({
   title: "minpeter | blog",
   description: "내가 만든 블로그, 너를 위해 써봤지",
-};
+});
 
 export default function Page() {
   const posts = getAllPosts();

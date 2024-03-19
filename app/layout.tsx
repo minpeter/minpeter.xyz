@@ -10,11 +10,12 @@ import { cn } from "@/lib/utils";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import Footer from "@/components/footer";
+import NewMetadata from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = NewMetadata({
   title: "minpeter",
-  description: "minpeter's blog - a blog about development",
-};
+  description: "이 웹에서 가장 멋진 사이트가 될거야~",
+});
 
 const FontSans = localFont({
   variable: "--font-sans",
