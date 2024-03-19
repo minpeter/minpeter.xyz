@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: any) {
   }
 
   return {
-    title: post.frontmatter.title,
+    title: `minpeter | ${post.frontmatter.title}`,
     description: post.frontmatter.description,
   };
 }

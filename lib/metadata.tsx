@@ -15,6 +15,7 @@ export default function NewMetadata({
         ? `https://${process.env.VERCEL_URL}`
         : `http://localhost:${process.env.PORT ?? 3_000}`
     ),
+
     title: title,
     description: description,
     keywords: [
@@ -28,6 +29,7 @@ export default function NewMetadata({
       "cloud",
       "k8s",
     ],
+
     openGraph: {
       type: "website",
       locale: "ko_KR",

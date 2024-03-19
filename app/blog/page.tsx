@@ -3,6 +3,11 @@ import { getAllPosts } from "@/lib/loader";
 import Header from "@/components/header";
 import { cn, formatDate, formatYear } from "@/lib/utils";
 
+export const metadata = {
+  title: "minpeter | blog",
+  description: "내가 만든 블로그, 너를 위해 써봤지",
+};
+
 export default function Page() {
   const posts = getAllPosts();
 
