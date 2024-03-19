@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 import Header from "@/components/header";
 
 export default function NotFound({ params }: any) {
