@@ -41,7 +41,7 @@
   font-weight: 550;
 }
 
-.mdx blockquote {
+/* .mdx blockquote {
   position: relative;
   color: var(--text-second);
   font-family: var(--font-serif), sans-serif;
@@ -61,7 +61,7 @@
   margin-left: var(--quote-offset);
   color: var(--text-second);
   content: close-quote;
-}
+} */
 
 .mdx> :has(+ :where(ul, ol)) {
   @apply mb-2;

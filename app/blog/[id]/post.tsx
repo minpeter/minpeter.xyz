@@ -67,10 +67,10 @@ export default function PostContent({ code }: any) {
 
         img: (props: any) => (
           <Image
-            {...props}
             className="rounded-lg object-cover border shadow-sm min-w-full"
             width={500}
             height={300}
+            src={props.src}
             alt={props.alt}
           />
         ),
