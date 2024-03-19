@@ -31,7 +31,7 @@ export default function Page() {
                 className="group/year flex flex-col sm:flex-row gap-2 border-t last-of-type:border-b py-8"
               >
                 <div className="w-24">
-                  <h2 className="w-fit px-2 rounded-md text-gray-400 group-hover/year:bg-secondary/100 group-hover/year:!opacity-100">
+                  <h2 className="w-fit px-2 rounded-md opacity-60 group-hover/year:bg-secondary/100 group-hover/year:!opacity-100">
                     {year}
                   </h2>
                 </div>

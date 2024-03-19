@@ -113,6 +113,7 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
         ".jpg": "file",
         ".gif": "file",
         ".jpeg": "file",
+        ".svg": "file",
       };
 
       options.publicPath = path.join("/", imagePathPrefix, id);

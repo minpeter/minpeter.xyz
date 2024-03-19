@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 const FontSans = localFont({
   variable: "--font-sans",
-  display: "fallback",
+  display: "swap",
   src: [
     {
       path: "../public/fonts/AritaBuri-Medium.woff2",
