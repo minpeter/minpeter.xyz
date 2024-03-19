@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import { CommitIcon, CookieIcon } from "@radix-ui/react-icons";
+import { CookieIcon, TransformIcon } from "@radix-ui/react-icons";
 import { CodeIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -16,7 +16,10 @@ export default function Page() {
           내가 만든 블로그, 너를 위해 써봤지
           <CookieIcon className="w-4 h-4 inline-block ml-1.5" />
         </Link>
-
+        <Link href="/show" className="underline">
+          우리 집에만 있지 보러 와
+          <TransformIcon className="w-4 h-4 inline-block ml-1.5" />
+        </Link>
         <Link
           href="https://ip.minpeter.tech/"
           target="_blank"

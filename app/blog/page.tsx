@@ -20,7 +20,11 @@ export default function Page() {
 
   return (
     <section>
-      <Header title="블로그" description="내가 만든 블로그, 너를 위해 써봤지" />
+      <Header
+        title="민웅기의 개발 노트"
+        description="내가 만든 블로그, 너를 위해 써봤지"
+        link={{ href: "/", text: "홈으로" }}
+      />
       <div data-animate data-animate-speed="slow" className="group/list">
         {yearList &&
           Object.keys(yearList)
