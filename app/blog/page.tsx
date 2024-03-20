@@ -12,9 +12,6 @@ export const metadata = NewMetadata({
 export default function Page() {
   const posts = getAllPosts();
 
-  const itemSytles =
-    "rounded-md group-hover/post:bg-secondary/100 group-hover/post:!opacity-100 group-hover/list:opacity-60";
-
   const yearList = posts.reduce((acc: any, post) => {
     const year = formatYear(post.frontmatter.date);
     if (!acc[year]) {
@@ -23,6 +20,9 @@ export default function Page() {
     acc[year].push(post);
     return acc;
   }, {});
+
+  const itemSytles =
+    "group-hover/year:!opacity-100 group-hover/post:bg-secondary/100 group-hover/list:opacity-60 rounded-md";
 
   return (
     <section>
@@ -41,7 +41,7 @@ export default function Page() {
                 className="group/year flex flex-col sm:flex-row gap-2 border-t last-of-type:border-b py-8"
               >
                 <div className="w-24">
-                  <h2 className="w-fit px-2 rounded-md opacity-60 group-hover/year:bg-secondary/100 group-hover/year:!opacity-100">
+                  <h2 className="w-fit px-2 rounded-md opacity-60 group-hover/year:bg-secondary/100">
                     {year}
                   </h2>
                 </div>
