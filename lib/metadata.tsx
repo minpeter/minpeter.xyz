@@ -36,12 +36,14 @@ export default function NewMetadata({
       siteName: "minpeter",
       title: title,
       description: description,
+      images: "/og-image.png",
     },
     twitter: {
       card: "summary_large_image",
       title: title,
       description: description,
       creator: "@minpeter",
+      images: "/og-image.png",
     },
     formatDetection: {
       telephone: false,
