@@ -45,15 +45,24 @@ export function getAllPosts(): BlogListProps[] {
 
   for (const dirName of dirNames) {
     const dirPath = path.join(postRootPath, dirName);
-    if (!fs.statSync(dirPath).isDirectory()) continue;
-    if (/^\./.test(dirName)) continue;
+    const dirext = dirName.split(".")[1];
+    const IsMarkdownFile = dirext === "md" || dirext === "mdx";
 
-    const filePath = path.join(
-      dirPath,
-      fs
-        .readdirSync(dirPath)
-        .filter((fileName) => /\.(mdx|md)$/.test(fileName))[0]
-    );
+    if (/^\./.test(dirName)) continue;
+    let filePath = "";
+
+    if (IsMarkdownFile) {
+      filePath = dirPath;
+    } else if (fs.statSync(dirPath).isDirectory()) {
+      filePath = path.join(
+        dirPath,
+        fs
+          .readdirSync(dirPath)
+          .filter((fileName) => /\.(mdx|md)$/.test(fileName))[0]
+      );
+    } else {
+      continue;
+    }
 
     const { id, hash } = hashAndId(filePath);
 
