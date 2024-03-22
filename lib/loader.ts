@@ -39,29 +39,32 @@ function hashAndId(filePath: string): { hash: string; id: string } {
 }
 
 export async function getAllPosts(): Promise<BlogListProps[]> {
-  let posts: BlogListProps[] = [];
-  const postRootPath = path.join(process.cwd(), "content");
+  const posts: BlogListProps[] = await Promise.all(
+    (
+      await fs.readdir(path.join(process.cwd(), "content"), {
+        withFileTypes: true,
+        recursive: true,
+      })
+    )
+      .filter((dirent) => /\.(mdx|md)$/.test(dirent.name))
+      .map(async (dirent) => {
+        const filePath = path.join(dirent.path, dirent.name);
 
-  const filePaths: string[] = (
-    await fs.readdir(postRootPath, { withFileTypes: true, recursive: true })
-  )
-    .filter((dirent) => /\.(mdx|md)$/.test(dirent.name))
-    .map((dirent) => {
-      return path.join(dirent.path, dirent.name);
-    });
+        const { id, hash } = hashAndId(filePath);
+        const { data: frontmatter } = matter(
+          await fs.readFile(filePath, "utf8")
+        );
 
-  for (const filePath of filePaths) {
-    const { id, hash } = hashAndId(filePath);
-    const { data: frontmatter } = matter(await fs.readFile(filePath, "utf8"));
+        return {
+          id,
+          hash,
+          frontmatter,
+          published: new Date(frontmatter.date).toISOString().split("T")[0],
 
-    posts.push({
-      id: id,
-      frontmatter,
-      published: new Date(frontmatter.date).toISOString().split("T")[0],
-      filePath,
-      hash,
-    });
-  }
+          filePath,
+        };
+      })
+  );
 
   return posts.sort(
     (a, b) => Date.parse(b.frontmatter.date) - Date.parse(a.frontmatter.date)
