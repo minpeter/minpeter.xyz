@@ -41,24 +41,17 @@ function hashAndId(filePath: string): { hash: string; id: string } {
 export async function getAllPosts(): Promise<BlogListProps[]> {
   let posts: BlogListProps[] = [];
   const postRootPath = path.join(process.cwd(), "content");
-  const objs = (await fs.readdir(postRootPath, { withFileTypes: true })).filter(
-    (dirent) =>
-      (dirent.isDirectory() || /\.(mdx|md)$/.test(dirent.name)) &&
-      !/^\./.test(dirent.name)
-  );
 
-  for (const obj of objs) {
-    let filePath = path.join(postRootPath, obj.name);
+  const filePaths: string[] = (
+    await fs.readdir(postRootPath, { withFileTypes: true, recursive: true })
+  )
+    .filter((dirent) => /\.(mdx|md)$/.test(dirent.name))
+    .map((dirent) => {
+      return path.join(dirent.path, dirent.name);
+    });
 
-    if (obj.isDirectory()) {
-      const files = await fs
-        .readdir(path.join(postRootPath, obj.name))
-        .then((files) => files.filter((file) => /\.(mdx|md)$/.test(file)));
-      filePath = path.join(postRootPath, obj.name, files[0]);
-    }
-
+  for (const filePath of filePaths) {
     const { id, hash } = hashAndId(filePath);
-
     const { data: frontmatter } = matter(await fs.readFile(filePath, "utf8"));
 
     posts.push({
@@ -77,11 +70,9 @@ export async function getAllPosts(): Promise<BlogListProps[]> {
 
 export async function getPostById(id: string): Promise<BlogPostProps | null> {
   const { filePath, published, hash, frontmatter } =
-    // getAllPosts().find((post) => post.id === id) || {};
     (await getAllPosts()).find((post) => post.id === id) || {};
   if (!filePath || !published || !hash || !frontmatter) return null;
 
-  // const { content: postData } = matter(fs.readFileSync(filePath, "utf8"));
   const { content: postData } = matter(await fs.readFile(filePath, "utf8"));
 
   const { code } = await bundleMDX({
