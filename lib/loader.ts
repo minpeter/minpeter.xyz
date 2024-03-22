@@ -33,7 +33,7 @@ export interface PHSProps {
 var phs_cache: PHSProps[] = [];
 
 export async function getPostPHS(): Promise<PHSProps[]> {
-  if (phs_cache.length > 0) {
+  if (phs_cache.length > 0 && process.env.NODE_ENV === "production") {
     return phs_cache;
   }
 
