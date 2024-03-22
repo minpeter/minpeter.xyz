@@ -41,37 +41,24 @@ function hashAndId(filePath: string): { hash: string; id: string } {
 export async function getAllPosts(): Promise<BlogListProps[]> {
   let posts: BlogListProps[] = [];
   const postRootPath = path.join(process.cwd(), "content");
-  // const dirNames = fs.readdirSync(postRootPath);
-  const dirNames = await fs.readdir(postRootPath);
+  const objs = (await fs.readdir(postRootPath, { withFileTypes: true })).filter(
+    (dirent) =>
+      (dirent.isDirectory() || /\.(mdx|md)$/.test(dirent.name)) &&
+      !/^\./.test(dirent.name)
+  );
 
-  for (const dirName of dirNames) {
-    const dirPath = path.join(postRootPath, dirName);
-    const dirext = dirName.split(".")[1];
-    const IsMarkdownFile = dirext === "md" || dirext === "mdx";
+  for (const obj of objs) {
+    let filePath = path.join(postRootPath, obj.name);
 
-    if (/^\./.test(dirName)) continue;
-    let filePath = "";
-
-    if (IsMarkdownFile) {
-      filePath = dirPath;
-      // } else if (fs.statSync(dirPath).isDirectory()) {
-    } else if ((await fs.stat(dirPath)).isDirectory()) {
-      filePath = path.join(
-        dirPath,
-        // fs
-        //   .readdirSync(dirPath)
-        //   .filter((fileName) => /\.(mdx|md)$/.test(fileName))[0]
-        (await fs.readdir(dirPath)).filter((fileName) =>
-          /\.(mdx|md)$/.test(fileName)
-        )[0]
-      );
-    } else {
-      continue;
+    if (obj.isDirectory()) {
+      const files = await fs
+        .readdir(path.join(postRootPath, obj.name))
+        .then((files) => files.filter((file) => /\.(mdx|md)$/.test(file)));
+      filePath = path.join(postRootPath, obj.name, files[0]);
     }
 
     const { id, hash } = hashAndId(filePath);
 
-    // const { data: frontmatter } = matter(fs.readFileSync(filePath, "utf8"));
     const { data: frontmatter } = matter(await fs.readFile(filePath, "utf8"));
 
     posts.push({
