@@ -10,36 +10,34 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 export interface BlogProps {
-  id: string;
-  hash: string;
-  published: string;
   frontmatter: any;
 }
 
 export interface BlogListProps extends BlogProps {
   filePath: string;
+  published: string;
+  slug: string;
+  hash: string;
 }
 
 export interface BlogPostProps extends BlogProps {
   content: string;
 }
 
-function hashAndId(filePath: string): { hash: string; id: string } {
-  const hash = createHash("md5").update(filePath).digest("hex").substring(0, 6);
-
-  let id = path
-    .basename(filePath, path.extname(filePath))
-    .replace(/(\s|_|\.|,)/g, "-");
-  if (!/^[a-zA-Z0-9-]+$/.test(id)) {
-    id = id.replace(/[^a-zA-Z0-9-]/g, "") + "-" + hash;
-  }
-  id = id.replace(/-{2,}/g, "-").toLowerCase();
-
-  return { hash, id };
+export interface PHSProps {
+  path: string;
+  hash: string;
+  slug: string;
 }
 
-export async function getAllPosts(): Promise<BlogListProps[]> {
-  const posts: BlogListProps[] = await Promise.all(
+var phs_cache: PHSProps[] = [];
+
+export async function getPostPHS(): Promise<PHSProps[]> {
+  if (phs_cache.length > 0) {
+    return phs_cache;
+  }
+
+  phs_cache = await Promise.all(
     (
       await fs.readdir(path.join(process.cwd(), "content"), {
         withFileTypes: true,
@@ -50,20 +48,47 @@ export async function getAllPosts(): Promise<BlogListProps[]> {
       .map(async (dirent) => {
         const filePath = path.join(dirent.path, dirent.name);
 
-        const { id, hash } = hashAndId(filePath);
-        const { data: frontmatter } = matter(
-          await fs.readFile(filePath, "utf8")
-        );
+        /// BEGIN HASH AND SLUG
+        const hash = createHash("md5")
+          .update(filePath)
+          .digest("hex")
+          .substring(0, 6);
+
+        let slug = path
+          .basename(filePath, path.extname(filePath))
+          .replace(/(\s|_|\.|,)/g, "-");
+        if (!/^[a-zA-Z0-9-]+$/.test(slug)) {
+          slug = slug.replace(/[^a-zA-Z0-9-]/g, "") + "-" + hash;
+        }
+        slug = slug.replace(/-{2,}/g, "-").toLowerCase();
+        /// END HASH AND SLUG
 
         return {
-          id,
+          path: filePath,
+          slug,
           hash,
-          frontmatter,
-          published: new Date(frontmatter.date).toISOString().split("T")[0],
-
-          filePath,
         };
       })
+  );
+
+  return phs_cache;
+}
+
+export async function getAllPosts(): Promise<BlogListProps[]> {
+  const phs = await getPostPHS();
+  const posts: BlogListProps[] = await Promise.all(
+    phs.map(async ({ path: filePath, slug, hash }) => {
+      const { data: frontmatter } = matter(await fs.readFile(filePath, "utf8"));
+
+      return {
+        filePath,
+        slug,
+        hash,
+
+        frontmatter,
+        published: new Date(frontmatter.date).toISOString().split("T")[0],
+      };
+    })
   );
 
   return posts.sort(
@@ -71,12 +96,20 @@ export async function getAllPosts(): Promise<BlogListProps[]> {
   );
 }
 
-export async function getPostById(id: string): Promise<BlogPostProps | null> {
-  const { filePath, published, hash, frontmatter } =
-    (await getAllPosts()).find((post) => post.id === id) || {};
-  if (!filePath || !published || !hash || !frontmatter) return null;
+export async function getPostBySlug(
+  slug: string
+): Promise<BlogPostProps | null> {
+  const phs = await getPostPHS().then((ps) =>
+    ps.find((post) => post.slug === slug)
+  );
 
-  const { content: postData } = matter(await fs.readFile(filePath, "utf8"));
+  if (!phs) return null;
+
+  const { path: filePath } = phs;
+
+  const { content: postData, data: frontmatter } = matter(
+    await fs.readFile(filePath, "utf8")
+  );
 
   const { code } = await bundleMDX({
     source: postData,
@@ -103,7 +136,12 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
     },
     esbuildOptions: (options) => {
       const imagePathPrefix = "dynamic";
-      options.outdir = path.join(process.cwd(), "public", imagePathPrefix, id);
+      options.outdir = path.join(
+        process.cwd(),
+        "public",
+        imagePathPrefix,
+        slug
+      );
 
       options.loader = {
         ...options.loader,
@@ -114,7 +152,7 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
         ".svg": "file",
       };
 
-      options.publicPath = path.join("/", imagePathPrefix, id);
+      options.publicPath = path.join("/", imagePathPrefix, slug);
 
       options.write = true;
       return options;
@@ -122,10 +160,7 @@ export async function getPostById(id: string): Promise<BlogPostProps | null> {
   });
 
   return {
-    id,
-    hash,
     frontmatter,
     content: code,
-    published,
   };
 }

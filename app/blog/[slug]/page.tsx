@@ -1,4 +1,4 @@
-import { getPostById, getAllPosts } from "@/lib/loader";
+import { getPostBySlug, getPostPHS } from "@/lib/loader";
 
 import "@/styles/code-block-custom.css";
 
@@ -9,14 +9,14 @@ import { formatDateLong } from "@/lib/utils";
 import NewMetadata from "@/lib/metadata";
 
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
-  return posts.map((post) => ({
-    id: post.id,
+  const phs = await getPostPHS();
+  return phs.map((phs) => ({
+    slug: phs.slug,
   }));
 }
 
 export async function generateMetadata({ params }: any) {
-  const post = await getPostById(params.id);
+  const post = await getPostBySlug(params.slug);
 
   if (!post) {
     return NewMetadata({
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: any) {
 }
 
 export default async function Post({ params }: any) {
-  const post = await getPostById(params.id);
+  const post = await getPostBySlug(params.slug);
 
   return (
     <section>

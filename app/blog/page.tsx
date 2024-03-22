@@ -53,10 +53,10 @@ export default async function Page() {
                   >
                     {yearList[year].map((post: any) => (
                       <li
-                        key={post.id}
+                        key={post.hash}
                         className="flex justify-between group/post space-x-4"
                       >
-                        <Link href={`/blog/${post.id}`}>
+                        <Link href={`/blog/${post.slug}`}>
                           <span
                             className={cn(
                               itemSytles,
