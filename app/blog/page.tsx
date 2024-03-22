@@ -9,8 +9,8 @@ export const metadata = NewMetadata({
   description: "내가 만든 블로그, 너를 위해 써봤지",
 });
 
-export default function Page() {
-  const posts = getAllPosts();
+export default async function Page() {
+  const posts = await getAllPosts();
 
   const yearList = posts.reduce((acc: any, post) => {
     const year = formatYear(post.frontmatter.date);

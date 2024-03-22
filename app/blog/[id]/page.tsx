@@ -8,8 +8,8 @@ import { formatDateLong } from "@/lib/utils";
 
 import NewMetadata from "@/lib/metadata";
 
-export function generateStaticParams() {
-  const posts = getAllPosts();
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
   return posts.map((post) => ({
     id: post.id,
   }));

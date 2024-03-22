@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
 import { createHash } from "crypto";
@@ -38,10 +38,11 @@ function hashAndId(filePath: string): { hash: string; id: string } {
   return { hash, id };
 }
 
-export function getAllPosts(): BlogListProps[] {
+export async function getAllPosts(): Promise<BlogListProps[]> {
   let posts: BlogListProps[] = [];
   const postRootPath = path.join(process.cwd(), "content");
-  const dirNames = fs.readdirSync(postRootPath);
+  // const dirNames = fs.readdirSync(postRootPath);
+  const dirNames = await fs.readdir(postRootPath);
 
   for (const dirName of dirNames) {
     const dirPath = path.join(postRootPath, dirName);
@@ -53,12 +54,16 @@ export function getAllPosts(): BlogListProps[] {
 
     if (IsMarkdownFile) {
       filePath = dirPath;
-    } else if (fs.statSync(dirPath).isDirectory()) {
+      // } else if (fs.statSync(dirPath).isDirectory()) {
+    } else if ((await fs.stat(dirPath)).isDirectory()) {
       filePath = path.join(
         dirPath,
-        fs
-          .readdirSync(dirPath)
-          .filter((fileName) => /\.(mdx|md)$/.test(fileName))[0]
+        // fs
+        //   .readdirSync(dirPath)
+        //   .filter((fileName) => /\.(mdx|md)$/.test(fileName))[0]
+        (await fs.readdir(dirPath)).filter((fileName) =>
+          /\.(mdx|md)$/.test(fileName)
+        )[0]
       );
     } else {
       continue;
@@ -66,7 +71,8 @@ export function getAllPosts(): BlogListProps[] {
 
     const { id, hash } = hashAndId(filePath);
 
-    const { data: frontmatter } = matter(fs.readFileSync(filePath, "utf8"));
+    // const { data: frontmatter } = matter(fs.readFileSync(filePath, "utf8"));
+    const { data: frontmatter } = matter(await fs.readFile(filePath, "utf8"));
 
     posts.push({
       id: id,
@@ -84,10 +90,12 @@ export function getAllPosts(): BlogListProps[] {
 
 export async function getPostById(id: string): Promise<BlogPostProps | null> {
   const { filePath, published, hash, frontmatter } =
-    getAllPosts().find((post) => post.id === id) || {};
+    // getAllPosts().find((post) => post.id === id) || {};
+    (await getAllPosts()).find((post) => post.id === id) || {};
   if (!filePath || !published || !hash || !frontmatter) return null;
 
-  const { content: postData } = matter(fs.readFileSync(filePath, "utf8"));
+  // const { content: postData } = matter(fs.readFileSync(filePath, "utf8"));
+  const { content: postData } = matter(await fs.readFile(filePath, "utf8"));
 
   const { code } = await bundleMDX({
     source: postData,
