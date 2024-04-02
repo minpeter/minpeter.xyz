@@ -4,6 +4,12 @@ description: AWS CloudFormation을 이용한 전체 자동 설정
 date: 2024-04-01
 ---
 
+> April Fool's Day 🤪
+
+실제 방법을 다루지 않습니다, 특정 검색어가 구글 검색에 의해 얼마나 유입되는지 실험하기 위해 작성하였습니다.
+
+---
+
 ```yaml
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
