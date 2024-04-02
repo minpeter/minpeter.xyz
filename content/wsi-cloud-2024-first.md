@@ -1,0 +1,197 @@
+---
+title: 2024년 지방기능경기대회 클라우드컴퓨팅 1과제
+description: AWS CloudFormation을 이용한 전체 자동 설정
+date: 2024-04-01
+---
+
+> April Fool's Day 🤪
+
+실제 방법을 다루지 않습니다, 특정 검색어가 구글 검색에 의해 얼마나 유입되는지 실험하기 위해 작성하였습니다.
+
+---
+
+```yaml
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  # 빈 리소스 섹션
+  EmptyResource:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL: "https://s3.amazonaws.com/my-bucket/empty-template.yaml"
+
+  # 출력만 하는 리소스
+  EchoResource:
+    Type: "AWS::CloudFormation::CustomResource"
+    Properties:
+      ServiceToken: "arn:aws:lambda:::function:my-echo-function"
+      Properties:
+        Message: "Hello, world!"
+
+Outputs:
+  EmptyOutput:
+    Value: ""
+  EchoOutput:
+    Value: !GetAtt EchoResource.Outputs.Message
+```
+
+## AWS CloudFormation 스크립트
+
+### 1. 스크립트 요약
+
+본 스크립트는 AWS CloudFormation을 활용하여 아래 기능을 자동 설정합니다.
+
+- **빈 리소스 스택 생성**: `EmptyResource` 섹션은 `empty-template.yaml` 템플릿을 참조하여 빈 스택을 생성합니다. 실제 리소스는 없지만, 스택 구조 및 종속성을 정의하는 데 유용합니다.
+- **메시지 출력**: `EchoResource` 섹션은 Lambda 함수 `my-echo-function`을 호출하여 "Hello, world!" 메시지를 출력합니다.
+- **출력 값 제공**: `Outputs` 섹션은 `EmptyOutput` (빈 문자열) 및 `EchoOutput` (Lambda 함수 출력 메시지) 값을 제공합니다.
+
+### 2. 스크립트 사용 방법
+
+1. **템플릿 파일 저장**:
+   - `empty-template.yaml` 파일을 S3 버킷에 저장합니다.
+   - 본 스크립트 파일을 원하는 위치에 저장합니다.
+2. **CloudFormation 스택 생성**:
+   - AWS 콘솔 또는 CLI를 사용하여 스크립트 파일을 참조하여 CloudFormation 스택을 생성합니다.
+   - 스택 생성 시 `my-echo-function` Lambda 함수 ARN을 `EchoResource` 섹션의 `ServiceToken` 속성에 입력해야 합니다.
+3. **출력 확인**:
+   - 스택 생성 완료 후 `Outputs` 섹션의 `EmptyOutput` 및 `EchoOutput` 값을 확인합니다.
+
+### 3. 추가 기능 및 활용
+
+**3.1. 리소스 추가**:
+
+본 스크립트는 기본적인 예시이며, 실제 환경에 맞춰 다양한 리소스를 추가하여 자동 설정을 확장할 수 있습니다. 예를 들어, 다음과 같은 리소스를 추가할 수 있습니다.
+
+- EC2 인스턴스 생성 및 설정
+- RDS 데이터베이스 생성 및 설정
+- S3 버킷 생성 및 설정
+- CloudFront 배포 설정
+- Lambda 함수 생성 및 설정
+
+**3.2. 파라미터 및 조건 추가**:
+
+스크립트에 파라미터를 추가하여 스택 생성 시 사용자 입력 값을 받아 동적으로 설정을 변경할 수 있습니다. 또한 조건문을 활용하여 환경에 따라
+
+설정을 조정할 수 있습니다.
+
+## EKS 생성 후 ALB ingress로 설정
+
+```yaml
+apiVersion: "klodd.tjcsec.club/v1"
+kind: Challenge
+metadata:
+name: test
+spec:
+name: Test Challenge
+timeout: 10000
+pods:
+  - name: app
+    ports:
+      - port: 80
+    spec:
+      containers:
+        - name: main
+          image: traefik/whoami:latest
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 75m
+            limits:
+              memory: 250Mi
+              cpu: 100m
+      automountServiceAccountToken: false
+expose:
+  kind: http
+  pod: app
+  port: 80
+middlewares:
+  - contentType:
+      autoDetect: false
+  - rateLimit:
+      average: 5
+      burst: 10
+
+```
+
+`kubectl apply -f challenge.yaml`
+
+```yaml
+apiVersion: "klodd.tjcsec.club/v1"
+kind: Challenge
+metadata:
+  name: analects
+spec:
+  name: Analects
+  timeout: 300000
+  pods:
+    - name: app
+      ports:
+        - port: 80
+      spec:
+        containers:
+          - name: app
+            image: analects-app:latest
+            resources:
+              requests:
+                memory: 100Mi
+                cpu: 50m
+              limits:
+                memory: 200Mi
+                cpu: 100m
+            startupProbe:
+              httpGet:
+                path: "/search.php?q=with%20two%20others"
+                port: 80
+              initialDelaySeconds: 0
+              periodSeconds: 5
+              failureThreshold: 30
+        automountServiceAccountToken: false
+    - name: mysql
+      ports:
+        - port: 3306
+      spec:
+        containers:
+          - name: mysql
+            image: analects-mysql:latest
+            resources:
+              requests:
+                memory: 200Mi
+                cpu: 50m
+              limits:
+                memory: 500Mi
+                cpu: 100m
+        automountServiceAccountToken: false
+  expose:
+    kind: http
+    pod: app
+    port: 80
+```
+
+위에 있는 yaml 파일을 생성하고 `kubectl apply -f challenge.yaml` 명령어를 실행하면 해당 리소스가 생성됩니다.
+
+**3.3. 배포 자동화**:
+
+AWS CodePipeline, CodeBuild 등을 활용하여 스크립트 업데이트 및 배포를 자동화할 수 있습니다.
+
+**3.4. 모듈화 및 재사용**:
+
+스크립트를 모듈화하여 코드 재사용성을 높이고, 다양한 환경에 맞춰 쉽게 조정할 수 있습니다.
+
+### 4. 참고자료
+
+- AWS CloudFormation 문서: [https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/)
+- AWS CloudFormation 템플릿 예시: [유효하지 않은 URL 삭제됨]
+- AWS Lambda 문서: [https://docs.aws.amazon.com/lambda/](https://docs.aws.amazon.com/lambda/)
+
+### 5. 주의 사항
+
+- 스크립트를 사용하기 전에 내용을 충분히 검토하고, 필요에 따라 수정 및 보완해야 합니다.
+- 스크립트 실행으로 인해 발생하는 비용은 사용자의 책임입니다.
+- 스크립트는 예시이며, 실제 환경에 맞춰 조정해야 합니다.
+
+### 6. 기타
+
+본 스크립트는 기능경기대회 1과제 완료를 위한 기본적인 틀을 제공하며, 실제 환경에 맞춰 다양한 기능을 추가하고 확장할 수 있습니다.
+
+##
+
+본 스크립트가 기능경기대회 1과제 완료에 도움이 되기를 바랍니다.
