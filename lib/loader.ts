@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import { createHash } from "crypto";
 import { bundleMDX } from "mdx-bundler";
 
-import remarkMdxImages from "remark-mdx-images";
+import rehypeMdxImportMedia from "rehype-mdx-import-media";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -119,9 +119,10 @@ export async function getPostBySlug(
       return options;
     },
     mdxOptions(options) {
-      options.remarkPlugins = [remarkGfm, remarkMdxImages];
+      options.remarkPlugins = [remarkGfm];
       options.rehypePlugins = [
         rehypeSlug,
+        rehypeMdxImportMedia,
         [
           rehypeAutolinkHeadings,
           {
