@@ -7,6 +7,7 @@ import { codeVariants } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import copy from "clipboard-copy";
 import { highlight } from "sugar-high";
+// import "@/styles/mdx.css";
 
 import {
   Table,

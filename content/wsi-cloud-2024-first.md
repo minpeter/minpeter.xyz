@@ -13,13 +13,13 @@ date: 2024-04-01
 ```yaml
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
-  # 빈 리소스 섹션
+  # empty resource stack
   EmptyResource:
     Type: "AWS::CloudFormation::Stack"
     Properties:
       TemplateURL: "https://s3.amazonaws.com/my-bucket/empty-template.yaml"
 
-  # 출력만 하는 리소스
+  # only print message
   EchoResource:
     Type: "AWS::CloudFormation::CustomResource"
     Properties:

@@ -1,7 +1,5 @@
 import { getPostBySlug, getPostPHS } from "@/lib/loader";
 
-import "@/styles/code-block-custom.css";
-
 import PostContent from "./post";
 import Header from "@/components/header";
 import { formatDateLong } from "@/lib/utils";
