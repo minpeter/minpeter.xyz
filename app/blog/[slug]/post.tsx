@@ -7,7 +7,7 @@ import { codeVariants } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import copy from "clipboard-copy";
 import { highlight } from "sugar-high";
-// import "@/styles/mdx.css";
+import "@/styles/mdx.css";
 
 import {
   Table,
@@ -31,9 +31,6 @@ export default function PostContent({ code }: any) {
         tbody: (props: any) => <TableBody {...props} />,
         thead: (props: any) => <TableHeader {...props} />,
         tr: (props: any) => <TableRow {...props} />,
-        img: (props: any) => (
-          <Image width={500} height={1} src={props.src} alt={props.alt} />
-        ),
 
         code: ({ children }: any) => {
           const isMultiline = children.includes("\n");

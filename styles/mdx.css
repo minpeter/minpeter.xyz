@@ -1,103 +1,28 @@
-.mdx {
-  @apply w-full max-w-content text-tx;
-
-  --shiki-color-text: var(--text-color);
-  --shiki-color-background: var(--gray3);
-  --shiki-token-constant: var(--gray12);
-  --shiki-token-string: var(--gray11);
-  --shiki-token-comment: var(--gray9);
-  --shiki-token-keyword: var(--gray10);
-  --shiki-token-parameter: var(--gray12);
-  --shiki-token-function: var(--gray12);
-  --shiki-token-string-expression: var(--gray11);
-  --shiki-token-punctuation: var(--gray9);
-  --shiki-token-link: var(--gray12);
+.mdx img {
+  display: flex;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 0.5rem;
 }
 
-
 .mdx code:not(pre code) {
-  @apply relative rounded-md bg-gray-3 px-1.5 py-1 text-sm text-gray-12;
+  @apply relative rounded-md px-1.5 py-1 text-xs;
+  color: #de3737;
+
+}
+
+.mdx code {
+  /* 클릭가능한 마우스 표시, 계속 오버시 click to copy 메세지 보여주기 */
+  @apply cursor-pointer;
 }
 
 .mdx pre {
-  @apply relative grid overflow-x-auto rounded-lg bg-gray-3 px-4 py-3 text-sm leading-6;
+  @apply relative overflow-x-auto rounded-lg px-4 py-3 text-sm;
+  @apply border bg-card text-card-foreground shadow-sm;
   -moz-tab-size: 4;
   -o-tab-size: 4;
   tab-size: 4;
 }
-
-.mdx [data-rehype-pretty-code-fragment] pre {
-  @apply px-0;
-}
-
-[data-rehype-pretty-code-title] {
-  @apply mb-1 text-sm text-gray-11;
-}
-
-[data-rehype-pretty-code-caption] {
-  @apply mt-1 text-sm text-gray-11;
-}
-
-[data-line] {
-  @apply inline-block w-full px-4;
-}
-
-[data-highlighted-line] {
-  @apply bg-black-A4;
-}
-
-[data-line-numbers] {
-  counter-reset: line;
-}
-
-[data-line-numbers]>[data-line] {
-  @apply pl-2;
-}
-
-[data-line-numbers]>[data-line]::before {
-  @apply mr-6 inline-block w-4 text-right text-gray-9;
-  counter-increment: line;
-  content: counter(line);
-}
-
-code[data-line-numbers-max-digits='2']>[data-line]::before {
-  width: 1.5rem;
-}
-
-code[data-line-numbers-max-digits='3']>[data-line]::before {
-  width: 2.5rem;
-}
-
-[data-highlighted-chars] {
-  @apply rounded-md bg-black-A4 px-1 shadow;
-}
-
-[data-chars-id] {
-  @apply border-b-2;
-}
-
-[data-chars-id] span {
-  color: inherit !important;
-}
-
-[data-chars-id='v'] {
-  @apply font-semibold text-white !important;
-  border-bottom-color: rgb(249 168 212);
-  background-color: #9f123980;
-}
-
-[data-chars-id='s'] {
-  @apply font-semibold text-white !important;
-  border-bottom-color: rgb(202 138 4);
-  background-color: #854d0e80;
-}
-
-[data-chars-id='i'] {
-  @apply font-semibold text-white !important;
-  border-bottom-color: rgb(147 51 234);
-  background-color: #6b21a880;
-}
-
 
 .mdx .anchor {
   @apply no-underline after:opacity-0 hover:after:opacity-100 focus:after:opacity-100;
@@ -121,70 +46,67 @@ code[data-line-numbers-max-digits='3']>[data-line]::before {
 
 
 
+.mdx>* {
+  @apply mb-2;
+  color: #b0b0b0;
+}
+
+.mdx> :where(h1, h2, h3, h4) {
+  @apply text-base font-semibold leading-7;
+}
+
 .mdx> :first-child {
   @apply mt-0;
 }
 
-.mdx>* {
-  @apply mb-7;
-}
-
 .mdx> :where(h1, h2, h3, h4) {
-  @apply scroll-mt-page text-base font-semibold leading-7;
+  color: var(--gray-900);
+  font-weight: 600;
+  scroll-margin-top: 6rem;
 }
 
 .mdx> :where(h1, h2) {
-  @apply mt-page;
+  margin-top: 6rem;
 }
 
 .mdx> :where(h3, h4) {
-  @apply mt-20;
+  @apply mt-4;
 }
 
-.mdx> :where(h1, h2)+ :where(h3, h4) {
-  @apply mt-0;
-}
-
-.mdx p {
-  @apply text-base leading-7 tracking-normal;
-}
-
-.mdx b,
-.mdx strong:not:has(code) {
-  @apply bg-gray-4 p-0.5 font-semibold;
-}
-
-.mdx em {
-  @apply font-serif not-italic;
-}
-
-.mdx del {
-  @apply !text-gray-8;
+.mdx> :where(h1)+ :where(h2) {
+  margin-top: 1.5rem;
 }
 
 .mdx a {
-  @apply relative break-all underline decoration-gray-8 decoration-1 underline-offset-[2.5px] transition-[color, text-decoration-color] duration-xx ease-[ease] hover:text-tx hover:decoration-gray-9 hover:duration-fast;
+  text-decoration: underline;
 }
 
+.mdx b,
+.mdx strong {
+  font-weight: 550;
+}
+
+
 .mdx blockquote {
-  @apply relative font-serif text-gray-11;
+  position: relative;
+  color: var(--gray-700);
+  font-family: var(--font-serif), sans-serif;
   quotes: '“' '”' '‘' '’';
-  --quote-offset: 2px;
+  --quote-offset: 3px;
 }
 
 .mdx blockquote:before {
-  @apply absolute -translate-x-full text-gray-11;
-  content: open-quote;
+  position: absolute;
   left: calc(-1 * var(--quote-offset));
+  color: var(--gray-700);
+  content: open-quote;
+  transform: translateX(-100%);
 }
 
 .mdx blockquote :last-child:after {
-  content: close-quote;
   margin-left: var(--quote-offset);
-}
-
-.mdx blockquote * {
-  @apply text-gray-11;
+  color: var(--gray-700);
+  content: close-quote;
 }
 
 .mdx> :has(+ :where(ul, ol)) {
@@ -192,9 +114,9 @@ code[data-line-numbers-max-digits='3']>[data-line]::before {
 }
 
 .mdx ul {
-  list-style-type: disc;
-  list-style-position: outside;
   padding-left: 16px;
+  list-style-position: outside;
+  list-style-type: disc;
 }
 
 .mdx li>ul {
@@ -206,7 +128,7 @@ code[data-line-numbers-max-digits='3']>[data-line]::before {
 }
 
 .mdx li::marker {
-  @apply text-gray-11;
+  color: var(--gray-300);
 }
 
 .mdx li+li,
@@ -219,32 +141,43 @@ code[data-line-numbers-max-digits='3']>[data-line]::before {
   @apply mb-3;
 }
 
+.mdx li:has([data-rehype-pretty-code-fragment])::marker {
+  content: none;
+}
+
 .mdx ol {
   --counter-space: 12px;
+  padding: 0;
   counter-reset: basics-ol;
   list-style-type: none;
-  padding: 0;
 }
 
 .mdx ol li {
   --l: calc(2 * var(--counter-space));
-  text-indent: calc(-1 * var(--l));
   padding-left: var(--l);
+  text-indent: calc(-1 * var(--l));
 }
 
 .mdx ol li:before {
-  @apply inline-flex select-none items-center justify-end text-right text-gray-11;
+  display: inline-flex;
+  min-width: var(--counter-space);
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: var(--counter-space);
+  color: var(--gray-300);
   content: counter(basics-ol) '. ';
   counter-increment: basics-ol;
-  min-width: var(--counter-space);
-  margin-right: var(--counter-space);
   font-feature-settings: 'tnum' 1;
   letter-spacing: -0.05em;
   line-height: normal;
+  text-align: right;
+  user-select: none;
 }
 
 .mdx hr {
-  @apply h-[1px] border-none bg-gray-5;
+  height: 1px;
+  border: none;
+  background-color: var(--border);
 }
 
 .mdx table {
@@ -268,21 +201,7 @@ code[data-line-numbers-max-digits='3']>[data-line]::before {
   @apply border-r;
 }
 
-.mdx img {
-  @apply flex overflow-hidden rounded-md;
-}
-
-.mdx img+em,
-.mdx img+em p {
-  @apply mt-2 inline-block font-sans text-sm not-italic leading-5 text-gray-11;
-}
-
-.mdx img,
-.medium-zoom-image--opened {
-  filter: drop-shadow(0 25px 20px rgba(0, 0, 0, 0.1));
-}
-
-.medium-zoom-overlay,
-.medium-zoom-image--opened {
-  z-index: 1000;
+.mdx figure {
+  overflow: hidden;
+  border-radius: 6px;
 }

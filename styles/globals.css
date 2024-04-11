@@ -6,7 +6,7 @@
 
   /* width */
   ::-webkit-scrollbar {
-    @apply w-1.5;
+    @apply w-1.5 h-1;
   }
 
   /* Track */
@@ -16,7 +16,7 @@
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    @apply bg-neutral-700 rounded;
+    @apply bg-neutral-800 rounded;
   }
 
 
@@ -30,7 +30,12 @@
   }
 
 
+
+
   :root {
+
+
+    --text-second: #b0b0b0;
 
     --sh-class: #2d5e9d;
     --sh-identifier: #697a8e;
