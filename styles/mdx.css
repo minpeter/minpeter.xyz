@@ -7,8 +7,14 @@
 
 .mdx code:not(pre code) {
   @apply relative rounded-md px-1.5 py-1 text-xs;
-  color: #de3737;
+  color: #e23838;
 
+}
+
+
+.mdx pre,
+.mdx img {
+  margin: 1rem 0;
 }
 
 .mdx code {
