@@ -170,114 +170,6 @@ if문의 숫자들을 적어보면 다음과 같음
 
 이래서 알아낸건 안비밀
 
-`89fc238534a13e556726cf70f36205cf_ST4r10RD`
-
-위의 값을 인자로 프로그램 실행
-
-```
-./vault 89fc238534a13e556726cf70f36205cf_ST4r10RD
-```
-
-output :
-
-```
-[+] You cracked the vault.
-[+] Your flag is flag{89fc238534a13e556726cf70f36205cf_ST4r10RD}
-```
-
-히히 바로 제출해보면?
-
-풀이 끗!!
-
-![Untitled](revagers/Untitled-2.png)
-
-Brrrrrrrr 이 나다 :)파일 다운 후 메모장으로 열어 파일 시그니처 확인
-
-![Untitled](revagers/Untitled.png)
-
-손쉽게 ELF 파일, 즉 리눅스 실행 파일인 것을 알 수 있음
-
-바로 IDA로 오픈
-
-```c
-__int64 __fastcall main(int a1, char **a2, char **a3)
-{
-  if ( a1 == 2 )
-  {
-    if ( strlen(a2[1]) == 41 )
-      sub_1159(a2[1]);
-    else
-      printf("[!] Incorrect Passcode");
-  }
-  else
-  {
-    printf("[!] ERR! Usage ./vault <Passcode>");
-  }
-  return 0LL;
-}
-```
-
-```c
-int __fastcall sub_1159(const char *a1)
-{
-  int result; // eax
-
-  result = *((unsigned __int8 *)a1 + 1);
-  if ( (_BYTE)result == '9' )
-  {
-    result = *((unsigned __int8 *)a1 + 15);
-    if ( (_BYTE)result == '5' )
-    {
---- [반복되는 부분 생략] ---
-              result = *((unsigned __int8 *)a1 + 10);
-              if ( (_BYTE)result == 'a' )
-              {
-                result = *((unsigned __int8 *)a1 + 32);
-                if ( (_BYTE)result == '_' )
-                {
-                  result = *((unsigned __int8 *)a1 + 19);
-                  if ( (_BYTE)result == '6' )
-                  {
-                    result = *((unsigned __int8 *)a1 + 6);
-                    if ( (_BYTE)result == '8' )
-                    {
---- [반복되는 부분 생략] ---
-                      result = *((unsigned __int8 *)a1 + 18);
-                      if ( (_BYTE)result == '2' )
-                      {
-                        result = *((unsigned __int8 *)a1 + 35);
-                        if ( (_BYTE)result == '4' )
-                        {
-                          if ( a1[2] == 'f' )
-                          {
-                            puts("[+] You cracked the vault.");
-                            return printf(
-                                     "[+] Your flag is flag{%s}",
-                                     a1);
-                          }
-                          else
-                          {
-                            return printf("[!] Incorrect Passcode");
-                          }
---- [닫는 괄호 생략] ---
-  return result;
-}
-```
-
-./vault &lt;passcode&gt;로 실행 가능하고
-
-이때 passcode의 길이는 41
-
-길이 41의 문자열을 sub_1159(a1)으로 호출
-
-이 함수에서 입력값을 검사한다는 것을 알 수 있음
-
-if문의 숫자들을 적어보면 다음과 같음
-
-![이래서 알아낸건 안비밀](revagers/Untitled-1.png)
-
-이래서 알아낸건 안비밀
-
 89fc238534a13e556726cf70f36205cf_ST4r10RD
 
 위의 값을 인자로 프로그램 실행
@@ -293,6 +185,7 @@ output :
 풀이 끗!!
 
 ![Untitled](revagers/Untitled-2.png)
+Brrrrrrrr 이 나다 :)
 
 ## 3. [Steganography] 100점 - T'kani
 
