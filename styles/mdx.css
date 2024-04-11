@@ -119,75 +119,41 @@
   content: close-quote;
 }
 
-.mdx> :has(+ :where(ul, ol)) {
-  @apply mb-2;
+.mdx ol,
+ul {
+  margin: 2rem 0;
+}
+
+.mdx li>* {
+  @apply mb-3 ml-3;
 }
 
 .mdx ul {
-  padding-left: 16px;
+  padding-left: 1rem;
   list-style-position: outside;
   list-style-type: disc;
 }
 
 .mdx li>ul {
-  @apply list-[circle];
-}
-
-.mdx li {
-  @apply list-item leading-7;
-}
-
-.mdx li::marker {
-  color: var(--gray-300);
-}
-
-.mdx li+li,
-.mdx li>ul {
-  @apply mt-[7px];
-}
-
-.mdx li>div,
-.mdx li>p {
-  @apply mb-3;
-}
-
-.mdx li:has([data-rehype-pretty-code-fragment])::marker {
-  content: none;
+  @apply list-decimal;
 }
 
 .mdx ol {
-  --counter-space: 12px;
-  padding: 0;
-  counter-reset: basics-ol;
-  list-style-type: none;
+  padding-left: 1rem;
+  list-style-position: outside;
+  list-style-type: decimal;
 }
 
-.mdx ol li {
-  --l: calc(2 * var(--counter-space));
-  padding-left: var(--l);
-  text-indent: calc(-1 * var(--l));
+.mdx li>ol {
+  @apply list-[circle];
 }
 
-.mdx ol li:before {
-  display: inline-flex;
-  min-width: var(--counter-space);
-  align-items: center;
-  justify-content: flex-end;
-  margin-right: var(--counter-space);
-  color: var(--gray-300);
-  content: counter(basics-ol) '. ';
-  counter-increment: basics-ol;
-  font-feature-settings: 'tnum' 1;
-  letter-spacing: -0.05em;
-  line-height: normal;
-  text-align: right;
-  user-select: none;
-}
+
 
 .mdx hr {
-  height: 1px;
-  border: none;
-  background-color: var(--border);
+  height: 0px;
+  border-bottom: 1px solid #3e3e3e;
+  margin: 4rem 0;
 }
 
 .mdx table {
