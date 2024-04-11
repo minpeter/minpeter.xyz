@@ -51,6 +51,10 @@
 }
 
 
+.mdx p {
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
 
 .mdx>* {
   @apply mb-2;

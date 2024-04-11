@@ -26,9 +26,18 @@ export function Ip() {
   const [ip, setIp] = useState("");
 
   useEffect(() => {
-    fetch("https://ip.minpeter.tech/ip").then((res) =>
-      res.text().then((ip) => setIp(ip))
-    );
+    fetch("https://ip.minpeter.xyz/ip")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        return res.text();
+      })
+      .then((ip) => setIp(ip))
+      .catch((err) => {
+        console.error(err);
+        setIp("Failed to fetch IP, check console for more information.");
+      });
   }, []);
 
   return <span>Your IP: {ip ? ip : "Loading..."}</span>;
