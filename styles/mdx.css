@@ -121,11 +121,7 @@
 
 .mdx ol,
 .mdx ul {
-  margin: 2rem 0;
-}
-
-.mdx li>* {
-  @apply mb-3 ml-3;
+  margin: 0.5rem 0;
 }
 
 .mdx ul {
