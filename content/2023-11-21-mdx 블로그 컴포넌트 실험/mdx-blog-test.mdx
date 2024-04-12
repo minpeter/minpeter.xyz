@@ -8,6 +8,48 @@ import Typing from "@/components/typing";
 
 # Heading 1
 
+```
+/**
+ * @param {string} names
+ * @return {Promise<string[]>}
+ */
+async function notify(names) {
+  const tags = []
+  for (let i = 0; i < names.length; i++) {
+    tags.push('@' + names[i])
+  }
+  await ping(tags)
+}
+class SuperArray extends Array {
+  static core = Object.create(null)
+  constructor(...args) { super(...args); }
+  bump(value) {
+    return this.map(
+      x => x == undefined ? x + 1 : 0
+    ).concat(value)
+  }
+}
+```
+
+```
+const element = (
+  <>
+    <Food
+      season={{
+        sault: <p a={[{}]} />
+      }}>
+    </Food>
+    {/* jsx comment */}
+    <h1 className="title" data-title="true">
+      Read{' '}
+      <Link href="/posts/first-post">
+        <a>this page! - {Date.now()}</a>
+      </Link>
+    </h1>
+  </>
+)
+```
+
 ## Heading 2
 
 **Paragraphs:**
@@ -24,11 +66,13 @@ This is a paragraph.
      - List item 2
      - List item 3
 
-       this is test Content
+       이건 테스트용 코드고
 
        ```js
        console.log("Hello, World!");
        ```
+
+       그리고 이건 이미지죠
 
        ![](./images/mdx-logo.png)
 
@@ -182,4 +226,4 @@ export function Counter() {
 
 ---
 
-> "간단한 되게 좋아하네"
+> 간단한 되게 좋아하네

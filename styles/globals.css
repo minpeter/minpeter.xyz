@@ -24,38 +24,22 @@
     background-color: var(--selection);
   }
 
-
   html {
     scroll-behavior: smooth;
   }
 
-
-
-
   :root {
+    --text-second: #585858;
 
-
-    --text-second: #b0b0b0;
-
-    --sh-class: #2d5e9d;
-    --sh-identifier: #697a8e;
-    --sh-sign: #8996a3;
-    --sh-property: #0550ae;
-    --sh-entity: #249a97;
-    --sh-jsxliterals: #6266d1;
-    --sh-string: #00a99a;
-    --sh-keyword: #f47067;
-    --sh-comment: #a19595;
-
-    /* --sh-class: #171717;
-    --sh-identifier: #697a8e;
-    --sh-sign: #8996a3;
-    --sh-property: #171717;
-    --sh-entity: #171717;
-    --sh-jsxliterals: #6f6f6f;
-    --sh-string: #6f6f6f;
-    --sh-keyword: #858585;
-    --sh-comment: #a19595; */
+    --sh-class: #4d8bdc;
+    --sh-jsxliterals: #00047a;
+    --sh-identifier: #292525;
+    --sh-property: #0073ff;
+    --sh-entity: #6334da;
+    --sh-string: #00afa1;
+    --sh-keyword: #ff1100;
+    --sh-sign: #686868;
+    --sh-comment: #686868;
 
 
     --selection: hsla(0, 0%, 0%, .045);
@@ -82,6 +66,19 @@
   }
 
   .dark {
+    --text-second: #b0b0b0;
+
+    --sh-class: #96c3ff;
+    --sh-jsxliterals: #797dff;
+    --sh-identifier: #f6f6f6;
+    --sh-property: #3c94ff;
+    --sh-entity: #34e4df;
+    --sh-string: #00f9e4;
+    --sh-keyword: #f87d74;
+    --sh-sign: #a5a5a5;
+    --sh-comment: #a5a5a5;
+
+
     --selection: hsla(0, 0%, 100%, .077);
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
