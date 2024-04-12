@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import Image from "next/image";
 
 import { codeVariants } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
@@ -25,7 +24,7 @@ export default function PostContent({ code }: any) {
   return (
     <Component
       components={{
-        table: (props: any) => <Table {...props} />, // "w-full" is not a valid class name
+        table: (props: any) => <Table {...props} />,
         th: (props: any) => <TableHead {...props} />,
         td: (props: any) => <TableCell {...props} />,
         tbody: (props: any) => <TableBody {...props} />,

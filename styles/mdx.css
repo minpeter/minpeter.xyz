@@ -1,8 +1,6 @@
 .mdx img {
-  display: flex;
   margin: 0 auto;
-  overflow: hidden;
-  border-radius: 0.5rem;
+  @apply overflow-hidden rounded-lg;
 }
 
 .mdx code:not(pre code) {
@@ -119,10 +117,6 @@
   content: close-quote;
 }
 
-.mdx ol,
-.mdx ul {
-  margin: 0.5rem 0;
-}
 
 .mdx ul {
   padding-left: 1rem;
@@ -138,6 +132,26 @@
   padding-left: 1rem;
   list-style-position: outside;
   list-style-type: decimal;
+}
+
+.mdx {
+
+  ul,
+  ol {
+    margin-top: 0.4rem;
+    list-style-position: outside
+  }
+
+  li>* {
+    margin: 0;
+    margin-bottom: 0.25rem;
+    margin-left: 0.5rem;
+
+    img {
+      margin: 0;
+    }
+  }
+
 }
 
 .mdx li>ol {
