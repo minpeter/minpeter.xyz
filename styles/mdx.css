@@ -132,11 +132,19 @@
     margin-top: 0.4rem;
     list-style-position: outside;
   }
+  /* 
+  li > code:first-child {
+    margin-left: 0;
+  } */
+
+  li > *:last-child {
+    margin-bottom: 0.75rem;
+  }
 
   li > * {
     margin: 0;
     margin-bottom: 0.25rem;
-    margin-left: 0.5rem;
+    /* margin-left: 0.3rem; */
 
     img {
       margin: 0;
