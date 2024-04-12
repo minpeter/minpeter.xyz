@@ -80,6 +80,7 @@
 
 .mdx a {
   text-decoration: underline;
+  word-break: break-word;
 }
 
 .mdx b,

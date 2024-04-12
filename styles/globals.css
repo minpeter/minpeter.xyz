@@ -16,7 +16,9 @@
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    @apply bg-neutral-800 rounded;
+    @apply rounded;
+
+    background: var(--scroll-bar-color);
   }
 
 
@@ -30,6 +32,8 @@
 
   :root {
     --text-second: #585858;
+
+    --scroll-bar-color: #b9b9b9;
 
     --sh-class: #4d8bdc;
     --sh-jsxliterals: #00047a;
@@ -67,6 +71,8 @@
 
   .dark {
     --text-second: #b0b0b0;
+
+    --scroll-bar-color: #2b2b2b;
 
     --sh-class: #96c3ff;
     --sh-jsxliterals: #797dff;
