@@ -31,8 +31,18 @@ export default function PostContent({ code }: any) {
         thead: (props: any) => <TableHeader {...props} />,
         tr: (props: any) => <TableRow {...props} />,
 
-        code: ({ children }: any) => {
+        code: ({ children, className }: any) => {
           const isMultiline = children.includes("\n");
+
+          const match = /language-(\w+)/.exec(className || "");
+          const language = match ? match[1] : "";
+
+          const isPlain =
+            language === "plaintext" ||
+            language === "text" ||
+            language === "plain" ||
+            language === "nohighlight" ||
+            language === "";
 
           return (
             <code
@@ -41,7 +51,8 @@ export default function PostContent({ code }: any) {
               }}
               className={isMultiline ? "" : cn(codeVariants(), "break-all")}
               dangerouslySetInnerHTML={{
-                __html: isMultiline ? highlight(children) : children,
+                __html:
+                  isMultiline && !isPlain ? highlight(children) : children,
               }}
             />
           );

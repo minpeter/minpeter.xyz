@@ -47,7 +47,7 @@ GET /robots.txt HTTP/1.1
 
 응답은 이러하다
 
-```html
+```
 HTTP/1.1 200 OK Accept-Ranges: bytes Vary: Accept-Encoding Content-Type:
 text/plain Cross-Origin-Resource-Policy: cross-origin
 Cross-Origin-Opener-Policy-Report-Only: same-origin;
