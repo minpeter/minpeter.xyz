@@ -1,7 +1,8 @@
-.mdx > * {
+.mdx>* {
   @apply mb-2;
   color: var(--text-second);
 }
+
 .mdx img {
   margin: 0 auto;
   @apply overflow-hidden rounded-lg;
@@ -9,6 +10,9 @@
 
 .mdx code:not(pre code) {
   @apply relative rounded-md px-1.5 py-1 text-xs;
+  @apply break-all;
+  /* codeVariants */
+  @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
 }
 
 .mdx pre,
@@ -41,8 +45,9 @@
 }
 
 @media (hover: hover) {
+
   .mdx .anchor:hover,
-  .mdx *:hover > .anchor {
+  .mdx *:hover>.anchor {
     @apply opacity-100;
   }
 }
@@ -52,29 +57,29 @@
   line-height: 1.5;
 }
 
-.mdx > :where(h1, h2, h3, h4) {
+.mdx> :where(h1, h2, h3, h4) {
   @apply text-base font-semibold leading-7;
 }
 
-.mdx > :first-child {
+.mdx> :first-child {
   @apply mt-0;
 }
 
-.mdx > :where(h1, h2, h3, h4) {
+.mdx> :where(h1, h2, h3, h4) {
   color: var(--gray-900);
   font-weight: 600;
   scroll-margin-top: 6rem;
 }
 
-.mdx > :where(h1, h2) {
+.mdx> :where(h1, h2) {
   margin-top: 6rem;
 }
 
-.mdx > :where(h3, h4) {
+.mdx> :where(h3, h4) {
   @apply mt-4;
 }
 
-.mdx > :where(h1) + :where(h2) {
+.mdx> :where(h1)+ :where(h2) {
   margin-top: 1.5rem;
 }
 
@@ -116,7 +121,7 @@
   list-style-type: disc;
 }
 
-.mdx li > ul {
+.mdx li>ul {
   @apply list-decimal;
 }
 
@@ -127,21 +132,23 @@
 }
 
 .mdx {
+
   ul,
   ol {
     margin-top: 0.4rem;
     list-style-position: outside;
   }
+
   /* 
   li > code:first-child {
     margin-left: 0;
   } */
 
-  li > *:last-child {
+  li>*:last-child {
     margin-bottom: 0.75rem;
   }
 
-  li > * {
+  li>* {
     margin: 0;
     margin-bottom: 0.25rem;
     /* margin-left: 0.3rem; */
@@ -152,7 +159,7 @@
   }
 }
 
-.mdx li > ol {
+.mdx li>ol {
   @apply list-[circle];
 }
 
