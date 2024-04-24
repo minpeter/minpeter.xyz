@@ -27,40 +27,39 @@ export default function Model() {
   // });
 
   const materialProps = {
-    thickness: 0.2,
-    roughness: 0,
+    thickness: 1.1,
+    roughness: 0.4,
     transmission: 1,
     ior: 1.2,
-    chromaticAberration: 1,
+    chromaticAberration: 0.7,
     backside: true,
   };
 
   useFrame(() => {
-    torus.current.rotation.z += 0.01;
+    torus.current.rotation.z += 0.015;
   });
 
   return (
-    <group scale={viewport.width / 120}>
-      {/* <Text
-        // font={"/fonts/PPNeueMontreal-Bold.otf"}
+    <group scale={viewport.width / 20}>
+      <Text
         position={[0, 0, -1]}
-        fontSize={12}
+        fontSize={0.7}
         color="white"
         anchorX="center"
         anchorY="middle"
+        textAlign="center"
       >
         내루미 ❤️
-      </Text> */}
+        {"\n\n"}
+        {"flag{1ICK17un6_poKemoN_1o8}"}
+      </Text>
 
       <mesh
         ref={torus}
-        // {...nodes.mesh_0}
         geometry={nodes.mesh_0.geometry}
         position={[0, -6, 0]}
         rotation={[-Math.PI / -2, 0, 0]}
       >
-        {/* <meshBasicMaterial /> */}
-
         <MeshTransmissionMaterial {...materialProps} />
       </mesh>
     </group>

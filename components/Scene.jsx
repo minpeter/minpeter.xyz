@@ -8,12 +8,18 @@ import { Environment } from "@react-three/drei";
 
 export default function Index() {
   return (
-    <Canvas style={{ background: "0 0% 3.9%" }}>
-      <Model />
+    <div className="w-full flex justify-center">
+      <Canvas
+        style={{ background: "0 0% 3.9%", height: "200px", width: "300px" }}
+        // camera={{ fov: 1, near: 0.1, far: 500, position: [0, 0, 400] }}
+        camera={{ fov: 1 }}
+      >
+        <Model />
 
-      <directionalLight intensity={2} position={[0, 2, 3]} />
+        <directionalLight intensity={2} position={[0, 2, 3]} />
 
-      <Environment preset="studio" />
-    </Canvas>
+        <Environment preset="studio" />
+      </Canvas>
+    </div>
   );
 }
