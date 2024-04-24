@@ -8,6 +8,13 @@ import dynamic from "next/dynamic";
 
 const Scene = dynamic(() => import("@/components/Scene"), {
   ssr: false,
+
+  // w-full, 150px 검은색 박스
+  loading: () => (
+    <div className="w-full h-[150px] animate-pulse flex items-center justify-center">
+      pokemon 108 (Lickitung) 로딩중..
+    </div>
+  ),
 });
 
 export default async function Page() {
@@ -15,12 +22,12 @@ export default async function Page() {
   return (
     <section className="flex flex-col gap-3">
       <Header description="이 웹에서 가장 멋진 사이트가 될거야~" />
-
       <Scene />
       <div
         data-animate
         data-animate-speed="fast"
-        className="flex flex-col gap-2"
+        // flex row지만 overflow시 하나씩 내려가게
+        className="flex flex-wrap gap-4 overflow-hidden"
       >
         <Link href="/blog" className="underline">
           내가 만든 블로그, 너를 위해 써봤지
