@@ -49,8 +49,7 @@ export default function Model() {
         anchorY="middle"
         textAlign="center"
       >
-        XAT ❤️ NQF
-        {"\n\n"}
+        {"VUD ❤️\n\n"}
         {"flag{1ICK17un6_poKemoN_1o8-2}"}
       </Text>
 
