@@ -10,7 +10,7 @@ const Scene = dynamic(() => import("@/components/Scene"), {
   ssr: false,
 
   loading: () => (
-    <div className="w-full h-[150px] animate-pulse flex items-center justify-center">
+    <div className="w-full h-[200px] animate-pulse flex items-center justify-center">
       pokemon 108 (Lickitung) 로딩중..
     </div>
   ),
