@@ -4,11 +4,19 @@ import { CodeIcon } from "lucide-react";
 import { getAllPosts } from "@/lib/loader";
 import Link from "next/link";
 
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(() => import("@/components/Scene"), {
+  ssr: false,
+});
+
 export default async function Page() {
   const posts = await getAllPosts();
   return (
     <section className="flex flex-col gap-3">
       <Header description="이 웹에서 가장 멋진 사이트가 될거야~" />
+
+      <Scene />
       <div
         data-animate
         data-animate-speed="fast"
