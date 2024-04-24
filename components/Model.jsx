@@ -49,9 +49,9 @@ export default function Model() {
         anchorY="middle"
         textAlign="center"
       >
-        내루미 ❤️
+        VDU ❤️
         {"\n\n"}
-        {"flag{1ICK17un6_poKemoN_1o8}"}
+        {"flag{1ICK17un6_poKemoN_1o8-2}"}
       </Text>
 
       <mesh
