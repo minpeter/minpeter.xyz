@@ -42,7 +42,7 @@ export default function Model() {
   return (
     <group scale={viewport.width / 20}>
       <Text
-        position={[0, 0, -1]}
+        position={[0, 0, -20]}
         fontSize={0.7}
         color="white"
         anchorX="center"

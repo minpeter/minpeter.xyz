@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 
 import Model from "./Model";
 
-import { Environment } from "@react-three/drei";
+import { Environment, OrbitControls } from "@react-three/drei";
 
 export default function Index() {
   return (
@@ -19,6 +19,7 @@ export default function Index() {
         <directionalLight intensity={2} position={[0, 2, 3]} />
 
         <Environment preset="studio" />
+        {/* <OrbitControls makeDefault /> */}
       </Canvas>
     </div>
   );
