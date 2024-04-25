@@ -36,7 +36,7 @@ export default function Model() {
   };
 
   useFrame(() => {
-    torus.current.rotation.z += 0.015;
+    torus.current.rotation.z -= 0.03;
   });
 
   return (
