@@ -22,6 +22,7 @@ export interface BlogListProps extends BlogProps {
 
 export interface BlogPostProps extends BlogProps {
   content: string;
+  slug: string;
 }
 
 export interface PHSProps {
@@ -161,6 +162,7 @@ export async function getPostBySlug(
   });
 
   return {
+    slug,
     frontmatter,
     content: code,
   };

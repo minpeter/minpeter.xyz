@@ -1,4 +1,4 @@
-import { getPostBySlug, getPostPHS } from "@/lib/loader";
+import { getAllPosts, getPostBySlug, getPostPHS } from "@/lib/loader";
 
 import PostContent from "./post";
 import Header from "@/components/header";
@@ -32,6 +32,17 @@ export async function generateMetadata({ params }: any) {
 export default async function Post({ params }: any) {
   const post = await getPostBySlug(params.slug);
 
+  const posts = await getAllPosts();
+
+  const postsIndex = posts.reduce((acc: any, post, index) => {
+    acc[post.slug] = {
+      ...post,
+      previous: posts[index - 1] || null,
+      next: posts[index + 1] || null,
+    };
+    return acc;
+  }, {});
+
   return (
     <section>
       {!post ? (
@@ -57,6 +68,35 @@ export default async function Post({ params }: any) {
           <article data-animate data-animate-speed="fast" className="mdx">
             {post.content && <PostContent code={post.content} />}
           </article>
+
+          {/* 이전글 이후글 */}
+          <section className="mt-32">
+            <hr className="my-8" />
+            <div className="flex flex-col justify-center items-center mb-8">
+              <h2 className="opacity-60">이전글 / 다음글</h2>
+            </div>
+            <div className="flex justify-between">
+              {postsIndex[post.slug].previous ? (
+                <a
+                  href={`/blog/${postsIndex[post.slug].previous.slug}`}
+                  className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
+                >
+                  ← {postsIndex[post.slug].previous.frontmatter.title}
+                </a>
+              ) : (
+                <div></div>
+              )}
+
+              {postsIndex[post.slug].next && (
+                <a
+                  href={`/blog/${postsIndex[post.slug].next.slug}`}
+                  className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
+                >
+                  {postsIndex[post.slug].next.frontmatter.title} →
+                </a>
+              )}
+            </div>
+          </section>
         </>
       )}
     </section>

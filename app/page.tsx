@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import dynamic from "next/dynamic";
 
-const Scene = dynamic(() => import("@/components/Scene"), {
+const Scene = dynamic(() => import("@/components/Lickitung"), {
   ssr: false,
 
   loading: () => (
