@@ -37,7 +37,7 @@ export default async function Page() {
           <TransformIcon className="w-4 h-4 inline-block ml-1.5" />
         </Link>
         <Link
-          href="https://ip.minpeter.tech/"
+          href="https://ip.minpeter.xyz/"
           target="_blank"
           className="underline"
         >

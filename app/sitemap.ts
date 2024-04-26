@@ -3,7 +3,7 @@ import { getAllPosts } from "@/lib/loader";
 export default async function sitemap() {
   const posts = await getAllPosts();
 
-  const url = "https://minpeter.tech";
+  const url = "https://minpeter.xyz";
 
   const post = posts.map((post) => {
     return {
