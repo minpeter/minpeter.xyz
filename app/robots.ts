@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://blog.minpeter.xyz/sitemap.xml",
+    sitemap: "https:/minpeter.xyz/sitemap.xml",
   };
 }
