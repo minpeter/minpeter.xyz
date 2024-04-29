@@ -24,6 +24,7 @@
     "@tailwindcss/typography": "^0.5.13",
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
+    "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clipboard-copy": "^4.0.1",
     "clsx": "^2.1.1",

@@ -14,6 +14,10 @@ export default function Page() {
         data-animate-speed="fast"
         className="flex flex-col gap-2"
       >
+        <Link href="/show/yet-another-tempfiles" className="underline">
+          /show/yet-another-tempfiles
+        </Link>
+
         <Link href="/show/tech-stack-ball" className="underline">
           /show/tech-stack-ball
         </Link>
