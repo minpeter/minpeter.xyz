@@ -171,7 +171,7 @@ DNS는 무엇을 사용해도 상관없지만 글에서는 클라우드플레어
 ```bash
 curl ifconfig.me
 # or
-curl ip.minpeter.cf -L
+curl ip.minpeter.xyz -L
 ```
 
 또 traefik로 들어가는 트래픽을 위해 공유기나 방화벽을 사용 중이라면 80, 443 포트를 개방시켜주어야 한다. ~~(알아서 하자)~~
@@ -200,7 +200,7 @@ URL에는 `*.example.com//.well-known/acme-challenge/*` 를 입력해주고 Pick
 
 traefik 폴더를 만들고 docker-compose.yaml 파일을 생성해준다.
 
-이후 설정파일에서 나오는 minpeter.cf는 모두 본인의 도메인으로 대체하면 된다.
+이후 설정파일에서 나오는 minpeter.xyz는 모두 본인의 도메인으로 대체하면 된다.
 
 ```bash
 version: '3.8'
@@ -211,7 +211,7 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - traefik.http.routers.traefik.rule=Host(`traefik.minpeter.cf`) && PathPrefix(`/api`, `/dashboard`)
+      - traefik.http.routers.traefik.rule=Host(`traefik.minpeter.xyz`) && PathPrefix(`/api`, `/dashboard`)
       - traefik.http.routers.traefik.entrypoints=websecure
       - traefik.http.routers.traefik.tls.certresolver=myresolver
       - traefik.http.routers.traefik.service=api@internal
@@ -231,7 +231,7 @@ services:
     container_name: iplogger-service
     labels:
       - traefik.enable=true
-      - traefik.http.routers.iplogger.rule=Host(`ip.minpeter.cf`)
+      - traefik.http.routers.iplogger.rule=Host(`ip.minpeter.xyz`)
       - traefik.http.routers.iplogger.entrypoints=websecure
       - traefik.http.routers.iplogger.tls.certresolver=myresolver
     networks: [traefik]
@@ -250,7 +250,7 @@ volumes:
 
 ```bash
 # docker-compose.yaml 중 traefik service의 labels
-- traefik.http.routers.traefik.rule=Host(`traefik.minpeter.cf`) && PathPrefix(`/api`, `/dashboard`)
+- traefik.http.routers.traefik.rule=Host(`traefik.minpeter.xyz`) && PathPrefix(`/api`, `/dashboard`)
 - traefik.http.routers.traefik.service=api@internal
 ```
 
@@ -425,7 +425,7 @@ services:
       - traefik.http.services.uptime-kuma.loadbalancer.server.port=3001
       - traefik.http.routers.uptime-kuma.entrypoints=websecure
       - traefik.http.routers.uptime-kuma.tls.certresolver=myresolver
-      - traefik.http.routers.uptime-kuma.rule=Host(`uptime.minpeter.cf`)
+      - traefik.http.routers.uptime-kuma.rule=Host(`uptime.minpeter.xyz`)
     networks:
       - traefik
 
@@ -468,7 +468,7 @@ traefik가 올라간 서버의 localhost의 10000 포트에 서비스가 올라�
 [http.routers]
   [http.routers.iplogger]
     entryPoints = ["websecure"]
-    rule = "Host(`ip.minpeter.cf`)"
+    rule = "Host(`ip.minpeter.xyz`)"
     service = "iplogger-ext-srv"
     [http.routers.iplogger.tls]
       certResolver = "myresolver"
