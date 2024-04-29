@@ -5,6 +5,8 @@ tags:
 categories: "home lab"
 ---
 
+import Callout from '@/components/callout';
+
 # template이란?
 
 그 동안 proxmox를 사용하면서 template이라는 개념을 처음 접했다.
@@ -125,6 +127,11 @@ Clone 클릭 이후 전원을 켜고 기다리면 끝이다.
 # 다음편에선..?
 
 지금 만든 template을 이용해 k8s-ctrlr와 k8s-node를 만들고, k8s-node 탬플릿을 추가로 생성, 총 k8s-ctrlr + 2개의 k8s-node를 만들고 설정해보자.
+<br />
+<Callout>
+[k8s via proxmox (2) - worker node & master node 설정
+](/blog/k8s-via-proxmox-2)으로 이어집니다.
+</Callout>
 
 ## 참고자료
 

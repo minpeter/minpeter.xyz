@@ -5,6 +5,12 @@ tags:
 categories: "home lab"
 ---
 
+import Callout from '@/components/callout';
+
+<Callout>
+[k8s via proxmox (1) - ubuntu server template 만들기](/blog/k8s-via-proxmox-1)에서 이어지는 내용입니다.
+</Callout>
+
 ## 1. k8s-ctrlr & k8s-node 생성
 
 앞에서 만들어둔 template을 이용하여 k8s-ctrlr과 k8s-node를 생성한다.
