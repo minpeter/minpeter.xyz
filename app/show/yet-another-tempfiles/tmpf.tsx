@@ -6,23 +6,38 @@ import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
+import { DownloadIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { codeVariants } from "@/components/ui/typography";
 
 const TMPF_API_BASE = "https://api.tmpf.me";
 // const TMPF_API_BASE = "http://localhost:5001";
+
+const API_SUFFIX = {
+  UPLOAD: "/upload",
+  DOWNLOAD(folderId: string, fileName: string) {
+    return `/dl/${folderId}/${fileName}`;
+  },
+  VIEW(folderId: string, fileName: string) {
+    return `/view/${folderId}/${fileName}`;
+  },
+};
+
+function BACKEND(suffix: string) {
+  return `${TMPF_API_BASE}${suffix}`;
+}
 
 const axiosInstance = axios.create({
   baseURL: TMPF_API_BASE,
 });
 
-export async function downloadFile(fileUrl: string, filename: string) {
+export async function downloadFile(folderId: string, fileName: string) {
   await axiosInstance
-    .get(fileUrl, { responseType: "blob" })
+    .get(API_SUFFIX.DOWNLOAD(folderId, fileName), { responseType: "blob" })
     .then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const a = document.createElement("a");
       a.href = url;
-      a.download = filename;
+      a.download = fileName;
 
       document.body.appendChild(a);
       a.click();
@@ -44,7 +59,7 @@ export async function uploadFile(file: File[]) {
   });
 
   return await axiosInstance
-    .post("/upload", formData, {
+    .post(API_SUFFIX.UPLOAD, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -96,22 +111,18 @@ export default function TmpfUI() {
       {uploaded && (
         <>
           <div className="flex flex-row items-center space-x-4">
-            <p>Message: {uploaded.message}</p>
+            <p>
+              Folder <code className={codeVariants()}>{uploaded.folderId}</code>{" "}
+              uploaded
+            </p>
             <Button
               onClick={() => {
                 for (let i = 0; i < uploaded.files.length; i++) {
-                  downloadFile(
-                    TMPF_API_BASE +
-                      "/dl/" +
-                      uploaded.folderId +
-                      "/" +
-                      uploaded.files[i].fileName,
-                    uploaded.files[i].fileName
-                  );
+                  downloadFile(uploaded.folderId, uploaded.files[i].fileName);
                 }
               }}
             >
-              Download ALL
+              <DownloadIcon className="w-4 h-4" />
             </Button>
           </div>
 
@@ -120,13 +131,7 @@ export default function TmpfUI() {
               <li key={f.fileName}>
                 <a
                   className="flex items-center space-x-2 hover:underline"
-                  href={
-                    TMPF_API_BASE +
-                    "/view/" +
-                    uploaded.folderId +
-                    "/" +
-                    f.fileName
-                  }
+                  href={BACKEND(API_SUFFIX.VIEW(uploaded.folderId, f.fileName))}
                   target="_blank"
                 >
                   <span>{f.fileName}</span>
