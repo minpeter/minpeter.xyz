@@ -1,6 +1,4 @@
-import Link from "next/link";
-
-import { ArrowTopLeftIcon } from "@radix-ui/react-icons";
+import { Backlink } from "./link";
 
 type HeaderProps = {
   title?: string;
@@ -16,13 +14,7 @@ export default function Header({ title, description, link }: HeaderProps) {
     <header className="mb-10 space-y-1">
       {link ? (
         <div data-animate data-animate-speed="fast">
-          <Link
-            className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100 animation:enter"
-            href={link.href}
-          >
-            <ArrowTopLeftIcon className="w-3 h-3 mb-1 mr-0.5 inline" />
-            {link.text}
-          </Link>
+          <Backlink text={link.text} href={link.href} />
         </div>
       ) : (
         <div className="invisible">.</div>
