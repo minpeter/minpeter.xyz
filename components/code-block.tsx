@@ -2,6 +2,7 @@
 
 import copy from "clipboard-copy";
 import { highlight } from "sugar-high";
+import { Input } from "@/components/ui/input";
 
 import { useEffect, useState } from "react";
 import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
@@ -59,6 +60,10 @@ export function ModCodeBlock({
 
   const [state, setState] = useState(data);
 
+  const [onFocus, setOnFocus] = useState(
+    new Array(Object.keys(data).length).fill(false)
+  );
+
   useEffect(() => {
     setState(data);
   }, [data]);
@@ -112,21 +117,51 @@ export function ModCodeBlock({
             } else if (type === "dynamic" && data === "%TAB") {
               return <span key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</span>;
             } else {
-              return (
+              return onFocus[i] ? (
+                <input
+                  type="text"
+                  autoFocus
+                  //
+                  className={`inline bg-secondary px-1 py-0.5 rounded-md h-5`}
+                  key={i}
+                  value={state[data]}
+                  onFocus={(e) => {
+                    const input = e.target;
+                    input.style.width = input.value.length + 2 + "ch";
+                  }}
+                  onChange={(e) => {
+                    stateUpdate(data, e.target.value);
+
+                    const input = e.target;
+                    input.style.width = input.value.length + 2 + "ch";
+                  }}
+                  onBlur={() =>
+                    setOnFocus((prev) => {
+                      const newFocus = [...prev];
+                      newFocus[i] = false;
+                      return newFocus;
+                    })
+                  }
+                  onKeyDown={(e: any) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      e.target.blur();
+                    }
+                  }}
+                />
+              ) : (
                 <span
                   key={i}
                   onClick={() => {
-                    const newValue = prompt(
-                      "Enter new value for " + data,
-                      state[data]
-                    );
-                    if (newValue !== null) {
-                      stateUpdate(data, newValue);
-                    }
+                    setOnFocus((prev) => {
+                      const newFocus = [...prev];
+                      newFocus[i] = true;
+                      return newFocus;
+                    });
                   }}
                   className="cursor-pointer bg-secondary px-1 py-0.5 rounded-md text-blue-500 hover:text-white hover:bg-blue-500"
                 >
-                  {state[data]}
+                  {state[data] || "Click to edit"}
                 </span>
               );
             }

@@ -20,6 +20,10 @@
   margin: 1rem 0;
 }
 
+.mdx code {
+  line-height: 1.65;
+}
+
 .mdx pre {
   @apply relative overflow-x-auto rounded-lg px-4 py-3 text-sm;
   @apply border bg-card text-card-foreground shadow-sm;
@@ -197,4 +201,13 @@
 .mdx figure {
   overflow: hidden;
   border-radius: 6px;
+}
+
+.mdx input {
+
+  width: inherit;
+
+  &:focus {
+    outline: none;
+  }
 }
