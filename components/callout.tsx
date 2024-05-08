@@ -8,7 +8,9 @@ export default function Callout({
   return (
     <div className="rounded-lg border border-neutral-700 bg-card text-card-foreground shadow-sm p-4 flex items-center gap-3">
       {emoji ? emoji : "💡"}
-      {children}
+      <p className="text-sm font-medium leading-6 text-neutral-900 dark:text-neutral-100">
+        {children}
+      </p>
     </div>
   );
 }

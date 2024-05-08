@@ -1,7 +1,7 @@
 "use client";
 
-import copy from "clipboard-copy";
-import { highlight } from "sugar-high";
+import { CodeBlock, ModCodeBlock } from "@/components/code-block";
+import Callout from "@/components/callout";
 import "@/styles/mdx.css";
 
 import { getMDXComponent } from "mdx-bundler/client";
@@ -12,36 +12,14 @@ export default function PostContent({ code }: any) {
     <Component
       components={{
         code: ({ children, className }: any) => {
-          const isMultiline = children.includes("\n");
           const match = /language-(\w+)/.exec(className || "");
           const language = match ? match[1] : "";
-          const isPlain =
-            language === "plaintext" ||
-            language === "text" ||
-            language === "plain" ||
-            language === "nohighlight" ||
-            language === "";
-          return (
-            <code
-              onClick={() => {
-                handleCopyClick(children);
-              }}
-              dangerouslySetInnerHTML={{
-                __html:
-                  isMultiline && !isPlain ? highlight(children) : children,
-              }}
-            />
-          );
+
+          return <CodeBlock language={language} code={children} />;
         },
+        ModCodeBlock,
+        Callout,
       }}
     />
   );
-}
-
-async function handleCopyClick(content: string) {
-  try {
-    await copy(content);
-  } catch (error) {
-    console.error("Failed to copy text to clipboard", error);
-  }
 }

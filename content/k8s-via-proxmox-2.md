@@ -5,8 +5,6 @@ tags:
 categories: "home lab"
 ---
 
-import Callout from '@/components/callout';
-
 <Callout>
 [k8s via proxmox (1) - ubuntu server template 만들기](/blog/k8s-via-proxmox-1)에서 이어지는 내용입니다.
 </Callout>

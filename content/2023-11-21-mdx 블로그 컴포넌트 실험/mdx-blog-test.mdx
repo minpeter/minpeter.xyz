@@ -6,6 +6,79 @@ description: 블로그 mdx 지원 기념 컴포넌트 실험실
 
 import Typing from "@/components/typing";
 
+<Callout>
+  이 블로그에서 활용할 수 있는 MDX 컴포넌트들을 실험해보기 위한 게시글입니다.
+  {"\n"}
+  실용적인 글을 찾고 있다면 넘어가시면 됩니다.
+</Callout>
+
+# ModCodeBlock, CodeBlock
+
+<ModCodeBlock
+  template="
+    aws ec2 create-subnet --vpc-id {{vpc-id}} \
+    {{%TAB}}--cidr-block {{cidr-block}} \    
+    {{%TAB}}--availability-zone {{availability-zone}}"
+  data={{
+    "vpc-id": "vpc-071ecca730edf705f",
+    "cidr-block": "10.10.0.0/24",
+    "availability-zone": "ap-northeast-1a",
+  }}
+/>
+
+위에서 ModCodeBlock를 이용해 `vpc-id`, `cidr-block`, `availability-zone`를 변수로 사용할 수 있다.
+이때 사용되는 형식은 이러하다.
+
+```
+<ModCodeBlock
+  template="
+    aws ec2 create-subnet --vpc-id {{vpc-id}} \
+    {{%TAB}}--cidr-block {{cidr-block}} \
+    {{%TAB}}--availability-zone {{availability-zone}}"
+  data={{
+    "vpc-id": "vpc-071ecca730edf705f",
+    "cidr-block": "10.10.0.0/24",
+    "availability-zone": "ap-northeast-1a",
+  }}
+/>
+```
+
+여기서 `{{%TAB}}`은 탭을 위해서 추가했다. 이후에 필요한 경우 이러한 기능을 추가할 수 있다.
+
+ModCodeBlock의 특징으로는 어떤 커맨드을 독자가 복사하기 전에 변경하여야 할 값을 간단하게 수정 후에 복사할 수 있다는 것이다.  
+이렇게 되면 CLI를 중심으로 진행되는 블로그 글을 작성할때 독자가 쉽게 따라할 수 있게 된다.
+
+처음으로 추가된 실용적인 용도의 MDX 컴포넌트이다. 이를 기본적으로 모든 게시글에서 활용할 수 있도록 `app/blog/[slug]/post.tsx`를 다음과 같이 수정했다.
+
+```
+"use client";
+
+import { CodeBlock, ModCodeBlock } from "@/components/code-block";
+import "@/styles/mdx.css";
+
+import { getMDXComponent } from "mdx-bundler/client";
+
+export default function PostContent({ code }: any) {
+  const Component = getMDXComponent(code);
+  return (
+    <Component
+      components={{
+        code: ({ children, className }: any) => {
+          const match = /language-(\w+)/.exec(className || "");
+          const language = match ? match[1] : "";
+
+          return <CodeBlock language={language} code={children} />;
+        },
+        ModCodeBlock,
+      }}
+    />
+  );
+}
+
+```
+
+이렇게 하면 해당 컴포넌트는 전역적으로 사용할 수 있게 된다. ✨
+
 # Heading 1
 
 ```java

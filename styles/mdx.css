@@ -20,17 +20,20 @@
   margin: 1rem 0;
 }
 
-.mdx code {
-  @apply cursor-pointer;
-}
-
 .mdx pre {
   @apply relative overflow-x-auto rounded-lg px-4 py-3 text-sm;
   @apply border bg-card text-card-foreground shadow-sm;
   -moz-tab-size: 4;
   -o-tab-size: 4;
   tab-size: 4;
+
+  &:hover {
+    div {
+      visibility: visible;
+    }
+  }
 }
+
 
 .mdx .anchor {
   @apply no-underline after:opacity-0 hover:after:opacity-100 focus:after:opacity-100;

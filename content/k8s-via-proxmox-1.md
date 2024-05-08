@@ -5,8 +5,6 @@ tags:
 categories: "home lab"
 ---
 
-import Callout from '@/components/callout';
-
 # template이란?
 
 그 동안 proxmox를 사용하면서 template이라는 개념을 처음 접했다.
