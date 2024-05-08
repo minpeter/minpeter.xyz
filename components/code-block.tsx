@@ -202,7 +202,7 @@ export function CodeBlock({
   return (
     <>
       <div
-        className="invisible absolute right-3 top-3 hover:cursor-pointer border rounded-md p-1"
+        className="invisible absolute right-3 top-3 hover:cursor-pointer border rounded-md p-1 bg-card"
         onClick={() => {
           setOnCopy(true);
           handleCopyClick(code);
@@ -211,15 +211,17 @@ export function CodeBlock({
         <CopyIcon className={!onCopy ? "block" : "hidden"} />
         <CheckIcon className={onCopy ? "block" : "hidden"} />
       </div>
-      {isPlain ? (
-        <code>{code}</code>
-      ) : (
-        <code
-          dangerouslySetInnerHTML={{
-            __html: highlight(code),
-          }}
-        />
-      )}
+      <div style={{ overflowX: "auto" }}>
+        {isPlain ? (
+          <code>{code}</code>
+        ) : (
+          <code
+            dangerouslySetInnerHTML={{
+              __html: highlight(code),
+            }}
+          />
+        )}
+      </div>
     </>
   );
 }

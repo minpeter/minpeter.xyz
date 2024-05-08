@@ -31,6 +31,10 @@
   -o-tab-size: 4;
   tab-size: 4;
 
+  /* copy 버튼 고정 */
+  position: relative;
+
+
   &:hover {
     div {
       visibility: visible;
