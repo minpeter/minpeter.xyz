@@ -161,7 +161,7 @@ export function ModCodeBlock({
                   }}
                   className="cursor-pointer bg-secondary px-1 py-0.5 rounded-md text-blue-500 hover:text-white hover:bg-blue-500"
                 >
-                  {state[data] || "Click to edit"}
+                  {state[data] || `plz enter \`${data}\``}
                 </span>
               );
             }
