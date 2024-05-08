@@ -2,7 +2,6 @@
 
 import copy from "clipboard-copy";
 import { highlight } from "sugar-high";
-import { Input } from "@/components/ui/input";
 
 import { useEffect, useState } from "react";
 import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
@@ -169,7 +168,7 @@ export function ModCodeBlock({
         </code>
       </pre>
 
-      <div className="text-xs text-gray-500 pl-1">
+      <div className="text-xs text-gray-500 pl-1 mb-4">
         *파란색 텍스트를 클릭하면 간편하게 수정 후 복사할 수 있습니다.
       </div>
     </div>

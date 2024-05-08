@@ -67,15 +67,20 @@ mkdir gns3-data
 
 이후 아래 명령을 통해 gns3-server를 실행합니다.
 
-```bash
-sudo docker run \
-    --rm -d \
-    --name gns3 \
-    --net=host --privileged \
-    -e BRIDGE_ADDRESS="172.21.1.1/24" \
-    -v ./gns3-server:/data \
-    jsimonetti/gns3-server:latest
-```
+<ModCodeBlock
+  template="
+    sudo docker run \
+    {{%TAB}}--rm -d \
+    {{%TAB}}--name gns3 \
+    {{%TAB}}--net=host --privileged \
+    {{%TAB}}-e BRIDGE_ADDRESS={{bridge-address-cidr}} \
+    {{%TAB}}-v {{pwd}}:/data \
+    {{%TAB}}jsimonetti/gns3-server:latest"
+  data={{
+    "bridge-address-cidr": "172.21.1.1/24",
+    pwd: "./gns3-data",
+  }}
+/>
 
 이제 맥북에서 [http://ubuntu-gns3.orb.local:3080/](http://ubuntu-gns3.orb.local:3080/)으로 접속합니다. 만약 orbstack를 사용하고 있지 않는 경우 [http://localhost:3080](http://localhost:3080) 또는 가상머신의 아이피와 3080 포트로 접근합니다.
 
