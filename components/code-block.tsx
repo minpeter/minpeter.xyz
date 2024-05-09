@@ -49,11 +49,9 @@ function parseTemplate(template: string) {
 export function ModCodeBlock({
   template,
   data,
-  language,
 }: {
   template: string;
   data: { [key: string]: string };
-  language?: string;
 }) {
   const parsedTemplate = parseTemplate(template);
 
@@ -202,9 +200,7 @@ export function CodeBlock({
     }
   }, [onCopy]);
 
-  console.log("code", code);
   const isMultiline = code.includes("\n");
-  console.log("isMultiline", isMultiline);
 
   return (
     <>
