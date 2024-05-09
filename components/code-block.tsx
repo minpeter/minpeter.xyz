@@ -109,63 +109,66 @@ export function ModCodeBlock({
           <CopyIcon className={!onCopy ? "block" : "hidden"} />
           <CheckIcon className={onCopy ? "block" : "hidden"} />
         </div>
-        <code>
-          {parsedTemplate.map(({ data, type }, i) => {
-            if (type === "static") {
-              return <span key={i}>{data}</span>;
-            } else if (type === "dynamic" && data === "%TAB") {
-              return <span key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</span>;
-            } else {
-              return onFocus[i] ? (
-                <input
-                  type="text"
-                  autoFocus
-                  //
-                  className={`inline bg-secondary px-1 py-0.5 rounded-md h-5`}
-                  key={i}
-                  value={state[data]}
-                  onFocus={(e) => {
-                    const input = e.target;
-                    input.style.width = input.value.length + 2 + "ch";
-                  }}
-                  onChange={(e) => {
-                    stateUpdate(data, e.target.value);
 
-                    const input = e.target;
-                    input.style.width = input.value.length + 2 + "ch";
-                  }}
-                  onBlur={() =>
-                    setOnFocus((prev) => {
-                      const newFocus = [...prev];
-                      newFocus[i] = false;
-                      return newFocus;
-                    })
-                  }
-                  onKeyDown={(e: any) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      e.target.blur();
+        <div style={{ overflowX: "auto" }}>
+          <code>
+            {parsedTemplate.map(({ data, type }, i) => {
+              if (type === "static") {
+                return <span key={i}>{data}</span>;
+              } else if (type === "dynamic" && data === "%TAB") {
+                return <span key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</span>;
+              } else {
+                return onFocus[i] ? (
+                  <input
+                    type="text"
+                    autoFocus
+                    //
+                    className={`inline bg-secondary px-1 py-0.5 rounded-md h-5`}
+                    key={i}
+                    value={state[data]}
+                    onFocus={(e) => {
+                      const input = e.target;
+                      input.style.width = input.value.length + 2 + "ch";
+                    }}
+                    onChange={(e) => {
+                      stateUpdate(data, e.target.value);
+
+                      const input = e.target;
+                      input.style.width = input.value.length + 2 + "ch";
+                    }}
+                    onBlur={() =>
+                      setOnFocus((prev) => {
+                        const newFocus = [...prev];
+                        newFocus[i] = false;
+                        return newFocus;
+                      })
                     }
-                  }}
-                />
-              ) : (
-                <span
-                  key={i}
-                  onClick={() => {
-                    setOnFocus((prev) => {
-                      const newFocus = [...prev];
-                      newFocus[i] = true;
-                      return newFocus;
-                    });
-                  }}
-                  className="cursor-pointer bg-secondary px-1 py-0.5 rounded-md text-blue-500 hover:text-white hover:bg-blue-500"
-                >
-                  {state[data] || `plz enter \`${data}\``}
-                </span>
-              );
-            }
-          })}
-        </code>
+                    onKeyDown={(e: any) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        e.target.blur();
+                      }
+                    }}
+                  />
+                ) : (
+                  <span
+                    key={i}
+                    onClick={() => {
+                      setOnFocus((prev) => {
+                        const newFocus = [...prev];
+                        newFocus[i] = true;
+                        return newFocus;
+                      });
+                    }}
+                    className="cursor-pointer bg-secondary px-1 py-0.5 rounded-md text-blue-500 hover:text-white hover:bg-blue-500"
+                  >
+                    {state[data] || `plz enter \`${data}\``}
+                  </span>
+                );
+              }
+            })}
+          </code>
+        </div>
       </pre>
 
       <div className="text-xs text-gray-500 pl-1 mb-4">
@@ -199,6 +202,10 @@ export function CodeBlock({
     }
   }, [onCopy]);
 
+  console.log("code", code);
+  const isMultiline = code.includes("\n");
+  console.log("isMultiline", isMultiline);
+
   return (
     <>
       <div
@@ -211,17 +218,21 @@ export function CodeBlock({
         <CopyIcon className={!onCopy ? "block" : "hidden"} />
         <CheckIcon className={onCopy ? "block" : "hidden"} />
       </div>
-      <div style={{ overflowX: "auto" }}>
-        {isPlain ? (
-          <code>{code}</code>
-        ) : (
-          <code
-            dangerouslySetInnerHTML={{
-              __html: highlight(code),
-            }}
-          />
-        )}
-      </div>
+      {isMultiline ? (
+        <div style={{ overflowX: "auto" }}>
+          {isPlain ? (
+            <code>{code}</code>
+          ) : (
+            <code
+              dangerouslySetInnerHTML={{
+                __html: highlight(code),
+              }}
+            />
+          )}
+        </div>
+      ) : (
+        <code>{code}</code>
+      )}
     </>
   );
 }
