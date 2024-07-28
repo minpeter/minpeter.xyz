@@ -19,16 +19,20 @@ kubernetes를 설치하려면 master node와 worker node가 필요하다.
 
 ## 1. vm 생성
 
-proxmox에서 vm을 생성한다.
-template으로 만들 vm의 이름은 ubuntu-22-04-server-template로 한다.
-가능하다면 혼동을 피하기 위해 vm-id도 900으로 설정해주자.
-media에서 Do not use any media를 선택한다.
-뒤에서 언급하겠지만 클라우드 이미지를 사용할 예정이기 떄문이다.  
-System 탭에서는 Qemu Agent를 체크한다.
-이것은 vm이 실행되는 동안에 vm의 상태를 확인할 수 있게 해준다.
-뭐 안해도 상관없긴 한데 나중에 설정하게 되면 켜져있는 편이 편하다.
-디스크는 제거해주고 cpu는 1core, memory는 1GB로 설정한다.
-네트워크는 일반적으로 vm을 만들 때와 동일하게 설정한다.
+탬플릿의 기본이 되는 vm을 생성한다.
+이때 vm에는 그동안 만들었던 방식과 달리 경량화된 cloud image를 사용하여 생성할 것이기 때문에 다소 다르게 설정해주어야 한다.
+
+1. proxmox에서 **vm을 생성**한다.
+2. template으로 만들 vm의 이름은 ubuntu-22-04-server-template로 한다.
+   뒤에서 vm-id가 900인 걸 가정하게 진행하기 때문에 **vm-id도 900으로 설정**해주자.
+3. **media에서 Do not use any media를 선택**한다.
+   뒤에서 언급하겠지만 클라우드 이미지를 사용할 예정이기 떄문이다.
+4. **System 탭에서는 Qemu Agent를 체크**한다.
+   이것은 vm이 실행되는 동안에 vm의 상태를 확인할 수 있게 해준다.
+   뭐 안해도 상관없긴 한데 나중에 설정하게 되면 켜져있는 편이 편하다.
+5. **디스크는 제거해주고** cpu는 1core, memory는 1GB로 설정한다.
+
+6. 네트워크는 일반적으로 vm을 만들 때와 동일하게 설정한다.
 
 ## 2. cloud init 설정
 

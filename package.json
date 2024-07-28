@@ -39,6 +39,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
+    "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.0",
     "sharp": "^0.33.3",
     "sonner": "^1.4.41",

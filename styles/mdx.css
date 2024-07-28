@@ -102,6 +102,7 @@
 .mdx b,
 .mdx strong {
   font-weight: 550;
+  color: #ec625c;
 }
 
 .mdx blockquote {

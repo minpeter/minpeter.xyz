@@ -6,6 +6,7 @@ import { bundleMDX } from "mdx-bundler";
 
 import rehypeMdxImportMedia from "rehype-mdx-import-media";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
@@ -120,7 +121,7 @@ export async function getPostBySlug(
       return options;
     },
     mdxOptions(options) {
-      options.remarkPlugins = [remarkGfm];
+      options.remarkPlugins = [remarkBreaks, remarkGfm];
       options.rehypePlugins = [
         rehypeSlug,
         rehypeMdxImportMedia,
