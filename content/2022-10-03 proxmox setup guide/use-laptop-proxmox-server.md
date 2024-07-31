@@ -10,44 +10,48 @@ description: Proxmox 설치 및 설정 가이드, 노트북에서의 효율적�
 
 # proxmox란?
 
-Hyper-V, ESXi, XenServer, KVM 등과 유사한 기능을 제공하는 Type-1 hypervisor  
-오픈소스라는 장점이 있으며, 오픈소스 중 대체품으론 XenServer의 포크인 XCP-ng가 있음  
-~~써보진 않았다~~
+Hyper-V, ESXi, XenServer, KVM 등과 유사한 기능을 제공하는 Type-1 hypervisor
+오픈소스라는 장점이 있다.
 
-## proxmox 설치
+## 설치 환경
 
-### 설치 환경
-
-Lenovo ThinkPad E485 (Ryzen 3 2200U + 12GB RAM + 1TB HDD)
-무조건 Bare Metal에 설치해야한다.
+어떤 환경에서 설치를 진행하든 정상적인 사용을 위해선 Bare metal에 설치하여야 한다.
 
 최소사양은 다음과 같다.
 
 ```
-CPU: 64비트(Intel EMT64 또는 AMD64)
+CPU: x86 64bit cpu
+*전가상화 지원을 위한 Intel VT/AMD-V 지원 CPU
 
-KVM 전체 가상화 지원을 위한 Intel VT/AMD-V 지원 CPU/메인보드
+RAM: 1GB RAM + 게스트용 추가 RAM 필요
 
-RAM: 1GB RAM 및 게스트용 추가 RAM 필요
+하드 드라이브 (뭐든지 저장할 수 있는거라면)
 
-하드 드라이브
-
-네트워크 카드(NIC) 1개
+네트워크 카드 1개 이상
 ```
 
-### 설치 과정
+나의 경우 아래와 같은 사양에 설치를 진행했다.
+
+```
+Lenovo ThinkPad E485 (Ryzen 3 2200U + 12GB RAM(8 + 4) + 1TB HDD)
+```
+
+사양에서 알 수 있듯 하이퍼바이저라고 크게 높은 사양을 요구하진 않는다.
+당장 서랍 속에서 사용되지 않고 있는 노트북 한대면 충분히 가능하다.
+
+## 설치 과정
 
 1. [공식 홈페이지](https://www.proxmox.com/en/downloads/category/iso-images-pve)에서 ISO 파일을 다운로드한다.
-2. ISO 파일을 USB에 설치한다. (원도우의 경우 rufus, 리눅스의 경우 dd)
+2. ISO 파일을 USB에 굽는다. (원도우의 경우 rufus, 리눅스의 경우 dd)
 3. USB를 노트북에 꽂고 부팅한다.
-   ![image](/images/pve-grub-menu.png)
    다음과 같은 화면이 나오면 `Install Proxmox VE`를 선택한다.
-4. 적절하게 디스크 선택, 적절하게 비밀번호 선택, 적절한 타임존 적절한 선택으로 설치를 완료한다.
+   ![image](/images/pve-grub-menu.png)
+
+4. 적절하게 디스크 선택, 적당한 비밀번호 선택, 적절한 Time zone, 적절한 선택으로 설치를 완료한다.
 5. https://server-ip:8006 접속 후 로그인한다.
+   나의 경우 `192.168.100.113:8006` 이였다.
 
-### 기업용 레포지토리 제거
-
-## 구독용 저장소 제거
+## 구독용 저장소 제거 및 미구독자용 레포지토리 추가
 
 ```bash
 # vim /etc/apt/sources.list.d/pve-enterprise.list
@@ -58,6 +62,31 @@ RAM: 1GB RAM 및 게스트용 추가 RAM 필요
 ```bash
 # deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise
 ```
+
+아래 명령어로 설정파일 오픈
+
+```bash
+# vim /etc/apt/sources.list
+```
+
+다음 내용 추가
+
+```bash
+# no subscription
+deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
+```
+
+![Untitled](images/pve-no-subscription.png)
+
+저장 후 업데이트
+
+```bash
+# apt update && apt dist-upgrade -y
+```
+
+![web console에서 경고를 주긴 하지만 개발용 서버이기 때문에 상관 없다!](images/web-console-warning.png)
+
+web console에서 경고를 주긴 하지만 개발용 서버이기 때문에 상관 없다!
 
 ## 로그인 시 구독 안내 메시지 제거
 
@@ -83,31 +112,6 @@ if (false) {
 ```bash
 # systemctl restart pveproxy.service
 ```
-
-### 미구독자용 레포지토리 추가
-
-```bash
-# vim /etc/apt/sources.list
-```
-
-다음 내용 추가
-
-```bash
-# no subscription
-deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
-```
-
-![Untitled](images/pve-no-subscription.png)
-
-저장 후 업데이트
-
-```bash
-# apt update && apt dist-upgrade -y
-```
-
-![web console에서 경고를 주긴 하지만 개발용 서버이기 때문에 상관 없다!](images/web-console-warning.png)
-
-web console에서 경고를 주긴 하지만 개발용 서버이기 때문에 상관 없다!
 
 ### 노트북에 설치시 절전모드 설정
 
