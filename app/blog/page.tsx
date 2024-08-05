@@ -22,8 +22,11 @@ export default async function Page({
 
   const posts = await getAllPosts();
 
+  const searchIn = (text?: string) =>
+    text?.toLowerCase().includes(query.toLowerCase());
+
   const filteredPosts = posts.filter((post: any) =>
-    post.frontmatter.title.toLowerCase().includes(query.toLowerCase())
+    searchIn(post.frontmatter.title)
   );
 
   const yearList = filteredPosts.reduce((acc: any, post) => {
