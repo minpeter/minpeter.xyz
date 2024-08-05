@@ -46,7 +46,8 @@
     "sugar-high": "^0.7.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.167.1"
+    "three": "^0.167.1",
+    "use-debounce": "^10.0.2"
   },
   "devDependencies": {
     "@radix-ui/react-icons": "^1.3.0",
