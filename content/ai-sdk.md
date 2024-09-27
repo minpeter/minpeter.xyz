@@ -71,10 +71,12 @@ AI SDK를 사용하여 간단한 대화 기능을 구현해 보겠습니다. 두
 
 import { useChat } from "ai/react";
 
-export default function Page() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    keepLastMessageOnError: true,
-  });
+export default function Chat() {
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
+    useChat();
+
+  const isWaiting =
+    isLoading && messages[messages.length - 1]?.role !== "assistant";
 
   return (
     <>
@@ -85,6 +87,11 @@ export default function Page() {
         </div>
       ))}
 
+      {(isWaiting || error) &&
+        (isWaiting
+          ? "AI is thinking..."
+          : error && "An error has occurred. Please try again later.")}
+
       <form onSubmit={handleSubmit}>
         <input name="prompt" value={input} onChange={handleInputChange} />
         <button type="submit">Submit</button>
@@ -92,6 +99,7 @@ export default function Page() {
     </>
   );
 }
+
 ```
 
 이 코드는 사용자의 메시지와 AI의 응답을 UI에 출력하고, 사용자가 텍스트를 입력할 수 있는 폼을 제공합니다.
