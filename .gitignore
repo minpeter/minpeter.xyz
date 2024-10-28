@@ -37,3 +37,6 @@ next-env.d.ts
 certificates
 
 public/dynamic
+
+public/sitemap.xml
+public/robots.txt
