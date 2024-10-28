@@ -45,7 +45,8 @@
     "sonner": "^1.5.0",
     "sugar-high": "^0.7.4",
     "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/matter-js": "^0.19.7",
