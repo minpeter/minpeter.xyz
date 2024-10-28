@@ -8,6 +8,8 @@ import Header from "@/components/header";
 import { formatDateLong } from "@/lib/utils";
 import Link from "next/link";
 
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
 export default async function Page(props: {
   params: Promise<{ slug: string[] }>;
 }) {
@@ -45,7 +47,7 @@ export default async function Page(props: {
           data-animate
           data-animate-speed="fast"
           className="mdx"
-          components={{ ...defaultMdxComponents }}
+          components={{ ...defaultMdxComponents, Tab, Tabs }}
         />
       </DocsBody>
 
