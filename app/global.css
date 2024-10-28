@@ -254,3 +254,7 @@
 [data-animate]>*:nth-child(24) {
   --lv: 24;
 }
+
+[data-animate]>*:nth-child(n+25) {
+  --lv-wait: 24;
+}
