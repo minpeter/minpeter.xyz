@@ -5,6 +5,7 @@ import {
   frontmatterSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
+import { remarkInstall } from "fumadocs-docgen";
 
 export const { docs, meta } = defineDocs({
   dir: "content/blog",
@@ -28,7 +29,10 @@ export const { docs, meta } = defineDocs({
   },
 });
 
-const mdxOptions: DefaultMDXOptions = {};
+const mdxOptions: DefaultMDXOptions = {
+  remarkPlugins: [remarkInstall],
+  rehypePlugins: (v) => [...v],
+};
 
 export default defineConfig({
   lastModifiedTime: "git",

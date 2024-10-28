@@ -19,13 +19,13 @@ Vercel은 Next.js를 만든 회사로, 개발자들이 LLM(대형 언어 모델)
 
 우선 Next.js 프로젝트를 생성하고 AI SDK를 추가합니다.
 
-```bash
-# Next.js 프로젝트 생성
-pnpm dlx create-next-app@latest my-ai-app
+```package-install
+npx create-next-app@latest my-ai-app
 cd my-ai-app
+```
 
-# AI SDK 추가
-pnpm add ai
+```package-install
+ai
 ```
 
 AI SDK를 사용하려면 LLM 모델을 제공하는 **provider**가 필요합니다.
@@ -52,8 +52,8 @@ Llama 3.1 모델은 메타의 최신 LLM으로 뛰어난 성능을 자랑합니�
 
 ### 3. FriendliAI provider 패키지 설치
 
-```bash
-pnpm add @friendliai/ai-provider
+```package-install
+@friendliai/ai-provider
 ```
 
 이제 FriendliAI와 Vercel AI SDK를 사용할 준비가 완료되었습니다.
@@ -99,7 +99,6 @@ export default function Chat() {
     </>
   );
 }
-
 ```
 
 이 코드는 사용자의 메시지와 AI의 응답을 UI에 출력하고, 사용자가 텍스트를 입력할 수 있는 폼을 제공합니다.
