@@ -2,7 +2,6 @@
 title: "git default branch 설정 변경"
 date: 2023-02-25
 tags: ["github", "git"]
-categories:
 ---
 
 기본적으로 git에서는 master라는 브랜치가 자동적으로 설정되게 되어 있다.
