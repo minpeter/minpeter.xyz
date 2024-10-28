@@ -34,7 +34,7 @@ export default async function Page(props: {
         title={post.data.title}
         description={
           post.data.description === undefined
-            ? formatDateLong(post.data.lastModified)
+            ? formatDateLong(post.data.date)
             : post.data.description
         }
         link={{ href: "/blog", text: "글 목록으로" }}

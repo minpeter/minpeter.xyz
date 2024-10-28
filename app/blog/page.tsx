@@ -42,7 +42,7 @@ function BlogList() {
   const filteredPosts = posts.filter((post: any) => searchIn(post.data.title));
 
   const yearList = filteredPosts.reduce((acc: any, post) => {
-    const year = formatYear(post.data.lastModified);
+    const year = formatYear(post.data.date);
 
     if (!acc[year]) {
       acc[year] = [];
@@ -111,10 +111,10 @@ function BlogList() {
                         </Link>
 
                         <time
-                          dateTime={post.data.lastModified?.toString()}
+                          dateTime={post.data.date?.toString()}
                           className={cn(itemSytles, "text-nowrap h-fit")}
                         >
-                          {formatDate(post.data.lastModified)}
+                          {formatDate(post.data.date)}
                         </time>
                       </li>
                     ))}
