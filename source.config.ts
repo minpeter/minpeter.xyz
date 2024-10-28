@@ -38,5 +38,5 @@ const mdxOptions: DefaultMDXOptions = {
 export default defineConfig({
   lastModifiedTime: "git",
   mdxOptions: mdxOptions,
-  generateManifest: true,
+  generateManifest: false,
 });
