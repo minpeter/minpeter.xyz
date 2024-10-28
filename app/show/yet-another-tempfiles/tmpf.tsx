@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DownloadIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { codeVariants } from "@/components/ui/typography";
+import Link from "next/link";
 
 const TMPF_API_BASE = "https://api.tmpf.me";
 // const TMPF_API_BASE = "http://localhost:5001";
@@ -129,14 +130,14 @@ export default function TmpfUI() {
           <ul>
             {uploaded.files.map((f: any) => (
               <li key={f.fileName}>
-                <a
+                <Link
                   className="flex items-center space-x-2 hover:underline"
                   href={BACKEND(API_SUFFIX.VIEW(uploaded.folderId, f.fileName))}
                   target="_blank"
                 >
                   <span>{f.fileName}</span>
                   <EyeOpenIcon className="w-4 h-4" />
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
