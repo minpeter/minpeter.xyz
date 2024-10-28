@@ -1,0 +1,67 @@
+---
+title: virtual network editor
+date: 2024-03-18
+description: "vmware 가상 네트워크 설정 가이드"
+---
+
+VMware에는 3가지 네트워크 모드가 있다.
+
+Bridged, NAT, Host-only이다.
+
+네트워크 설정 변경을 위해선 Virtual Network Editor 라는 프로그램을 이용한다.
+
+![virtual network editor](./images/virtual_network_editor.png)
+
+뭔가 변경하기 위해선 아래쪽의 Change Settings 버튼을 눌러 관리자 권한을 부여한 뒤에 수정이 가능하다.
+
+가상 네트워크는 VMnet\* 조합으로 하나의 가상 네트워크 아댑터가 구성되며 VMnet0에서 VMnet19번까지 자유롭게 생성하고 삭제할 수 있다.
+
+우선 기본적으로 설정되어 있는 3가지 네트워크 아댑터를 살펴보자.
+
+## VMnet0 (Type Bridged)
+
+기존적으로 VMnet0번은 브리지모드로 설정되어 있다.
+
+이는 변경가능하고 사용하기 위해선 Bridged to : 라고 적힌 부분의 장치 선택을 하면 된다.
+
+이때 선택해야되는 장치는 호스트 장비에서 실제 인터넷에 접근하고 있는 NIC, 즉 노트북으로 말하자면 무선랜 아댑터이다.
+
+브리지 모드는 Host-only와 동일하게 여러개 선언 가능하나 특징으로는 같은 NIC를 사용하는 브리지는 생성할 수 없다는 것이다.
+
+이를 선택할 경우 호스트 PC가 실행되고 있는 실제 네트워크 환경에 따라서 IP가 부여되며 학교와 같은 고정아이피를 사용하는 기관에서는 DHCP 서버가 없기에 VM내부에서 고정아이피를 설정해주어야 한다.
+
+실제 내트워크에서 실행되는 것처럼 되기 때문에 동일 네트워크에 있는 다른 PC에서도 가상머신으로 접속이 가능해지게 된다.
+
+## VMnet1 (Type Host-only)
+
+기본적으로 Host-only모드로 설정되어 있다.
+
+마찬가지로 변경가능하고 특징으로는 이 네트워크에 연결된 VM은 이 네트워크 내의 VM끼리만 통신이 가능해지게 된다.
+
+변경가능한 설정으로는 Subnet IP, Subnet mask, DHCP 사용여부, DHCP 대역 설정이 있다.
+
+## VMnet8 (Type NAT)
+
+가장 신기한 VNIC다.
+
+Host-only와 비슷하게 작동하지만 Network Address Translation 기술의 적용으로 호스트의 인터넷을 공유하는 방식으로 외부 인터넷 접근이 가능하며 VM에는 VNIC내의 사설망 IP가 할당된다.
+
+Host-only와 동일하게 Subnet IP, Subnet mask, DHCP 사용여부, DHCP 대역을 설정할 수 있고,
+
+NAT 만의 고유 설정으로는 NAT Settings 버튼을 누르면 나오는 설정창이 존재한다.
+
+![virtual network editor NAT](./images/virtual_network_editor_NAT.png)
+
+여기서 NAT만의 특징인 포트포워딩을 수행할 수 있는데 공유기의 포트포워딩과 같이 호스트의 포트 (노출될 포트), 게스트의 포트 (서비스 중인 포트), 게스트의 아이피 (포트포워딩할 대상) 을 설정해주면 포트포워딩을 수행한다.
+
+이때 포트포워딩에 성공하면 브리지모드와 유사하게 해당 서비스에 한하여 호스트PC와 같은 네트워크에 존재하는 다른 PC에서 서비스로 접속이 가능해지게 된다.
+
+## Type Custom
+
+이는 Host-only모드에서 Connect a host virtual adapter to this network 옵션을 끌때 다음 타음으로 변경된다.
+
+Host-only 모드와 거희 유사하나 호스트 PC와 Custom Type의 VNIC에 속한 가상머신간의 통신이 불가능해진다는 특징이 있다.
+
+일반적으로 생각하는 Host-only 모드가 이에 속한다.
+
+사실 Host-only 모드도 가상머신끼리만 통신이 되는것이 아닌 호스트 컴퓨터까지는 통신이 되거든요 ㅎ

@@ -1,4 +1,4 @@
-import { type ClassValue, clsx } from "clsx";
+import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -6,21 +6,21 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // 2022-1-1 -> 01. 01.
-export function formatDate(date: string) {
-  const d = new Date(date);
+export function formatDate(date?: string | number | undefined | Date) {
+  const d = new Date(date ? date : new Date());
   return `${("0" + (d.getMonth() + 1)).slice(-2)}. ${("0" + d.getDate()).slice(
     -2
   )}.`;
 }
 
-export function formatYear(date: string) {
-  const d = new Date(date);
+export function formatYear(date?: string | number | undefined | Date) {
+  const d = new Date(date ? date : new Date());
   return d.getFullYear();
 }
 
 // 2022-1-1 -> February 1, 2022
-export function formatDateLong(date: string) {
-  const d = new Date(date);
+export function formatDateLong(date?: string | number | undefined | Date) {
+  const d = new Date(date ? date : new Date());
   return d.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",

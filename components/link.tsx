@@ -1,7 +1,3 @@
-import Header from "@/components/header";
-import { CookieIcon, TransformIcon } from "@radix-ui/react-icons";
-import { CodeIcon } from "lucide-react";
-import { getAllPosts } from "@/lib/loader";
 import Link from "next/link";
 
 import { ArrowTopLeftIcon } from "@radix-ui/react-icons";

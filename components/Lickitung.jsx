@@ -11,7 +11,7 @@ import {
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 
-export default function Index() {
+export default function Lickitung() {
   return (
     <div className="w-full flex justify-center">
       <Canvas
