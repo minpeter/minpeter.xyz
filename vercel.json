@@ -5,8 +5,8 @@
       "destination": "/blog"
     },
     {
-      "source": "https://blog.minpeter.xyz/:path*",
-      "destination": "/blog/:path*"
+      "source": "https://blog.minpeter.xyz/:path",
+      "destination": "/blog/:path"
     }
   ]
 }
