@@ -59,7 +59,7 @@ export default async function Page(props: {
         <div className="flex justify-between">
           {postsIndex[post.slugs.join("/")].previous ? (
             <Link
-              href={`/blog/${postsIndex[post.slugs.join("/")].previous.slug}`}
+              href={postsIndex[post.slugs.join("/")].previous.url}
               className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
             >
               ← {postsIndex[post.slugs.join("/")].previous.data.title}
@@ -70,7 +70,7 @@ export default async function Page(props: {
 
           {postsIndex[post.slugs.join("/")].next && (
             <Link
-              href={`/blog/${postsIndex[post.slugs.join("/")].next.slug}`}
+              href={postsIndex[post.slugs.join("/")].next.url}
               className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
             >
               {postsIndex[post.slugs.join("/")].next.data.title} →
