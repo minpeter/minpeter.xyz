@@ -9,7 +9,7 @@
           "value": "blog.minpeter.xyz"
         }
       ],
-      "destination": "/blog/:path"
+      "destination": "https://minpeter.xyz/blog/:path"
     }
   ]
 }
