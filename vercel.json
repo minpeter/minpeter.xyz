@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/:path((?!blog/).*)",
+      "source": "/:path",
       "has": [
         {
           "type": "header",
@@ -9,7 +9,7 @@
           "value": "blog.minpeter.xyz"
         }
       ],
-      "destination": "/blog/:path*"
+      "destination": "/blog/:path"
     }
   ]
 }
