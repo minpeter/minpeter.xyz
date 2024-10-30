@@ -1,12 +1,15 @@
 {
   "rewrites": [
     {
-      "source": "https://blog.minpeter.xyz",
-      "destination": "/blog"
-    },
-    {
-      "source": "https://blog.minpeter.xyz/:path",
-      "destination": "/blog/:path"
+      "source": "/:path((?!blog/).*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-forwarded-host",
+          "value": "blog.minpeter.xyz"
+        }
+      ],
+      "destination": "/blog/:path*"
     }
   ]
 }
