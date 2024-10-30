@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "https://blog.minpeter.xyz",
+      "destination": "/blog"
+    },
+    {
+      "source": "https://blog.minpeter.xyz/:path*",
+      "destination": "/blog/:path*"
+    }
+  ]
+}
