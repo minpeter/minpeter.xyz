@@ -29,7 +29,6 @@ const MIN_ACCURACY_THRESHOLD = 85; // 85% accuracy threshold
 export default function Page() {
   // Add new states
   const [sentences, setSentences] = useState(initialSentences);
-  const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [lastWpm, setLastWpm] = useState(0); // Add this line after other state declarations
 
