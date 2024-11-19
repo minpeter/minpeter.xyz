@@ -60,7 +60,7 @@ export function Model() {
         anchorY="middle"
         textAlign="center"
       >
-        {"VUD ❤️\n\nflag{1ICK17un6_poKemoN_1o8-2}"}
+        {"VUD ❤️\n\nflag{1ICK17un6_1o8-2}\n\nNULL"}
       </Text>
 
       <mesh
