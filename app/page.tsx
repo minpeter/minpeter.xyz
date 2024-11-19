@@ -1,6 +1,6 @@
 import Header from "@/components/header";
 import { CookieIcon, TransformIcon } from "@radix-ui/react-icons";
-import { CodeIcon, KeyboardIcon } from "lucide-react";
+import { CodeIcon, KeyboardIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
 export default async function Page() {
@@ -51,7 +51,15 @@ export default async function Page() {
               className="p-3 bg-white/5 rounded-xl flex flex-col relative
                        hover:bg-white/10 transition-colors duration-200 aspect-square"
             >
-              <div className="absolute top-3 right-3">{item.icon}</div>
+              <div className="absolute top-3 left-3 flex gap-1.5 items-center">
+                {item.icon}
+              </div>
+
+              {item.external && (
+                <div className="absolute top-3 right-3 flex gap-1.5 items-center">
+                  <ExternalLinkIcon className="w-3 h-3" />
+                </div>
+              )}
               <span className="text-sm self-start mt-auto">{item.text}</span>
             </Link>
           ))}
