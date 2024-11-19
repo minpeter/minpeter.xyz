@@ -28,6 +28,8 @@ export default function Lickitung() {
   );
 }
 
+useGLTF.preload("/Lickitung.gltf");
+
 export function Model() {
   const { nodes } = useGLTF("/Lickitung.gltf");
 

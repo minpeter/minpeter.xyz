@@ -3,6 +3,8 @@ import { CookieIcon, TransformIcon } from "@radix-ui/react-icons";
 import { CodeIcon, KeyboardIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
+import Lickitung from "@/components/Lickitung";
+
 export default async function Page() {
   return (
     <section className="flex flex-col gap-3">
@@ -64,6 +66,8 @@ export default async function Page() {
             </Link>
           ))}
         </div>
+
+        <Lickitung />
       </div>
     </section>
   );
