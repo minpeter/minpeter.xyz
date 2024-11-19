@@ -33,7 +33,7 @@ export default function Page() {
   const [isFetching, setIsFetching] = useState(false);
 
   // 상태 관리
-  const [userInput, setUserInput] = useState(""); // 사용자가 입���한 텍스트
+  const [userInput, setUserInput] = useState(""); // 사용자가 입�����한 텍스트
   const [isComposing, setIsComposing] = useState(false); // 한글 조합 중인지 여부
   const [composingText, setComposingText] = useState(""); // 현재 조합 중인 한글
   const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0); // 현재 문장 인덱스
@@ -355,7 +355,7 @@ export default function Page() {
         })}
       </div>
 
-      {/* Update progress display to include loading indicator */}
+      {/* Update progress display to include fetching indicator */}
       <div className="text-sm text-gray-400 flex items-center gap-2">
         <span>
           {currentSentenceIndex + 1} / {sentences.length}
@@ -366,10 +366,10 @@ export default function Page() {
             <span>{wpm} WPM</span>
           </>
         )}
-        {isLoading && (
+        {isFetching && (
           <>
             <span className="text-gray-500">•</span>
-            <span>로딩중...</span>
+            <span>문장 생성중...</span>
           </>
         )}
       </div>
