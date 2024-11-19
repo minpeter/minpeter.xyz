@@ -11,42 +11,51 @@ export default async function Page() {
       <div
         data-animate
         data-animate-speed="fast"
-        className="flex flex-col items-center gap-4 w-full max-w-xl mx-auto"
+        // 상위 레이아웃에 넓이 제한이 존재하기 때문에 여기서 넓이 제한은 의미없음
+        className="grid lg:grid-cols-2 grid-cols-1 gap-2 w-full"
       >
-        {[
-          {
-            href: "/blog",
-            text: "개발 이야기와 일상을 기록하는 공간",
-            icon: <CookieIcon className="w-5 h-5" />,
-          },
-          {
-            href: "/typing",
-            text: "타이핑 연습하기",
-            icon: <KeyboardIcon className="w-5 h-5" />,
-          },
-          {
-            href: "https://ip.minpeter.xyz/",
-            text: "IP 주소 확인 도구",
-            icon: <CodeIcon className="w-5 h-5" />,
-            external: true,
-          },
-          {
-            href: "/show",
-            text: "프로젝트 쇼케이스",
-            icon: <TransformIcon className="w-5 h-5" />,
-          },
-        ].map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            target={item.external ? "_blank" : undefined}
-            className="w-full p-4 bg-white/5 rounded-lg flex items-center justify-between
-                     hover:bg-white/10 transition-colors duration-200"
-          >
-            <span>{item.text}</span>
-            {item.icon}
-          </Link>
-        ))}
+        <Link
+          href="/blog"
+          className="p-5 bg-white/5 rounded-xl flex flex-col justify-between
+               hover:bg-white/10 transition-colors duration-200 h-40 lg:square lg:h-auto"
+        >
+          <span className="text-lg font-medium">
+            개발 이야기와 일상을 기록하는 공간
+          </span>
+          <CookieIcon className="w-6 h-6" />
+        </Link>
+
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            {
+              href: "/typing",
+              text: "타이핑 연습하기",
+              icon: <KeyboardIcon className="w-4 h-4" />,
+            },
+            {
+              href: "/show",
+              text: "프로젝트 쇼케이스",
+              icon: <TransformIcon className="w-4 h-4" />,
+            },
+            {
+              href: "https://ip.minpeter.xyz/",
+              text: "IP 주소 확인 도구",
+              icon: <CodeIcon className="w-4 h-4" />,
+              external: true,
+            },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              className="p-3 bg-white/5 rounded-xl flex flex-col relative
+                       hover:bg-white/10 transition-colors duration-200 aspect-square"
+            >
+              <div className="absolute top-3 right-3">{item.icon}</div>
+              <span className="text-sm self-start mt-auto">{item.text}</span>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );
