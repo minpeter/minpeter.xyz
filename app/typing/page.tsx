@@ -19,9 +19,9 @@ const isSpecialChar = (char: string) => {
 
 // Initial sentences array
 const initialSentences = [
-  "타이핑 연습을 시작합니다.",
-  "각 문장이 완성되면 자동으로 넘어가고,",
-  "엔터를 통해 강제로 스킵할 수 있습니다.",
+  "각 문장이 완성되면 자동으로 넘어갑니다.",
+  "엔터 키를 눌러 강제로 다음 문장으로 이동할 수 있습니다.",
+  "문장은 자동으로 생성됩니다, 즐거운 타이핑하세요.",
 ];
 
 const MIN_ACCURACY_THRESHOLD = 85; // 85% accuracy threshold
