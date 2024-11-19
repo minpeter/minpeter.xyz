@@ -56,7 +56,10 @@ export function Playground({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const engine = Engine.create();
+    const engine = Engine.create({
+      gravity: { x: 0, y: 1, scale: 0.001 },
+    });
+
     const render = Render.create({
       engine,
       canvas: canvasRef.current!,
@@ -147,11 +150,16 @@ export function Playground({
     ]);
 
     Render.run(render);
-    const runner = Runner.run(engine);
+    const runner = Runner.create();
+    Runner.run(runner, engine);
 
     return () => {
-      Runner.stop(runner);
       Render.stop(render);
+      Runner.stop(runner);
+      Engine.clear(engine);
+      // render.canvas = null;
+      // render.context = null;
+      render.textures = {};
     };
   }, [w, h]);
 
