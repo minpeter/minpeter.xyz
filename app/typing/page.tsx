@@ -33,7 +33,7 @@ export default function Page() {
   const [isFetching, setIsFetching] = useState(false);
 
   // 상태 관리
-  const [userInput, setUserInput] = useState(""); // 사용자가 입력한 텍스트
+  const [userInput, setUserInput] = useState(""); // 사용자가 입���한 텍스트
   const [isComposing, setIsComposing] = useState(false); // 한글 조합 중인지 여부
   const [composingText, setComposingText] = useState(""); // 현재 조합 중인 한글
   const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0); // 현재 문장 인덱스
@@ -224,7 +224,7 @@ export default function Page() {
     if (!isTransitioning) {
       setIsComposing(false);
 
-      // 조�� 중인 텍스트를 userInput에 추가
+      // 조합 중인 텍스트를 userInput에 추가
       if (composingText) {
         const newInput = userInput + composingText;
 
@@ -261,16 +261,16 @@ export default function Page() {
     }
   };
 
-  // Update handleKeyDown to use new fetch function
+  // Update handleKeyDown to prevent early Enter presses
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !isTransitioning) {
       e.preventDefault();
-      // 강제로 다음 문장으로 진행
-      setIsTransitioning(true);
-      if (currentSentenceIndex >= sentences.length - 3) {
-        fetchNewSentences();
-      }
+      // 강제로 다음 문장으로 진행 (다음 문장이 있을 때만)
       if (currentSentenceIndex < sentences.length - 1) {
+        setIsTransitioning(true);
+        if (currentSentenceIndex >= sentences.length - 3) {
+          fetchNewSentences();
+        }
         setTimeout(() => {
           resetInputStates();
           setCurrentSentenceIndex((prev) => prev + 1);
