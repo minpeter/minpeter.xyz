@@ -23,7 +23,6 @@ export default async function Page() {
             href: "/typing",
             text: "타이핑 연습하기",
             icon: <KeyboardIcon className="w-5 h-5" />,
-            external: true,
           },
           {
             href: "https://ip.minpeter.xyz/",
