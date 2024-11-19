@@ -13,7 +13,7 @@ export async function nextSentencesGenerator() {
 Please write a heart-touching sentence by referring to famous movies, music, literature, comics, etc.
 Please use only Korean. Please make your answer short and concise.
 Please avoid using special characters such as '"', '(', ')' as much as possible, as they interfere with typing practice.
-Love stories are always good.`,
+End your sentences smoothly, always write literary.`,
     prompt: "Please create a phrase for typing practice, just one sentence.",
   });
 
