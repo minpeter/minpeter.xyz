@@ -31,9 +31,10 @@ export default function Page() {
   const [sentences, setSentences] = useState(initialSentences);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [lastWpm, setLastWpm] = useState(0); // Add this line after other state declarations
 
   // 상태 관리
-  const [userInput, setUserInput] = useState(""); // 사용자가 입�����한 텍스트
+  const [userInput, setUserInput] = useState(""); // 사용자가 입력한 텍스트
   const [isComposing, setIsComposing] = useState(false); // 한글 조합 중인지 여부
   const [composingText, setComposingText] = useState(""); // 현재 조합 중인 한글
   const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0); // 현재 문장 인덱스
@@ -57,6 +58,10 @@ export default function Page() {
       setTimeout(() => {
         inputRef.current?.focus();
       }, 50);
+    }
+    // Store current WPM before resetting
+    if (wpm > 0) {
+      setLastWpm(wpm);
     }
     setStartTime(null);
     setWpm(0);
@@ -162,6 +167,7 @@ export default function Page() {
     // 첫 입력 시작 시 타이머 시작
     if (!startTime && (userInput.length > 0 || composingText.length > 0)) {
       setStartTime(Date.now());
+      setLastWpm(0); // Reset lastWpm when new typing starts
       return;
     }
 
@@ -360,10 +366,10 @@ export default function Page() {
         <span>
           {currentSentenceIndex + 1} / {sentences.length}
         </span>
-        {wpm > 0 && (
+        {(wpm > 0 || lastWpm > 0) && (
           <>
             <span className="text-gray-500">•</span>
-            <span>{wpm} WPM</span>
+            <span>{wpm > 0 ? wpm : lastWpm} WPM</span>
           </>
         )}
         {isFetching && (
