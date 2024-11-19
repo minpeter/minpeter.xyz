@@ -331,6 +331,9 @@ export default function Page() {
           const typedChar = userInput[index];
           const isCurrentTyping = index === userInput.length;
           const isComposingHere = isCurrentTyping && isComposing;
+          const isSpace = char === " ";
+          const isWrongSpace = isTyped && isSpace && typedChar !== " ";
+          const isTypedSpace = isTyped && !isSpace && typedChar === " ";
 
           // Modified accuracy check logic
           const isCorrect = (() => {
@@ -354,7 +357,15 @@ export default function Page() {
                   : "opacity-30"
               } ${isComposingHere ? "border-b-2" : ""}`}
             >
-              {isComposingHere ? composingText : isTyped ? typedChar : char}
+              {isComposingHere
+                ? composingText
+                : isTyped
+                ? isWrongSpace || isTypedSpace
+                  ? "_"
+                  : typedChar
+                : isSpace
+                ? " "
+                : char}
             </span>
           );
         })}
@@ -374,7 +385,7 @@ export default function Page() {
         {isFetching && (
           <>
             <span className="text-gray-500">•</span>
-            <span>문장 생성중...</span>
+            <span>생성중...</span>
           </>
         )}
       </div>
