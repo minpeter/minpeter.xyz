@@ -45,13 +45,13 @@ export default async function RootLayout({
   params,
   children,
 }: {
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
   children: React.ReactNode;
 }) {
   const { lang } = await params;
   return (
     <html
-      lang={lang == "fr" ? "ko" : lang}
+      lang={lang ? lang : "ko"}
       className={cn("antialiased", FontSans.className)}
       suppressHydrationWarning
     >

@@ -9,7 +9,11 @@ export const metadata = NewMetadata({
   description: "내가 적은 블로그, 너를 위해 써봤지",
 });
 
-export default async function Page({ params }: { params: { lang: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
   const { lang } = await params;
   return (
     <section>

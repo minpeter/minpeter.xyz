@@ -13,9 +13,10 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 export default async function Page({
   params,
 }: {
-  params: { lang: string; slug: string[] };
+  params: Promise<{ lang: string; slug: string[] }>;
 }) {
   const { lang, slug } = await params;
+
   const post = source.getPage(slug, lang);
   const posts = source.getPages(lang);
 
