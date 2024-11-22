@@ -1,5 +1,11 @@
 import Header from "@/components/header";
-import { CookieIcon, TransformIcon } from "@radix-ui/react-icons";
+import {
+  CookieIcon,
+  GitHubLogoIcon,
+  InstagramLogoIcon,
+  LinkedInLogoIcon,
+  TransformIcon,
+} from "@radix-ui/react-icons";
 import { CodeIcon, KeyboardIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -65,6 +71,34 @@ export default async function Page() {
               <span className="text-sm self-start mt-auto">{item.text}</span>
             </Link>
           ))}
+
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              {
+                href: "https://github.com/minpeter",
+                icon: <GitHubLogoIcon className="w-4 h-4" />,
+              },
+              {
+                href: "https://instagram.com/minpeter2",
+                icon: <InstagramLogoIcon className="w-4 h-4" />,
+              },
+              {
+                href: "https://linkedin.com/in/minpeter",
+                icon: <LinkedInLogoIcon className="w-4 h-4" />,
+              },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="p-3 bg-white/5 rounded-xl flex justify-center items-center
+                 hover:bg-white/10 transition-colors duration-200 aspect-square"
+              >
+                <div className="flex gap-1.5 items-center">{item.icon}</div>
+              </Link>
+            ))}
+          </div>
         </div>
 
         <Lickitung />
