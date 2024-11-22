@@ -100,7 +100,7 @@ export default async function Page() {
             ))}
 
             <div className="col-span-3 ">
-              <Lickitung />
+              <Lickitung aspect="3/2" />
             </div>
           </div>
         </div>
