@@ -13,6 +13,25 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { getI18n } from "@/lib/locales/server";
 import { setStaticParamsLocale } from "next-international/server";
 
+export async function generateStaticParams() {
+  return blog.generateParams();
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string[] }>;
+}) {
+  const { locale, slug } = await params;
+  const page = blog.getPage(slug, locale);
+  if (!page) notFound();
+
+  return NewMetadata({
+    title: page.data.title,
+    description: page.data.description,
+  });
+}
+
 export default async function Page({
   params,
 }: {
@@ -92,23 +111,4 @@ export default async function Page({
       </section>
     </section>
   );
-}
-
-export async function generateStaticParams() {
-  return blog.generateParams();
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string; slug: string[] }>;
-}) {
-  const { locale, slug } = await params;
-  const page = blog.getPage(slug, locale);
-  if (!page) notFound();
-
-  return NewMetadata({
-    title: page.data.title,
-    description: page.data.description,
-  });
 }
