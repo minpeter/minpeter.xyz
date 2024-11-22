@@ -20,6 +20,10 @@ export default async function Page({
   const post = blog.getPage(slug, locale);
   const posts = blog.getPages(locale);
 
+  posts.sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  );
+
   if (!post) notFound();
 
   const MDX = post.data.body;
@@ -42,7 +46,7 @@ export default async function Page({
             ? formatDateLong(post.data.date)
             : post.data.description
         }
-        link={{ href: `/${locale}/blog`, text: "글 목록으로" }}
+        link={{ href: `/blog`, text: "글 목록으로" }}
       />
 
       <DocsBody>
@@ -62,9 +66,7 @@ export default async function Page({
         <div className="flex justify-between">
           {postsIndex[post.slugs.join("/")].previous ? (
             <Link
-              href={`/${locale}${
-                postsIndex[post.slugs.join("/")].previous.url
-              }`}
+              href={`${postsIndex[post.slugs.join("/")].previous.url}`}
               className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
             >
               ← {postsIndex[post.slugs.join("/")].previous.data.title}
@@ -75,7 +77,7 @@ export default async function Page({
 
           {postsIndex[post.slugs.join("/")].next && (
             <Link
-              href={`/${locale}${postsIndex[post.slugs.join("/")].next.url}`}
+              href={`${postsIndex[post.slugs.join("/")].next.url}`}
               className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
             >
               {postsIndex[post.slugs.join("/")].next.data.title} →
