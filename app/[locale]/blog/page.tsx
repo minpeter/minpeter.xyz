@@ -12,9 +12,9 @@ export const metadata = NewMetadata({
 export default async function Page({
   params,
 }: {
-  params: Promise<{ lang: string }>;
+  params: Promise<{ locale: string }>;
 }) {
-  const { lang } = await params;
+  const { locale } = await params;
   return (
     <section>
       <Header
@@ -23,7 +23,7 @@ export default async function Page({
         link={{ href: "/", text: "홈으로" }}
       />
       <Suspense>
-        <BlogList lang={lang} />
+        <BlogList lang={locale} />
       </Suspense>
     </section>
   );

@@ -45,18 +45,18 @@ export default async function RootLayout({
   params,
   children,
 }: {
-  params: Promise<{ lang: string }>;
+  params: Promise<{ locale: string }>;
   children: React.ReactNode;
 }) {
-  const { lang } = await params;
+  const { locale } = await params;
   return (
     <html
-      lang={lang ? lang : "ko"}
+      lang={locale ? locale : "ko"}
       className={cn("antialiased", FontSans.className)}
       suppressHydrationWarning
     >
       <body>
-        <I18nProvider locale={lang}>
+        <I18nProvider locale={locale}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
