@@ -41,21 +41,22 @@ export const metadata = NewMetadata({
 //   ],
 // });
 
-export default function RootLayout({
+export default async function RootLayout({
   params,
   children,
 }: {
   params: { lang: string };
   children: React.ReactNode;
 }) {
+  const { lang } = await params;
   return (
     <html
-      lang={params.lang}
+      lang={lang == "fr" ? "ko" : "en"}
       // className={cn("antialiased", FontSans.className)}
       suppressHydrationWarning
     >
       <body>
-        <I18nProvider locale={params.lang}>
+        <I18nProvider locale={lang}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

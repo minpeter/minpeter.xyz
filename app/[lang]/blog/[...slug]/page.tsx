@@ -10,12 +10,14 @@ import Link from "next/link";
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
-export default async function Page(props: {
-  params: Promise<{ slug: string[] }>;
+export default async function Page({
+  params,
+}: {
+  params: { lang: string; slug: string[] };
 }) {
-  const params = await props.params;
-  const post = source.getPage(params.slug);
-  const posts = source.getPages();
+  const { lang, slug } = await params;
+  const post = source.getPage(slug, lang);
+  const posts = source.getPages(lang);
 
   if (!post) notFound();
 
@@ -39,7 +41,7 @@ export default async function Page(props: {
             ? formatDateLong(post.data.date)
             : post.data.description
         }
-        link={{ href: "/blog", text: "글 목록으로" }}
+        link={{ href: `/${lang}/blog`, text: "글 목록으로" }}
       />
 
       <DocsBody>
@@ -59,7 +61,7 @@ export default async function Page(props: {
         <div className="flex justify-between">
           {postsIndex[post.slugs.join("/")].previous ? (
             <Link
-              href={postsIndex[post.slugs.join("/")].previous.url}
+              href={`/${lang}${postsIndex[post.slugs.join("/")].previous.url}`}
               className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
             >
               ← {postsIndex[post.slugs.join("/")].previous.data.title}
@@ -70,7 +72,7 @@ export default async function Page(props: {
 
           {postsIndex[post.slugs.join("/")].next && (
             <Link
-              href={postsIndex[post.slugs.join("/")].next.url}
+              href={`/${lang}${postsIndex[post.slugs.join("/")].next.url}`}
               className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
             >
               {postsIndex[post.slugs.join("/")].next.data.title} →
