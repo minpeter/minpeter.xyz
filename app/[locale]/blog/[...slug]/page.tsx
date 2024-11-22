@@ -9,6 +9,7 @@ import { formatDateLong } from "@/lib/utils";
 import Link from "next/link";
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
 
 export default async function Page({
   params,
@@ -54,7 +55,7 @@ export default async function Page({
           data-animate
           data-animate-speed="fast"
           className="mdx"
-          components={{ ...defaultMdxComponents, Tab, Tabs }}
+          components={{ ...defaultMdxComponents, Tab, Tabs, Callout }}
         />
       </DocsBody>
 
