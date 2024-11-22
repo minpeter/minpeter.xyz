@@ -5,9 +5,9 @@ const I18nMiddleware = createI18nMiddleware({
   locales: ["en", "ko"],
   defaultLocale: "ko",
   urlMappingStrategy: "rewriteDefault",
-  resolveLocaleFromRequest: () => {
-    return "ko";
-  },
+  // resolveLocaleFromRequest: () => {
+  //   return "ko";
+  // },
 });
 
 export function middleware(request: NextRequest) {
