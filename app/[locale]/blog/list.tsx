@@ -4,15 +4,12 @@ import Link from "next/link";
 import { cn, formatDate, formatYear } from "@/lib/utils";
 
 import { useQueryState, parseAsString } from "nuqs";
-import { source } from "@/lib/source";
+import { blog, blogType } from "@/lib/source";
 
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
-export type getPagesReturnType = ReturnType<typeof source.getPages>;
-export type postType = getPagesReturnType[number];
-
 export function BlogList({ lang }: { lang: string }) {
-  const posts = source.getPages(lang);
+  const posts = blog.getPages(lang);
 
   const [query, setQuery] = useQueryState("q", parseAsString.withDefault(""));
 
@@ -77,7 +74,7 @@ export function BlogList({ lang }: { lang: string }) {
                     data-animate-speed="fast"
                     className="space-y-3 w-full"
                   >
-                    {yearList[year].map((post: postType) => (
+                    {yearList[year].map((post: blogType) => (
                       <li
                         key={post.slugs.join("/")}
                         className="flex justify-between group/post space-x-4"

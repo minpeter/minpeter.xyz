@@ -1,4 +1,4 @@
-import { source } from "@/lib/source";
+import { blog } from "@/lib/source";
 
 import { notFound } from "next/navigation";
 import defaultMdxComponents from "fumadocs-ui/mdx";
@@ -17,8 +17,8 @@ export default async function Page({
 }) {
   const { locale, slug } = await params;
 
-  const post = source.getPage(slug, locale);
-  const posts = source.getPages(locale);
+  const post = blog.getPage(slug, locale);
+  const posts = blog.getPages(locale);
 
   if (!post) notFound();
 
@@ -88,14 +88,14 @@ export default async function Page({
 }
 
 export async function generateStaticParams() {
-  return source.generateParams();
+  return blog.generateParams();
 }
 
 export async function generateMetadata(props: {
   params: Promise<{ slug?: string[] }>;
 }) {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = blog.getPage(params.slug);
   if (!page) notFound();
 
   return NewMetadata({
