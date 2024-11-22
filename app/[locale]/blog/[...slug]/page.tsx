@@ -98,11 +98,13 @@ export async function generateStaticParams() {
   return blog.generateParams();
 }
 
-export async function generateMetadata(props: {
-  params: Promise<{ slug?: string[] }>;
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string[] }>;
 }) {
-  const params = await props.params;
-  const page = blog.getPage(params.slug);
+  const { locale, slug } = await params;
+  const page = blog.getPage(slug, locale);
   if (!page) notFound();
 
   return NewMetadata({
