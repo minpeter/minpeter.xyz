@@ -9,24 +9,39 @@ import {
 } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 
-// GLTF 로더에 draco 압축 옵션 추가
 useGLTF.preload("/Lickitung.gltf", true);
 
-export default function Lickitung() {
+const calculateAspectRatio = (ratio) => {
+  const [width, height] = ratio.split("/").map(Number);
+  return `${(height / width) * 100}%`;
+};
+
+export default function Lickitung({ aspect = "3/2" }) {
   return (
-    <div className="w-full flex justify-center">
-      <Canvas
-        style={{ background: "0 0% 3.9%", height: "200px", width: "300px" }}
-        camera={{ fov: 1 }}
-        dpr={[1, 2]} // 디바이스 픽셀 비율 최적화
-        performance={{ min: 0.1 }} // 성능 최적화
-      >
-        <Suspense fallback={null}>
-          <Model />
-          <directionalLight intensity={2} position={[0, 2, 3]} />
-          <Environment preset="studio" />
-        </Suspense>
-      </Canvas>
+    <div
+      className="w-full relative"
+      style={{ paddingTop: calculateAspectRatio(aspect) }}
+    >
+      <div className="absolute inset-0">
+        <Canvas
+          style={{
+            background: "0 0% 3.9%",
+            width: "100%",
+            height: "100%",
+            display: "block", // Add this to remove extra space
+          }}
+          camera={{ fov: 1 }}
+          dpr={[1, 2]} // 디바이스 픽셀 비율 최적화
+          performance={{ min: 0.1 }} // 성능 최적화
+        >
+          <Suspense fallback={null}>
+            <Model />
+            <directionalLight intensity={20} position={[0, 2, 3]} />
+            <ambientLight intensity={20} />
+            <pointLight intensity={20} position={[0, 5, 5]} />
+          </Suspense>
+        </Canvas>
+      </div>
     </div>
   );
 }

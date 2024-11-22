@@ -83,7 +83,7 @@ export default async function Page() {
                 icon: <InstagramLogoIcon className="w-4 h-4" />,
               },
               {
-                href: "https://linkedin.com/in/minpeter",
+                href: "https://linkedin.com/in/minpeter/",
                 icon: <LinkedInLogoIcon className="w-4 h-4" />,
               },
             ].map((item) => (
@@ -98,10 +98,12 @@ export default async function Page() {
                 <div className="flex gap-1.5 items-center">{item.icon}</div>
               </Link>
             ))}
+
+            <div className="col-span-3 ">
+              <Lickitung />
+            </div>
           </div>
         </div>
-
-        <Lickitung />
       </div>
     </section>
   );
