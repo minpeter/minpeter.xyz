@@ -13,23 +13,8 @@ import { Suspense } from "react";
 export type getPagesReturnType = ReturnType<typeof source.getPages>;
 export type postType = getPagesReturnType[number];
 
-export default function Page() {
-  return (
-    <section>
-      <Header
-        title="민웅기의 개발 노트"
-        description="내가 만든 블로그, 너를 위해 써봤지"
-        link={{ href: "/", text: "홈으로" }}
-      />
-      <Suspense>
-        <BlogList />
-      </Suspense>
-    </section>
-  );
-}
-
-function BlogList() {
-  const posts = source.getPages();
+export function BlogList({ lang }: { lang: string }) {
+  const posts = source.getPages(lang);
 
   const [query, setQuery] = useQueryState("q", parseAsString.withDefault(""));
 

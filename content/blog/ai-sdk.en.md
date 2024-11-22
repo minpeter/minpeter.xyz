@@ -1,0 +1,139 @@
+---
+title: ▲ Vercel AI SDK (en)
+description: 내 웹사이트에 LLM 대화 기능을 추가하는 방법
+date: 2024-09-23
+---
+
+## 개요
+
+Vercel은 Next.js를 만든 회사로, 개발자들이 LLM(대형 언어 모델)을 웹사이트에 쉽게 통합할 수 있도록 돕는 [AI SDK](https://sdk.vercel.ai/)를 제공합니다.
+이 SDK는 별도의 Node.js 서버를 사용하는 대부분의 프론트엔드 프레임워크에서 적용이 가능하며, 특히 서버 기본 제공하는 Next.js와 함께 사용할 때 매우 유용합니다.
+
+이 가이드는 Vercel AI SDK를 사용하여 웹사이트에 LLM 기반의 대화 기능을 추가하는 방법을 설명합니다.
+
+<Callout>
+이미 Node.js와 패키지 매니저인 `pnpm`(또는 `npm`)이 설치되었다는 가정하에 설명합니다.
+</Callout>
+
+## 프로젝트 생성
+
+우선 Next.js 프로젝트를 생성하고 AI SDK를 추가합니다.
+
+```package-install
+npx create-next-app@latest my-ai-app
+cd my-ai-app
+```
+
+```package-install
+ai
+```
+
+AI SDK를 사용하려면 LLM 모델을 제공하는 **provider**가 필요합니다.
+이 예제에서는 [FriendliAI](https://friendli.ai/)를 사용하여 설정을 진행합니다.
+다른 AI provider를 사용하려면 [Vercel AI SDK providers 문서](https://sdk.vercel.ai/providers/ai-sdk-providers)를 참고하세요.
+
+## FriendliAI 설정
+
+### 1. FriendliAI 계정 생성 및 API 토큰 발급
+
+먼저 FriendliAI 사이트에 가서 계정을 생성하고 [Personal Access Tokens 발급 방법](https://docs.friendli.ai/guides/personal_access_tokens)에 따라 API 토큰을 발급받습니다. 발급된 토큰은 `flp_xxxxxx` 형식입니다.
+
+### 2. 환경 변수 설정
+
+프로젝트 루트에 `.env` 파일을 생성하고, 발급받은 토큰을 환경 변수로 설정합니다.
+
+```.env
+# .env
+FRIENDLI_TOKEN=flp_xxxxx
+```
+
+이제 FriendliAI의 **Llama 3.1 70b** 모델을 $5 크레딧만큼 무료로 사용할 수 있습니다.
+Llama 3.1 모델은 메타의 최신 LLM으로 뛰어난 성능을 자랑합니다.
+
+### 3. FriendliAI provider 패키지 설치
+
+```package-install
+@friendliai/ai-provider
+```
+
+이제 FriendliAI와 Vercel AI SDK를 사용할 준비가 완료되었습니다.
+
+## 대화 기능 추가
+
+AI SDK를 사용하여 간단한 대화 기능을 구현해 보겠습니다. 두 개의 파일을 수정해야 합니다.
+
+### 1. app/page.tsx
+
+사용자와 AI 간의 대화를 관리하는 React 컴포넌트입니다.
+
+```tsx
+"use client";
+
+import { useChat } from "ai/react";
+
+export default function Chat() {
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
+    useChat();
+
+  const isWaiting =
+    isLoading && messages[messages.length - 1]?.role !== "assistant";
+
+  return (
+    <>
+      {messages.map((message) => (
+        <div key={message.id}>
+          {message.role === "user" ? "User: " : "AI: "}
+          {message.content}
+        </div>
+      ))}
+
+      {(isWaiting || error) &&
+        (isWaiting
+          ? "AI is thinking..."
+          : error && "An error has occurred. Please try again later.")}
+
+      <form onSubmit={handleSubmit}>
+        <input name="prompt" value={input} onChange={handleInputChange} />
+        <button type="submit">Submit</button>
+      </form>
+    </>
+  );
+}
+```
+
+이 코드는 사용자의 메시지와 AI의 응답을 UI에 출력하고, 사용자가 텍스트를 입력할 수 있는 폼을 제공합니다.
+
+### 2. app/api/chat/route.ts
+
+AI의 응답을 처리하는 API 경로입니다. FriendliAI의 `Llama 3.1 70b` 모델을 사용하여 대화를 처리합니다.
+
+```ts
+import { friendli } from "@friendliai/ai-provider";
+import { convertToCoreMessages, streamText } from "ai";
+
+// Allow streaming responses up to 30 seconds
+export const maxDuration = 30;
+
+export async function POST(req: Request) {
+  const { messages } = await req.json();
+
+  const result = await streamText({
+    model: friendli("meta-llama-3.1-70b-instruct"),
+    system: "You are a helpful assistant.",
+    messages: convertToCoreMessages(messages),
+  });
+
+  return result.toDataStreamResponse();
+}
+```
+
+이 API는 `POST` 요청으로 전달된 메시지 데이터를 처리하고, AI의 응답을 스트리밍으로 반환합니다. FriendliAI의 `meta-llama-3.1-70b-instruct` 모델을 사용하여 대화형 응답을 생성합니다.
+
+## 마무리
+
+이제 Vercel AI SDK와 FriendliAI를 사용하여 간단한 LLM 기반 대화 기능을 구현할 수 있습니다. 더 많은 기능을 추가하거나 다른 provider를 사용하고 싶다면 Vercel과 FriendliAI의 문서를 참고하세요.
+
+- [Vercel AI SDK Providers](https://sdk.vercel.ai/providers/ai-sdk-providers)
+- [FriendliAI Vercel AI SDK Guide](https://docs.friendli.ai/sdk/integrations/vercel-ai-sdk)
+
+Next.js와 함께 Vercel AI SDK를 사용하면, 강력한 LLM 기반의 기능을 웹사이트에 쉽게 통합할 수 있습니다.
