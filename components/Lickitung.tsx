@@ -11,7 +11,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 
 useGLTF.preload("/Lickitung.gltf", true);
 
-const calculateAspectRatio = (ratio) => {
+const calculateAspectRatio = (ratio: string) => {
   const [width, height] = ratio.split("/").map(Number);
   return `${(height / width) * 100}%`;
 };
@@ -63,6 +63,7 @@ export function Model() {
   };
 
   useFrame(() => {
+    // @ts-ignore
     torus.current.rotation.z += 0.02;
   });
 
@@ -81,6 +82,7 @@ export function Model() {
 
       <mesh
         ref={torus}
+        // @ts-ignore
         geometry={nodes.mesh_0.geometry}
         position={[0, -6, 0]}
         rotation={[-Math.PI / -2, 0, 0]}
