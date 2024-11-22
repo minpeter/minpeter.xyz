@@ -5,6 +5,7 @@ const I18nMiddleware = createI18nMiddleware({
   locales: ["en", "ko"],
   defaultLocale: "ko",
   urlMappingStrategy: "rewriteDefault",
+  // 유저의 지역 설정 무시
   // resolveLocaleFromRequest: () => {
   //   return "ko";
   // },
