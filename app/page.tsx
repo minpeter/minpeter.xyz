@@ -24,8 +24,8 @@ export default async function Page() {
       >
         <Link
           href="/blog"
-          className="p-5 bg-white/5 rounded-xl flex flex-col justify-between
-               hover:bg-white/10 transition-colors duration-200 h-40 lg:square lg:h-auto"
+          className="p-5 dark:bg-white/5 bg-black/5 rounded-xl flex flex-col justify-between
+               hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 h-40 lg:square lg:h-auto"
         >
           <span className="text-lg font-medium">
             개발 이야기와 일상을 기록하는 공간
@@ -56,8 +56,8 @@ export default async function Page() {
               key={item.href}
               href={item.href}
               target={item.external ? "_blank" : undefined}
-              className="p-3 bg-white/5 rounded-xl flex flex-col relative
-                       hover:bg-white/10 transition-colors duration-200 aspect-square"
+              className="p-3 dark:bg-white/5 bg-black/5 rounded-xl flex flex-col relative
+                       hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 aspect-square"
             >
               <div className="absolute top-3 left-3 flex gap-1.5 items-center">
                 {item.icon}
@@ -92,8 +92,8 @@ export default async function Page() {
                 href={item.href}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="p-3 bg-white/5 rounded-xl flex justify-center items-center
-                 hover:bg-white/10 transition-colors duration-200 aspect-square"
+                className="p-3 dark:bg-white/5 bg-black/5 rounded-xl flex justify-center items-center
+                 hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 aspect-square"
               >
                 <div className="flex gap-1.5 items-center">{item.icon}</div>
               </Link>

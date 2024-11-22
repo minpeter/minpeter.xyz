@@ -353,7 +353,7 @@ export default function Page() {
                     ? "opacity-100 text-emerald-400"
                     : "opacity-100 text-pink-400"
                   : isCurrentTyping
-                  ? "text-white opacity-100"
+                  ? "opacity-100"
                   : "opacity-30"
               } ${isComposingHere ? "border-b-2" : ""}`}
             >
