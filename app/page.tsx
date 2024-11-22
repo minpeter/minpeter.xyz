@@ -14,7 +14,10 @@ import Lickitung from "@/components/Lickitung";
 export default async function Page() {
   return (
     <section className="flex flex-col gap-3">
-      <Header description="written, coded, and designed by minpeter" />
+      <Header
+        description="written, coded, and designed by minpeter"
+        title="minpeter 🇰🇷"
+      />
 
       <div
         data-animate
