@@ -24,22 +24,22 @@ export const metadata = NewMetadata({
   description: "이 웹에서 가장 멋진 사이트가 될거야~",
 });
 
-// const FontSans = localFont({
-//   variable: "--font-sans",
-//   display: "swap",
-//   src: [
-//     {
-//       path: "../../public/fonts/AritaBuri-Medium.woff2",
-//       weight: "400",
-//       style: "normal",
-//     },
-//     {
-//       path: "../../public/fonts/AritaBuri-SemiBold.woff2",
-//       weight: "700",
-//       style: "bold",
-//     },
-//   ],
-// });
+const FontSans = localFont({
+  variable: "--font-sans",
+  display: "swap",
+  src: [
+    {
+      path: "../../public/fonts/AritaBuri-Medium.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/AritaBuri-SemiBold.woff2",
+      weight: "700",
+      style: "bold",
+    },
+  ],
+});
 
 export default async function RootLayout({
   params,
@@ -52,7 +52,7 @@ export default async function RootLayout({
   return (
     <html
       lang={lang == "fr" ? "ko" : "en"}
-      // className={cn("antialiased", FontSans.className)}
+      className={cn("antialiased", FontSans.className)}
       suppressHydrationWarning
     >
       <body>
