@@ -13,6 +13,98 @@ import { ModCodeBlock } from "@/components/code-block";
   실용적인 글을 찾고 있다면 넘어가시면 됩니다.
 </Callout>
 
+<Typing
+  staticText="This article uses "
+  dynamic={["Next.js", "MDX", "tailwind"]}
+/>
+
+시작부터 이 **블로그 타이틀**에 사용한 `컴포넌트`를 사용해봤다.{" "}
+
+잘 동작하는 것을 보니 MDX가 잘 적용되었다는 걸 알 수 있다.
+
+import { SimpleButton, Ip, Counter } from "./components";
+
+이제 블로그에서 컴포넌트를 사용할 수 있게 되어 몇가지 실험을 해보고자 한다.
+
+우선 인라인 코드 블럭 테스트 `console.log("Hello, World!")` 를 해보자.
+다음은 일반 코드 블럭 테스트
+
+```
+console.log("Hello, World!")
+```
+
+---
+
+간단한 버튼 컴포넌트
+
+```jsx
+export function SimpleButton() {
+  const [toggle, setToggle] = useState(false);
+  const [count, setCount] = useState(0);
+
+  return (
+    <Button
+      onClick={() => {
+        setToggle(!toggle);
+        setCount(count + 1);
+      }}
+    >
+      {toggle ? "You pushed me!!" : "Push me!!"}
+    </Button>
+  );
+}
+```
+
+<SimpleButton />
+
+---
+
+ip.minpeter.xyz 서버를 이용한 독자 아이피 조회 컴포넌트
+
+```jsx
+export function Ip() {
+  const [ip, setIp] = useState("");
+
+  useEffect(() => {
+    fetch("https://ip.minpeter.xyz/ip").then((res) =>
+      res.text().then((ip) => setIp(ip))
+    );
+  }, []);
+
+  return <span>Your IP: {ip ? ip : "Loading..."}</span>;
+}
+```
+
+<Ip />
+
+---
+
+간단한 카운터 컴포넌트
+
+```jsx
+export function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div className="space-y-2">
+      <p>Count: {count}</p>
+      <div className="space-x-1">
+        <Button onClick={() => setCount(count + 1)}>Count Up</Button>
+        <Button variant={"outline"} onClick={() => setCount(0)}>
+          Reset
+        </Button>
+      </div>
+    </div>
+  );
+}
+```
+
+<Counter />
+
+---
+
+> 간단한 되게 좋아하네 (🍄)
+
 # ModCodeBlock, CodeBlock
 
 <ModCodeBlock
@@ -208,95 +300,3 @@ console.log("Hello, World!");
 
 ![](/images/68d0b1b0-36cd-4f22-a6ea-e769c3eb8e7c-image.png)
 {/* ![](images/Untitled-1.png) */}
-
-<Typing
-  staticText="This article uses "
-  dynamic={["Next.js", "MDX", "tailwind"]}
-/>
-
-시작부터 이 **블로그 타이틀**에 사용한 `컴포넌트`를 사용해봤다.{" "}
-
-잘 동작하는 것을 보니 MDX가 잘 적용되었다는 걸 알 수 있다.
-
-import { SimpleButton, Ip, Counter } from "./components";
-
-이제 블로그에서 컴포넌트를 사용할 수 있게 되어 몇가지 실험을 해보고자 한다.
-
-우선 인라인 코드 블럭 테스트 `console.log("Hello, World!")` 를 해보자.
-다음은 일반 코드 블럭 테스트
-
-```
-console.log("Hello, World!")
-```
-
----
-
-간단한 버튼 컴포넌트
-
-```jsx
-export function SimpleButton() {
-  const [toggle, setToggle] = useState(false);
-  const [count, setCount] = useState(0);
-
-  return (
-    <Button
-      onClick={() => {
-        setToggle(!toggle);
-        setCount(count + 1);
-      }}
-    >
-      {toggle ? "You pushed me!!" : "Push me!!"}
-    </Button>
-  );
-}
-```
-
-<SimpleButton />
-
----
-
-ip.minpeter.xyz 서버를 이용한 독자 아이피 조회 컴포넌트
-
-```jsx
-export function Ip() {
-  const [ip, setIp] = useState("");
-
-  useEffect(() => {
-    fetch("https://ip.minpeter.xyz/ip").then((res) =>
-      res.text().then((ip) => setIp(ip))
-    );
-  }, []);
-
-  return <span>Your IP: {ip ? ip : "Loading..."}</span>;
-}
-```
-
-<Ip />
-
----
-
-간단한 카운터 컴포넌트
-
-```jsx
-export function Counter() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div className="space-y-2">
-      <p>Count: {count}</p>
-      <div className="space-x-1">
-        <Button onClick={() => setCount(count + 1)}>Count Up</Button>
-        <Button variant={"outline"} onClick={() => setCount(0)}>
-          Reset
-        </Button>
-      </div>
-    </div>
-  );
-}
-```
-
-<Counter />
-
----
-
-> 간단한 되게 좋아하네
