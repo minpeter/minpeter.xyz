@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { BlogList } from "./list";
 
 import NewMetadata from "@/lib/metadata";
+import { getI18n } from "@/lib/locales/server";
+import { setStaticParamsLocale } from "next-international/server";
 
 export const metadata = NewMetadata({
   title: "minpeter | blog",
@@ -15,12 +17,15 @@ export default async function Page({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setStaticParamsLocale(locale);
+
+  const t = await getI18n();
   return (
     <section>
       <Header
         title="민웅기의 개발 노트"
         description="내가 적은 블로그, 너를 위해 써봤지"
-        link={{ href: "/", text: "홈으로" }}
+        link={{ href: "/", text: t("backToHome") }}
       />
       <Suspense>
         <BlogList lang={locale} />

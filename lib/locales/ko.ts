@@ -5,4 +5,6 @@ export default {
   typingTitle: "타이핑 연습하기",
   showcaseTitle: "프로젝트 쇼케이스",
   ipTitle: "IP 주소 확인 도구",
+  backToBlog: "글 목록으로",
+  backToHome: "홈으로",
 } as const;

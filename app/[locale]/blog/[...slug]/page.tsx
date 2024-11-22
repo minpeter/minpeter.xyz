@@ -10,6 +10,8 @@ import Link from "next/link";
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
+import { getI18n } from "@/lib/locales/server";
+import { setStaticParamsLocale } from "next-international/server";
 
 export default async function Page({
   params,
@@ -17,6 +19,8 @@ export default async function Page({
   params: Promise<{ locale: string; slug: string[] }>;
 }) {
   const { locale, slug } = await params;
+  setStaticParamsLocale(locale);
+  const t = await getI18n();
 
   const post = blog.getPage(slug, locale);
   const posts = blog.getPages(locale);
@@ -47,7 +51,7 @@ export default async function Page({
             ? formatDateLong(post.data.date)
             : post.data.description
         }
-        link={{ href: `/blog`, text: "글 목록으로" }}
+        link={{ href: `/blog`, text: t("backToBlog") }}
       />
 
       <DocsBody>
