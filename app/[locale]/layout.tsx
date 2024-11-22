@@ -41,6 +41,12 @@ const FontSans = localFont({
   ],
 });
 
+import { getStaticParams } from "@/lib/locales/server";
+
+export function generateStaticParams() {
+  return getStaticParams();
+}
+
 export default async function RootLayout({
   params,
   children,

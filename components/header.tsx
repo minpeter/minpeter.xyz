@@ -1,3 +1,5 @@
+"use client";
+
 import { Backlink } from "./link";
 
 type HeaderProps = {
