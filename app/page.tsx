@@ -14,7 +14,7 @@ import Lickitung from "@/components/Lickitung";
 export default async function Page() {
   return (
     <section className="flex flex-col gap-3">
-      <Header description="이 웹에서 가장 멋진 사이트가 될거야~" />
+      <Header description="written, coded, and designed by minpeter" />
 
       <div
         data-animate
