@@ -40,7 +40,7 @@ export default function Lickitung({ aspect = "3/2" }) {
           <Suspense fallback={null}>
             <Model />
             <directionalLight intensity={2} position={[0, 2, 3]} />
-            <Environment preset="studio" />
+            <Environment files="/studio_small_03_1k.hdr" />
           </Suspense>
         </Canvas>
       </div>
