@@ -2,7 +2,6 @@
 
 import { Backlink } from "./link";
 import { useChangeLocale, useCurrentLocale } from "@/lib/locales/client";
-import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 
 type HeaderProps = {
