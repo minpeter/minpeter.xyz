@@ -25,7 +25,6 @@ export default function Lickitung({ aspect = "3/2" }) {
       <div className="absolute inset-0">
         <Canvas
           style={{
-            background: "0 0% 3.9%",
             width: "100%",
             height: "100%",
             display: "block",
@@ -40,32 +39,8 @@ export default function Lickitung({ aspect = "3/2" }) {
         >
           <Suspense fallback={null}>
             <Model />
-            {/* 주 광원 - 자연광처럼 넓은 각도로 비춤 */}
-            <spotLight
-              position={[2, 8, 4]}
-              angle={0.7}
-              penumbra={1}
-              intensity={15}
-              distance={30}
-              target-position={[0, -6, 0]}
-            />
-            {/* 보조 광원 - 반대편에서 부드럽게 비춤 */}
-            <spotLight
-              position={[-3, 4, -2]}
-              angle={0.9}
-              penumbra={1}
-              intensity={8}
-              distance={20}
-              target-position={[0, -6, 0]}
-            />
-            {/* 환경광 - 자연스러운 주변 조명 */}
-            <hemisphereLight
-              intensity={5}
-              groundColor="#1a1a1a"
-              color="#ffffff"
-            />
-            {/* 은은한 앰비언트 라이트 */}
-            <ambientLight intensity={2} />
+            <directionalLight intensity={2} position={[0, 2, 3]} />
+            <Environment preset="studio" />
           </Suspense>
         </Canvas>
       </div>
@@ -82,16 +57,11 @@ export function Model() {
 
   const materialProps = {
     thickness: 1.1,
-    roughness: 0.25,
+    roughness: 0.4,
     transmission: 1,
-    ior: 1.4,
-    chromaticAberration: 0.6,
+    ior: 1.2,
+    chromaticAberration: 0.7,
     backside: true,
-    clearcoat: 0.4,
-    clearcoatRoughness: 0.1,
-    emissiveIntensity: 0.05,
-    attenuationDistance: 0.5,
-    attenuationColor: "#ffffff",
   };
 
   useFrame(() => {
