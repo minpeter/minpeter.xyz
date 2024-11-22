@@ -7,8 +7,6 @@ import { useQueryState, parseAsString } from "nuqs";
 import { source } from "@/lib/source";
 
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import Header from "@/components/header";
-import { Suspense } from "react";
 
 export type getPagesReturnType = ReturnType<typeof source.getPages>;
 export type postType = getPagesReturnType[number];
@@ -22,6 +20,9 @@ export function BlogList({ lang }: { lang: string }) {
     text?.toLowerCase().includes(query.toLowerCase());
 
   const filteredPosts = posts.filter((post: any) => searchIn(post.data.title));
+  filteredPosts.sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  );
 
   const yearList = filteredPosts.reduce((acc: any, post) => {
     const year = formatYear(post.data.date);
