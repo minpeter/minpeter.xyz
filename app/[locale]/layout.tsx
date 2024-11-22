@@ -11,6 +11,7 @@ import { NuqsAdapter } from "nuqs/adapters/next";
 import localFont from "next/font/local";
 
 import { I18nProvider } from "fumadocs-ui/i18n";
+import { I18nProviderClient } from "@/lib/locales/client";
 
 import "./global.css";
 
@@ -47,6 +48,8 @@ export function generateStaticParams() {
   return getStaticParams();
 }
 
+// export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
   params,
   children,
@@ -62,28 +65,30 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <I18nProvider locale={locale}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <RootProvider>
-              <NuqsAdapter>
-                <main className="w-full mx-auto px-4 min-h-screen max-w-3xl py-12">
-                  {children}
-                </main>
+        <I18nProviderClient locale={locale}>
+          <I18nProvider locale={locale}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <RootProvider>
+                <NuqsAdapter>
+                  <main className="w-full mx-auto px-4 min-h-screen max-w-3xl py-12">
+                    {children}
+                  </main>
 
-                <Footer />
-                <Toaster />
-              </NuqsAdapter>
-            </RootProvider>
-          </ThemeProvider>
-          <Analytics />
-          <SpeedInsights />
-          <GoogleAnalytics gaId="G-8L34G6HSJS" />{" "}
-        </I18nProvider>
+                  <Footer />
+                  <Toaster />
+                </NuqsAdapter>
+              </RootProvider>
+            </ThemeProvider>
+            <Analytics />
+            <SpeedInsights />
+            <GoogleAnalytics gaId="G-8L34G6HSJS" />
+          </I18nProvider>
+        </I18nProviderClient>
       </body>
     </html>
   );

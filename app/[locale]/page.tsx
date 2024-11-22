@@ -1,3 +1,6 @@
+"use client";
+import { useI18n } from "@/lib/locales/client";
+
 import Header from "@/components/header";
 import {
   CookieIcon,
@@ -9,12 +12,10 @@ import {
 import { CodeIcon, KeyboardIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
-import { getI18n } from "@/lib/locales/server";
-
 import Lickitung from "@/components/Lickitung";
 
-export default async function Page() {
-  const t = await getI18n();
+export default function Page() {
+  const t = useI18n();
 
   return (
     <section className="flex flex-col gap-3">
