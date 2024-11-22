@@ -1,0 +1,138 @@
+---
+title: ▲ Vercel AI SDK (en)
+description: How to add LLM-based chat functionality to your website
+date: 2024-09-23
+---
+
+## Overview
+
+Vercel, the company behind Next.js, offers an [AI SDK](https://sdk.vercel.ai/) to help developers seamlessly integrate LLMs (Large Language Models) into their websites.  
+This SDK works with most frontend frameworks that use a Node.js server and is especially useful when paired with Next.js, which comes with built-in server support.
+
+This guide explains how to use the Vercel AI SDK to add LLM-based chat functionality to your website.
+
+<Callout>
+This guide assumes that you already have Node.js and a package manager like `pnpm` (or `npm`) installed.
+</Callout>
+
+## Creating a Project
+
+First, create a Next.js project and add the AI SDK.
+
+```package-install
+npx create-next-app@latest my-ai-app
+cd my-ai-app
+```
+
+```package-install
+ai
+```
+
+To use the AI SDK, you'll need a **provider** that offers LLM models.  
+In this example, we’ll use [FriendliAI](https://friendli.ai/). For other providers, refer to the [Vercel AI SDK providers documentation](https://sdk.vercel.ai/providers/ai-sdk-providers).
+
+## Setting Up FriendliAI
+
+### 1. Create a FriendliAI Account and Get an API Token
+
+First, create an account on FriendliAI's website and follow the instructions in the [Personal Access Tokens guide](https://docs.friendli.ai/guides/personal_access_tokens) to generate an API token. The token will have a format like `flp_xxxxxx`.
+
+### 2. Set Environment Variables
+
+Create a `.env` file in the project root and set the token as an environment variable.
+
+```.env
+# .env
+FRIENDLI_TOKEN=flp_xxxxx
+```
+
+You can now use FriendliAI's **Llama 3.1 70b** model for free with $5 worth of credits.  
+The Llama 3.1 model, developed by Meta, boasts excellent performance.
+
+### 3. Install the FriendliAI Provider Package
+
+```package-install
+@friendliai/ai-provider
+```
+
+You’re now ready to use both FriendliAI and the Vercel AI SDK.
+
+## Adding Chat Functionality
+
+Let’s implement a simple chat feature using the AI SDK. Two files need to be modified.
+
+### 1. app/page.tsx
+
+This React component handles the interaction between the user and the AI.
+
+```tsx
+"use client";
+
+import { useChat } from "ai/react";
+
+export default function Chat() {
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
+    useChat();
+
+  const isWaiting =
+    isLoading && messages[messages.length - 1]?.role !== "assistant";
+
+  return (
+    <>
+      {messages.map((message) => (
+        <div key={message.id}>
+          {message.role === "user" ? "User: " : "AI: "}
+          {message.content}
+        </div>
+      ))}
+
+      {(isWaiting || error) &&
+        (isWaiting
+          ? "AI is thinking..."
+          : error && "An error has occurred. Please try again later.")}
+
+      <form onSubmit={handleSubmit}>
+        <input name="prompt" value={input} onChange={handleInputChange} />
+        <button type="submit">Submit</button>
+      </form>
+    </>
+  );
+}
+```
+
+This code displays user and AI messages in the UI and provides a form for users to input text.
+
+### 2. app/api/chat/route.ts
+
+This API route handles AI responses using FriendliAI's `Llama 3.1 70b` model.
+
+```ts
+import { friendli } from "@friendliai/ai-provider";
+import { convertToCoreMessages, streamText } from "ai";
+
+// Allow streaming responses up to 30 seconds
+export const maxDuration = 30;
+
+export async function POST(req: Request) {
+  const { messages } = await req.json();
+
+  const result = await streamText({
+    model: friendli("meta-llama-3.1-70b-instruct"),
+    system: "You are a helpful assistant.",
+    messages: convertToCoreMessages(messages),
+  });
+
+  return result.toDataStreamResponse();
+}
+```
+
+This API processes `POST` requests containing message data and streams the AI's responses. It uses FriendliAI’s `meta-llama-3.1-70b-instruct` model to generate conversational replies.
+
+## Wrapping Up
+
+You now have a basic LLM-based chat feature using Vercel AI SDK and FriendliAI. To add more features or use other providers, refer to the documentation for Vercel and FriendliAI.
+
+- [Vercel AI SDK Providers](https://sdk.vercel.ai/providers/ai-sdk-providers)
+- [FriendliAI Vercel AI SDK Guide](https://docs.friendli.ai/sdk/integrations/vercel-ai-sdk)
+
+With Next.js and the Vercel AI SDK, integrating powerful LLM-based features into your website is simple and efficient.
