@@ -9,9 +9,13 @@ import {
 import { CodeIcon, KeyboardIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
+import { getI18n } from "@/lib/locales/server";
+
 import Lickitung from "@/components/Lickitung";
 
 export default async function Page() {
+  const t = await getI18n();
+
   return (
     <section className="flex flex-col gap-3">
       <Header
@@ -30,9 +34,7 @@ export default async function Page() {
           className="p-5 dark:bg-white/5 bg-black/5 rounded-xl flex flex-col justify-between
                hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 h-40 lg:square lg:h-auto"
         >
-          <span className="text-lg font-medium">
-            개발 이야기와 일상을 기록하는 공간
-          </span>
+          <span className="text-lg font-medium">{t("blogTitle")}</span>
           <CookieIcon className="w-6 h-6" />
         </Link>
 
@@ -40,17 +42,17 @@ export default async function Page() {
           {[
             {
               href: "/typing",
-              text: "타이핑 연습하기",
+              text: t("typingTitle"),
               icon: <KeyboardIcon className="w-4 h-4" />,
             },
             {
               href: "/show",
-              text: "프로젝트 쇼케이스",
+              text: t("showcaseTitle"),
               icon: <TransformIcon className="w-4 h-4" />,
             },
             {
               href: "https://ip.minpeter.xyz/",
-              text: "IP 주소 확인 도구",
+              text: t("ipTitle"),
               icon: <CodeIcon className="w-4 h-4" />,
               external: true,
             },
