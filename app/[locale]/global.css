@@ -23,7 +23,7 @@
 
 
   ::selection {
-    background-color: var(--selection);
+    @apply bg-secondary text-secondary-foreground;
   }
 
   html {
@@ -45,6 +45,7 @@
     --sh-sign: #686868;
     --sh-comment: #686868;
 
+    --selection: #e2e2e2;
 
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
@@ -88,6 +89,7 @@
     --sh-sign: #a5a5a5;
     --sh-comment: #a5a5a5;
 
+    --selection: #404040;
 
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
