@@ -52,7 +52,7 @@ export function Counter() {
     <div className="space-y-2">
       <p>
         Count: {count}
-        {count == 82 || count == 802 ? " - 🩷" : ""}
+        {count == 82 || count == 802 ? " - 🫵🩷♾️" : ""}
       </p>
       <div className="space-x-1">
         <Button variant={"secondary"} onClick={() => setCount(count + 1)}>
