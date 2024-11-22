@@ -12,5 +12,11 @@ module.exports = {
         priority: config.priority,
       };
     }
+
+    return {
+      loc: path,
+      changefreq: config.changefreq,
+      priority: config.priority,
+    };
   },
 };
