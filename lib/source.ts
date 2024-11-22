@@ -1,16 +1,12 @@
 import { docs, meta } from "@/.source";
 import { createMDXSource } from "fumadocs-mdx";
 import { loader } from "fumadocs-core/source";
-import type { I18nConfig } from "fumadocs-core/i18n";
-
-export const i18n: I18nConfig = {
-  defaultLanguage: "ko",
-  languages: ["ko", "en"],
-  hideLocale: "default-locale",
-};
 
 export const blog = loader({
-  i18n,
+  i18n: {
+    defaultLanguage: "ko",
+    languages: ["ko", "en"],
+  },
   baseUrl: "/blog",
   source: createMDXSource(docs, meta),
 });
