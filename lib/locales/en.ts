@@ -3,6 +3,6 @@ export default {
   typingTitle: "Practice typing",
   showcaseTitle: "Project showcase",
   ipTitle: "IP Address Checker",
-  backToBlog: "Back to blog",
+  backToBlog: "Blog list",
   backToHome: "Home",
 } as const;
