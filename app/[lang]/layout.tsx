@@ -51,7 +51,7 @@ export default async function RootLayout({
   const { lang } = await params;
   return (
     <html
-      lang={lang == "fr" ? "ko" : "en"}
+      lang={lang == "fr" ? "ko" : lang}
       className={cn("antialiased", FontSans.className)}
       suppressHydrationWarning
     >
