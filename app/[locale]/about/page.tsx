@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import Header from "@/components/header";
 import { useI18n } from "@/lib/locales/client";
+import Link from "next/link";
 
 export default function Page() {
   const t = useI18n();
@@ -47,7 +48,6 @@ export default function Page() {
           <Countdown />
         </div>
       </div>
-
       <div className="mt-4">
         내루미가 뭔지 아시나요?
         <br />
@@ -57,14 +57,28 @@ export default function Page() {
         <br />
         <br />
         자메품으로 나메코와 피크민도 귀엽습니다.
+        <br />
+        *피그민이 아닙니다, 피크민입니다.
       </div>
-
       <Image
         src={redPikmin}
         alt="red cute pikmin for you"
         width={40}
         height={73.33}
       />
+
+      <div>
+        아, 마지막으로 여기까지 보셨으면{" "}
+        <Link
+          rel="noopener noreferrer"
+          target="_blank"
+          href={"https://github.com/minpeter/minpeter.xyz"}
+          className="text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100 animation:enter w-fit"
+        >
+          minpeter/minpeter.xyz
+        </Link>{" "}
+        레포에 스타 한 번 눌러주시면 감사하겠습니다.
+      </div>
     </section>
   );
 }
