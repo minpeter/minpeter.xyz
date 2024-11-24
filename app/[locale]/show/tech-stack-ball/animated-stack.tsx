@@ -123,7 +123,8 @@ export function Playground({
       return Bodies.circle(100, 100, iconSize, {
         render: {
           sprite: {
-            texture: require(`@/assets/images/stack-icon/${icon}`).default.src,
+            texture: require(`@/public/assets/images/stack-icon/${icon}`)
+              .default.src,
             xScale: iconScale,
             yScale: iconScale,
           },

@@ -1,8 +1,8 @@
 "use client";
 
-import mainImage1 from "@/assets/images/main-image-1.jpg";
-import mainImage2 from "@/assets/images/main-image-2.png";
-import mainImage3 from "@/assets/images/main-image-3.png";
+import mainImage1 from "@/public/assets/images/main-image-1.jpg";
+import mainImage2 from "@/public/assets/images/main-image-2.png";
+import mainImage3 from "@/public/assets/images/main-image-3.png";
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
