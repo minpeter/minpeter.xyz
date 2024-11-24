@@ -8,6 +8,6 @@ export const {
   useCurrentLocale,
   useChangeLocale,
 } = createI18nClient({
-  en: () => import("./en"),
   ko: () => import("./ko"),
+  en: () => import("./en"),
 });
