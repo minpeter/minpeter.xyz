@@ -1,11 +1,15 @@
-import Header from "@/components/header";
+"use client";
 
-export default function NotFound({ params }: any) {
+import Header from "@/components/header";
+import { useI18n } from "@/lib/locales/client";
+
+export default function NotFound() {
+  const t = useI18n();
   return (
     <section>
       <Header
         title="404"
-        description="page not found :/"
+        description={t("404")}
         link={{ href: "/", text: "" }}
       />
     </section>

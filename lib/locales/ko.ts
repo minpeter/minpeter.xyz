@@ -1,6 +1,5 @@
-import { Ip } from "@/content/blog/mdx-blog-test/components";
-
 export default {
+  "404": "길을 잃었습니다.. 아직 잘할 수 있어요, 천천히 다시 해봅시다.",
   blogTitle: "개발 이야기와 일상을 기록하는 공간",
   typingTitle: "타이핑 연습하기",
   showcaseTitle: "프로젝트 쇼케이스",

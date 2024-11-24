@@ -1,4 +1,5 @@
 export default {
+  "404": "page not found :/",
   blogTitle: "A space to share development stories and daily life",
   typingTitle: "Typing practice",
   showcaseTitle: "Project showcase",
