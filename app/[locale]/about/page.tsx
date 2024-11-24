@@ -31,13 +31,11 @@ export default function Page() {
         description=""
         link={{ href: "/", text: t("backToHome") }}
       />
-
       <Card>
         <p className="rounded-xl p-4 text-sm whitespace-pre-wrap">
           {t("aboutMe")}
         </p>
       </Card>
-
       <div
         data-animate
         data-animate-speed="slow"
@@ -47,14 +45,26 @@ export default function Page() {
 
         <div className="flex flex-col justify-between m-4">
           <Countdown />
-          <Image
-            src={redPikmin}
-            alt="red cute pikmin for you"
-            width={40}
-            height={40}
-          />
         </div>
       </div>
+
+      <div className="mt-4">
+        내루미가 뭔지 아시나요?
+        <br />
+        포켓몬 전국 0108번, ベロリンガ(베로링가) 혹은 Lickitung
+        <br />
+        상당히 귀여우니 꼭 찾아보세요.
+        <br />
+        <br />
+        자메품으로 나메코와 피크민도 귀엽습니다.
+      </div>
+
+      <Image
+        src={redPikmin}
+        alt="red cute pikmin for you"
+        width={40}
+        height={73.33}
+      />
     </section>
   );
 }
