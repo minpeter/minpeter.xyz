@@ -105,9 +105,9 @@ export default function Page() {
               </Link>
             ))}
 
-            <div className="col-span-3 ">
+            <Link className="col-span-3" href={"/about"}>
               <Lickitung aspect="3/2" />
-            </div>
+            </Link>
           </div>
         </div>
       </div>
