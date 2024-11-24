@@ -3,6 +3,7 @@
 import mainImage1 from "@/assets/images/main-image-1.jpg";
 import mainImage2 from "@/assets/images/main-image-2.png";
 import mainImage3 from "@/assets/images/main-image-3.png";
+import redPikmin from "@/assets/images/red-pikmin.webp";
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -14,7 +15,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Card } from "@/components/ui/card";
 import Header from "@/components/header";
@@ -39,13 +40,71 @@ export default function Page() {
 
       <div
         data-animate
-        data-animate-speed="fast"
-        // 상위 레이아웃에 넓이 제한이 존재하기 때문에 여기서 넓이 제한은 의미없음
+        data-animate-speed="slow"
         className="grid lg:grid-cols-2 grid-cols-1 gap-2 w-full"
       >
         <CarouselImage />
+
+        <div className="flex flex-col justify-between m-4">
+          <Countdown />
+          <Image
+            src={redPikmin}
+            alt="red cute pikmin for you"
+            width={40}
+            height={40}
+          />
+        </div>
       </div>
     </section>
+  );
+}
+
+function Countdown() {
+  interface TimeLeft {
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  }
+
+  const calculateTimeLeft = (): TimeLeft => {
+    const difference =
+      +new Date(`01/01/${new Date().getFullYear() + 1}`) - +new Date();
+    let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  });
+
+  return (
+    <div className="rounded-xl p-4 text-sm whitespace-pre-wrap">
+      {Object.keys(timeLeft).length ? (
+        <>
+          {timeLeft.days}일 {timeLeft.hours}시간 {timeLeft.minutes}분{" "}
+          {timeLeft.seconds}초
+        </>
+      ) : (
+        "Happy New Year!"
+      )}
+    </div>
   );
 }
 
