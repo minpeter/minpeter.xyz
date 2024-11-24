@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ{}</>민쾹あ쵭ゆさつ퀴なまく뤱ふ";
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ{}</>믾쾹쵭퀴섫뤱윤チェ・ソユン";
 
 // original source: https://github.com/wiscaksono/wiscaksono-site/blob/master/src/components/molecules/animated-name.tsx
 // license: on github.com/wiscaksono/wiscaksono-site

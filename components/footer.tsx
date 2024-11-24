@@ -10,7 +10,7 @@ export default function Footer() {
         written by{" "}
         <Link
           className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100"
-          href="/"
+          href="/about"
         >
           minpeter
           <ArrowTopRightIcon className="w-3 h-3 mb-1 ml-0.5 inline" />
