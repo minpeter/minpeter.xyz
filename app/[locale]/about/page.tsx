@@ -3,7 +3,6 @@
 import mainImage1 from "@/assets/images/main-image-1.jpg";
 import mainImage2 from "@/assets/images/main-image-2.png";
 import mainImage3 from "@/assets/images/main-image-3.png";
-import redPikmin from "@/assets/images/red-pikmin.webp";
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -32,52 +31,48 @@ export default function Page() {
         description=""
         link={{ href: "/", text: t("backToHome") }}
       />
-      <Card>
-        <p className="rounded-xl p-4 text-sm whitespace-pre-wrap">
-          {t("aboutMe")}
-        </p>
-      </Card>
       <div
         data-animate
         data-animate-speed="slow"
-        className="grid lg:grid-cols-2 grid-cols-1 gap-2 w-full"
+        className="flex flex-col gap-3"
       >
-        <CarouselImage />
+        <Card>
+          <p className="rounded-xl p-4 text-sm whitespace-pre-wrap">
+            {t("aboutMe")}
+          </p>
+        </Card>
+        <div className="grid lg:grid-cols-2 grid-cols-1 gap-2 w-full">
+          <CarouselImage />
 
-        <div className="flex flex-col justify-between m-4">
-          <Countdown />
+          <div className="flex flex-col justify-between m-4">
+            <Countdown />
+          </div>
         </div>
-      </div>
-      <div className="mt-4">
-        내루미가 뭔지 아시나요?
-        <br />
-        포켓몬 전국 0108번, ベロリンガ(베로링가) 혹은 Lickitung
-        <br />
-        상당히 귀여우니 꼭 찾아보세요.
-        <br />
-        <br />
-        자메품으로 나메코와 피크민도 귀엽습니다.
-        <br />
-        *피그민이 아닙니다, 피크민입니다.
-      </div>
-      <Image
-        src={redPikmin}
-        alt="red cute pikmin for you"
-        width={40}
-        height={73.33}
-      />
+        <div className="mt-4">
+          내루미가 뭔지 아시나요?
+          <br />
+          포켓몬 전국 0108번, ベロリンガ(베로링가) 혹은 Lickitung
+          <br />
+          상당히 귀여우니 꼭 찾아보세요.
+          <br />
+          <br />
+          자메품으로 나메코와 피크민도 귀엽습니다.
+          <br />
+          *피그민이 아닙니다, 피크민입니다.
+        </div>
 
-      <div>
-        아, 마지막으로 여기까지 보셨으면{" "}
-        <Link
-          rel="noopener noreferrer"
-          target="_blank"
-          href={"https://github.com/minpeter/minpeter.xyz"}
-          className="text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100 animation:enter w-fit"
-        >
-          minpeter/minpeter.xyz
-        </Link>{" "}
-        레포에 스타 한 번 눌러주시면 감사하겠습니다.
+        <div>
+          아, 마지막으로 여기까지 보셨으면{" "}
+          <Link
+            rel="noopener noreferrer"
+            target="_blank"
+            href={"https://github.com/minpeter/minpeter.xyz"}
+            className="text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100 animation:enter w-fit"
+          >
+            minpeter/minpeter.xyz
+          </Link>{" "}
+          레포에 스타 한 번 눌러주시면 감사하겠습니다.
+        </div>
       </div>
     </section>
   );
