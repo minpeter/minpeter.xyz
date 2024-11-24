@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { nextSentencesGenerator } from "./action";
+import Header from "@/components/header";
+import { useI18n } from "@/lib/locales/client";
 
 // Add utility function to check Korean characters
 const isKorean = (char: string) => {
@@ -301,94 +303,102 @@ export default function Page() {
     }
   };
 
-  // UI 렌더링
+  const t = useI18n();
+
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center p-4 relative gap-4"
-      onClick={() => !isTransitioning && inputRef.current?.focus()}
-    >
-      {/* 숨겨진 입력 필드 */}
-      <input
-        ref={inputRef}
-        type="text"
-        className="opacity-0 absolute"
-        onCompositionStart={handleCompositionStart}
-        onCompositionUpdate={(e) => {
-          if (!isTransitioning) {
-            setComposingText(e.data || "");
-          }
-        }}
-        onCompositionEnd={handleCompositionEnd}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        autoFocus
+    <section className="flex flex-col gap-12">
+      <Header
+        title="Peter's Typing practice"
+        description="너가 원하는 방식이 맞는지 모르겠어. 마음에 들면 좋겠다"
+        link={{ href: "/", text: t("backToHome") }}
       />
-
-      {/* 타이핑 텍스트 표시 */}
-      <div className="text-2xl font-mono">
-        {currentSentence.split("").map((char, index) => {
-          const isTyped = index < userInput.length;
-          const typedChar = userInput[index];
-          const isCurrentTyping = index === userInput.length;
-          const isComposingHere = isCurrentTyping && isComposing;
-          const isSpace = char === " ";
-          const isWrongSpace = isTyped && isSpace && typedChar !== " ";
-          const isTypedSpace = isTyped && !isSpace && typedChar === " ";
-
-          // Modified accuracy check logic
-          const isCorrect = (() => {
-            if (!isTyped) return true;
-            if (isKorean(char) || isKorean(typedChar)) {
-              return char === typedChar;
+      <div
+        className="flex flex-col items-center justify-center p-4 relative gap-4"
+        onClick={() => !isTransitioning && inputRef.current?.focus()}
+      >
+        {/* 숨겨진 입력 필드 */}
+        <input
+          ref={inputRef}
+          type="text"
+          className="opacity-0 absolute"
+          onCompositionStart={handleCompositionStart}
+          onCompositionUpdate={(e) => {
+            if (!isTransitioning) {
+              setComposingText(e.data || "");
             }
-            return char.toLowerCase() === typedChar?.toLowerCase();
-          })();
+          }}
+          onCompositionEnd={handleCompositionEnd}
+          onInput={handleInput}
+          onKeyDown={handleKeyDown}
+          autoFocus
+        />
 
-          return (
-            <span
-              key={index}
-              className={`transition-all ${
-                isTyped
-                  ? isCorrect
-                    ? "opacity-100 text-emerald-400"
-                    : "opacity-100 text-pink-400"
-                  : isCurrentTyping
-                  ? "opacity-100"
-                  : "opacity-30"
-              } ${isComposingHere ? "border-b-2" : ""}`}
-            >
-              {isComposingHere
-                ? composingText
-                : isTyped
-                ? isWrongSpace || isTypedSpace
-                  ? "_"
-                  : typedChar
-                : isSpace
-                ? " "
-                : char}
-            </span>
-          );
-        })}
-      </div>
+        {/* 타이핑 텍스트 표시 */}
+        <div className="text-2xl font-mono">
+          {currentSentence.split("").map((char, index) => {
+            const isTyped = index < userInput.length;
+            const typedChar = userInput[index];
+            const isCurrentTyping = index === userInput.length;
+            const isComposingHere = isCurrentTyping && isComposing;
+            const isSpace = char === " ";
+            const isWrongSpace = isTyped && isSpace && typedChar !== " ";
+            const isTypedSpace = isTyped && !isSpace && typedChar === " ";
 
-      {/* Update progress display to include fetching indicator */}
-      <div className="text-sm text-gray-400 flex items-center gap-2">
-        <span>
-          {currentSentenceIndex + 1} / {sentences.length}
-        </span>
-        {(wpm > 0 || lastWpm > 0) && (
-          <>
-            <span className="text-gray-500">•</span>
-            <span>{wpm > 0 ? wpm : lastWpm} WPM</span>
-          </>
-        )}
-        {isFetching && (
-          <>
-            <span className="text-gray-500">•</span>
-            <span>생성중...</span>
-          </>
-        )}
+            // Modified accuracy check logic
+            const isCorrect = (() => {
+              if (!isTyped) return true;
+              if (isKorean(char) || isKorean(typedChar)) {
+                return char === typedChar;
+              }
+              return char.toLowerCase() === typedChar?.toLowerCase();
+            })();
+
+            return (
+              <span
+                key={index}
+                className={`transition-all ${
+                  isTyped
+                    ? isCorrect
+                      ? "opacity-100 text-emerald-400"
+                      : "opacity-100 text-pink-400"
+                    : isCurrentTyping
+                    ? "opacity-100"
+                    : "opacity-30"
+                } ${isComposingHere ? "border-b-2" : ""}`}
+              >
+                {isComposingHere
+                  ? composingText
+                  : isTyped
+                  ? isWrongSpace || isTypedSpace
+                    ? "_"
+                    : typedChar
+                  : isSpace
+                  ? " "
+                  : char}
+              </span>
+            );
+          })}
+        </div>
+
+        {/* Update progress display to include fetching indicator */}
+        <div className="text-sm text-gray-400 flex items-center gap-2">
+          <span>
+            {currentSentenceIndex + 1} / {sentences.length}
+          </span>
+          {(wpm > 0 || lastWpm > 0) && (
+            <>
+              <span className="text-gray-500">•</span>
+              <span>{wpm > 0 ? wpm : lastWpm} WPM</span>
+            </>
+          )}
+          {isFetching && (
+            <>
+              <span className="text-gray-500">•</span>
+              <span>생성중...</span>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
