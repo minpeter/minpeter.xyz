@@ -46,6 +46,8 @@ export default function Page() {
 
           <div className="flex flex-col justify-between m-4">
             <Countdown />
+            <br />
+            말을 잘 듣고 싶은데 수동적이고 싶지는 않아, 언제가 적절할까?
           </div>
         </div>
         <div className="mt-4">
