@@ -3,7 +3,7 @@
 import { friendli } from "@friendliai/ai-provider";
 import { generateText } from "ai";
 
-export async function nextSentencesGenerator() {
+export async function nextSentencesGenerator(locale: "ko" | "en") {
   const { text } = await generateText({
     model: friendli("meta-llama-3.1-8b-instruct"),
     temperature: 1.4,
@@ -12,7 +12,9 @@ export async function nextSentencesGenerator() {
     maxTokens: 50,
     system: `You are a beautiful sentence generator for typing practice.
 Please write a heart-touching sentence by referring to famous movies, music, literature, comics, etc.
-Please use only Korean. Please make your answer short and concise.
+Please use only ${
+      locale == "ko" ? "Korean" : "English"
+    }. Please make your answer short and concise.
 Please avoid using special characters such as '"', '(', ')' as much as possible, as they interfere with typing practice.
 Never mention the source or original of a sentence under any circumstances. It seriously reduces the quality of the sentence.
 Even if a sentence has been translated, never say anything about it being translated.

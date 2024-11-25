@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { nextSentencesGenerator } from "./action";
 import Header from "@/components/header";
-import { useI18n } from "@/locales/client";
+import { useCurrentLocale, useI18n } from "@/locales/client";
 
 // Add utility function to check Korean characters
 const isKorean = (char: string) => {
@@ -20,15 +20,20 @@ const isSpecialChar = (char: string) => {
 };
 
 // Initial sentences array
-const initialSentences = [
-  "각 문장이 완성되면 자동으로 넘어갑니다.",
-  "엔터 키를 눌러 강제로 다음 문장으로 이동할 수 있습니다.",
-  "문장은 자동으로 생성됩니다, 즐거운 타이핑하세요.",
-];
 
 const MIN_ACCURACY_THRESHOLD = 85; // 85% accuracy threshold
 
 export default function Page() {
+  const t = useI18n();
+
+  const initialSentences = [
+    t("typingInitialSentences.0"),
+    t("typingInitialSentences.1"),
+    t("typingInitialSentences.2"),
+  ];
+
+  const locale = useCurrentLocale();
+
   // Add new states
   const [sentences, setSentences] = useState(initialSentences);
   const [isFetching, setIsFetching] = useState(false);
@@ -87,8 +92,8 @@ export default function Page() {
     try {
       setIsFetching(true);
       const [sentence1, sentence2] = await Promise.all([
-        nextSentencesGenerator(),
-        nextSentencesGenerator(),
+        nextSentencesGenerator(locale),
+        nextSentencesGenerator(locale),
       ]);
       setSentences((prev) => [...prev, sentence1, sentence2]);
     } catch (error) {
@@ -302,8 +307,6 @@ export default function Page() {
       setIsAllSelected(true);
     }
   };
-
-  const t = useI18n();
 
   return (
     <section className="flex flex-col gap-12">

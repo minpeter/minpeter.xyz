@@ -1,5 +1,5 @@
 export default {
-  "404": "page not found :/",
+  "404": "Page not found :/",
   blogTitle: "A space to share development stories and daily life",
   typingTitle: "Typing practice",
   showcaseTitle: "Project showcase",
@@ -12,4 +12,9 @@ As a frontend developer, I enjoy learning and applying rapidly changing technolo
 I also prioritize user experience and strive to provide the best experience for users.`,
   mainText: "Was it a dream, or is this the beginning of a dream?",
   subText: "Was it a dream, or is this the beginning of a dream?",
+  typingInitialSentences: [
+    "Each sentence will automatically move to the next one once completed.",
+    "You can press the Enter key to forcefully move to the next sentence.",
+    "Sentences are generated automatically, enjoy typing.",
+  ],
 } as const;
