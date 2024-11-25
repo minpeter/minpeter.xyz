@@ -1,0 +1,334 @@
+---
+title: k8s via proxmox (2) - worker node & master node setup (en)
+date: 2022-10-03 20:20:15
+tags:
+categories: "home lab"
+---
+
+<Callout>
+  This post continues from [k8s via proxmox (1) - Creating an Ubuntu server
+  template](/blog/k8s-via-proxmox-1).
+</Callout>
+
+## 1. Creating k8s-ctrlr & k8s-node
+
+Using the template created earlier, generate the `k8s-ctrlr` and `k8s-node`.  
+Wait a moment after booting until the cloud-init configuration is complete.
+
+## 2. Setting up static IPs
+
+Set static IPs for `k8s-ctrlr` and `k8s-node`.  
+As always, use `netplan`.  
+Depending on your setup, it will likely be similar if you're running a Proxmox server with a typical router and a single computer.  
+Before editing, make a backup just in case:
+
+```bash
+sudo cp /etc/netplan/01-netcfg.yaml{,.bak}
+```
+
+Edit the `/etc/netplan/50-cloud-init.yaml` file as follows:
+
+```yaml
+version: 2
+ethernets:
+  eth0:
+    addresses: [192.168.0.180/24]
+    routes:
+      - to: default
+        via: 192.168.0.1
+    nameservers:
+      addresses: [192.168.0.120, 1.1.1.1]
+```
+
+In my case, I’m running a local DNS server using `pi.hole` on `192.168.0.120`, so I added it as a nameserver.  
+Set the static IPs as `192.168.0.180` for `k8s-ctrlr` and `192.168.0.185` for `k8s-node`.  
+Apply the changes with:
+
+```bash
+sudo netplan apply
+```
+
+## 3. Installing containerd
+
+Install `containerd` on both `k8s-ctrlr` and `k8s-node`.
+
+```bash
+sudo apt-get update && sudo apt-get install -y containerd
+```
+
+### 3.1. Configuring containerd
+
+Save the default configuration with the following command:
+
+```bash
+sudo mkdir /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+```
+
+Then, edit the `/etc/containerd/config.toml` file as follows:
+
+```toml
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+            BinaryName = ""
+            CriuImagePath = ""
+            CriuPath = ""
+            CriuWorkPath = ""
+            IoGid = 0
+            IoUid = 0
+            NoNewKeyring = false
+            NoPivotRoot = false
+            Root = ""
+            ShimCgroup = ""
+            SystemdCgroup = false
+```
+
+Change `SystemdCgroup = false` to `true`.
+
+## 4. Additional Network Settings
+
+Open the `/etc/sysctl.conf` file and modify it as follows:
+
+```bash
+# Uncomment the next line to enable packet forwarding for IPv4
+# sysctl -w net.ipv4.ip_forward=1
+```
+
+Find the second line above and remove the `#` comment.
+
+Add the following to the `/etc/modules-load.d/k8s.conf` file:
+
+```bash
+br_netfilter
+```
+
+Reboot to apply the updated network settings.
+
+## 5. Kubernetes Installation
+
+```
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+```
+
+The above commands fetch the key, add the Kubernetes apt repository, and install Kubernetes packages.  
+Check the [official documentation](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl) for updates and modify accordingly if needed.
+
+## 6. Creating a k8s-node Template
+
+Let’s create a k8s-node template to generate as many workers as needed.
+
+The following commands resolve the issue where cloned VMs have the same IP due to duplicate machine IDs.
+
+```bash
+sudo cloud-init clean
+
+sudo truncate -s 0 /etc/machine-id
+sudo rm /var/lib/dbus/machine-id
+sudo ln -s /etc/machine-id /var/lib/dbus/machine-id
+```
+
+Then, power off the VM and click _Convert to Template_ in the web UI.
+
+Once converted to a template, you can create as many workers as needed.  
+Here, we will create two workers: `k8s-node-1` and `k8s-node-2`.
+
+## 8. Modifying VM Specifications
+
+Adjust the specifications of `k8s-ctrlr`, `k8s-node-1`, and `k8s-node-2`.  
+Power off all VMs and modify their specifications in the web UI.
+
+Depending on the server running Proxmox, the recommended specs are:
+
+- `k8s-ctrlr`: 2 CPUs, 4 GB RAM
+- `k8s-node-1`, `k8s-node-2`: 2 CPUs, 2 GB RAM
+
+If the server lacks sufficient resources, set all to 2 CPUs and 2 GB RAM, which are the minimum requirements.  
+Even with high specs, increasing the number of workers is preferred over allocating more RAM.
+
+Once done, power on all VMs.  
+For VMs cloned from a template, static IPs may revert to DHCP. Change them back to static IPs if desired.
+
+## 9. Creating a Cluster
+
+Log in to `k8s-ctrlr` and create a cluster using `kubeadm`.
+
+```bash
+sudo kubeadm init --control-plane-endpoint=<vm-ip> \
+--node-name <vm-hostname> --pod-network-cidr=10.244.0.0/16
+```
+
+For example, `<vm-ip>` could be `192.168.0.180`, and `<vm-hostname>` could be `k8s-ctrlr`.
+
+Next, run the following commands:
+
+```bash
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+Then, copy the `join` command generated below and execute it on other nodes.
+
+```bash
+kubeadm join 192.168.0.180:6443 --token ~~~~~~
+```
+
+If the command is unavailable, execute the following on `k8s-ctrlr` to generate a new one:
+
+```bash
+kubeadm token create --print-join-command
+```
+
+### 9.1. Creating a Pod Network
+
+On `k8s-ctrlr`, execute the following command:
+
+```bash
+kubectl apply -f \
+https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+```
+
+Finally, verify that all nodes are successfully created:
+
+```bash
+kubectl get nodes
+```
+
+If all nodes show as `Ready`, the setup is complete:
+
+```bash
+NAME         STATUS   ROLES                  AGE   VERSION
+k8s-ctrlr    Ready    control-plane,master   10m   v1.21.1
+k8s-node-1   Ready    <none>                 10m   v1.21.1
+k8s-node-2   Ready    <none>                 10m   v1.21.1
+```
+
+The cluster creation process ends here.
+
+## Using Kubernetes
+
+We've created a cluster with some effort, but what should we do now?
+Let's deploy a web server using Kubernetes.
+
+### 1. Deploying nginx pod
+
+Let's create and deploy a single nginx pod.
+On k8s-ctrlr, create a pod.yaml file with the following content:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-example
+  labels:
+    app: nginx
+spec:
+  containers:
+    - name: nginx
+      image: linuxserver/nginx
+      ports:
+        - containerPort: 80
+          name: "nginx-http"
+```
+
+Then deploy it using the following command:
+
+```bash
+kubectl apply -f pod.yaml
+```
+
+Let's verify if the pod was created successfully:
+
+```bash
+kubectl get pods -o wide
+```
+
+On k8s-node-1, we can confirm that nginx is running on the pod network at 10.244.1.2:80.
+
+```
+NAME            READY   STATUS    RESTARTS   AGE    IP           NODE         NOMINATED NODE   READINESS GATES
+nginx-example   1/1     Running   0          3h8m   10.244.1.2   k8s-node-1   <none>
+```
+
+You can verify the connection from k8s-ctrlr, k8s-node-1, and k8s-node-2 using the following command:
+
+```bash
+curl 10.244.1.2:80
+```
+
+### 2. Creating nginx service
+
+However, directly accessing pods is not recommended.
+This is because pods get new IPs when they restart or are deleted.
+Also, while cluster internal access is possible from any node, external access is not.
+To solve these issues, we create a service.
+On k8s-ctrlr, create a service-nodeport.yaml file with the following content:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-example
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      nodePort: 30080
+      targetPort: nginx-http
+  selector:
+    app: nginx
+```
+
+Then deploy it using the following command:
+
+```bash
+kubectl apply -f service-nodeport.yaml
+```
+
+Let's verify if the service was created successfully:
+
+```bash
+kubectl get svc
+```
+
+If you see the following output, it was created successfully:
+
+```
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubernetes      ClusterIP   10.96.0.1      <none>        443/TCP        3h19m
+nginx-example   NodePort    10.109.7.138   <none>        80:30080/TCP   3h16m
+```
+
+You can verify the connection from k8s-ctrlr, k8s-node-1, and k8s-node-2 using the following command:
+
+```bash
+curl localhost:30080
+```
+
+Additionally, you can access it externally using the IP of any cluster member:
+
+```bash
+curl 192.168.0.180:30080
+curl 192.168.0.185:30080
+curl 192.168.0.190:30080
+```
+
+While on AWS you can use loadbalancer type instead of nodeport type to access through a single address, we used nodeport type here because loadbalancer type is not available locally.
+
+## Conclusion
+
+In this post, we learned how to install Kubernetes and deploy nginx.
+In the next post, we'll explore other Kubernetes features.
+We'll look at ingress, configmap, secret, volume, deployment, statefulset, etc.
+Also, if possible, we'll try to set up CI/CD using Jenkins.
+
+## References
+
+- [youtube/How to Build an Awesome Kubernetes Cluster using Proxmox Virtual Environment](https://youtu.be/U1VzcjCB_sY)
+- [blog/How to Build an Awesome Kubernetes Cluster using Proxmox Virtual Environment](https://www.learnlinux.tv/how-to-build-an-awesome-kubernetes-cluster-using-proxmox-virtual-environment/)
