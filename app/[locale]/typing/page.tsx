@@ -312,7 +312,7 @@ export default function Page() {
     <section className="flex flex-col gap-12">
       <Header
         title="Peter's Typing practice"
-        description="너가 원하는 방식이 맞는지 모르겠어. 마음에 들면 좋겠다"
+        description={t("typingDescription")}
         link={{ href: "/", text: t("backToHome") }}
       />
       <div

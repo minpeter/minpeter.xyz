@@ -4,8 +4,8 @@ export default {
   typingTitle: "Typing practice",
   showcaseTitle: "Project showcase",
   ipTitle: "IP Address Checker",
-  backToBlog: "Back to blog list",
-  backToHome: "Back to home",
+  backToBlog: "blog list",
+  backToHome: "Home",
   aboutTitle: "Hello, I'm Woonggi Min :)",
   aboutMe: `I am currently working as a frontend developer.
 As a frontend developer, I enjoy learning and applying rapidly changing technologies.
@@ -17,4 +17,5 @@ I also prioritize user experience and strive to provide the best experience for 
     "You can press the Enter key to forcefully move to the next sentence.",
     "Sentences are generated automatically, enjoy typing.",
   ],
+  typingDescription: "The simplest UI for typing practice",
 } as const;
