@@ -36,6 +36,8 @@ export default function Page() {
         data-animate-speed="slow"
         className="flex flex-col gap-3"
       >
+        <Countdown />
+
         <Card>
           <p className="rounded-xl p-4 text-sm whitespace-pre-wrap">
             {t("aboutMe")}
@@ -43,12 +45,6 @@ export default function Page() {
         </Card>
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-2 w-full">
           <CarouselImage />
-
-          <div className="flex flex-col justify-between m-4">
-            <Countdown />
-            <br />
-            말을 잘 듣고 싶은데 수동적이고 싶지는 않아, 언제가 적절할까?
-          </div>
         </div>
         <div className="mt-4">
           내루미가 뭔지 아시나요?
@@ -58,9 +54,7 @@ export default function Page() {
           상당히 귀여우니 꼭 찾아보세요.
           <br />
           <br />
-          자매품으로 나메코와 피크민도 귀엽습니다.
-          <br />
-          *피그민이 아닙니다, 피크민입니다.
+          나메코와 피크민도 귀엽습니다. (쿵야도,)
         </div>
 
         <div>
@@ -116,7 +110,7 @@ function Countdown() {
   });
 
   return (
-    <div className="rounded-xl p-4 text-sm whitespace-pre-wrap">
+    <div className="rounded-xl text-sm whitespace-pre-wrap">
       {Object.keys(timeLeft).length ? (
         <>
           {timeLeft.days}일 {timeLeft.hours}시간 {timeLeft.minutes}분{" "}
