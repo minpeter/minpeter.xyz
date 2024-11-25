@@ -1,0 +1,143 @@
+---
+title: k8s via proxmox (1) - Creating an Ubuntu Server Template (en)
+date: 2022-10-03 20:19:00
+tags:
+categories: "home lab"
+---
+
+# What is a template?
+
+While using Proxmox, I encountered the concept of a _template_ for the first time.  
+By creating a template, you can skip the installation process each time and clone VMs from the template instead.
+
+To set up Kubernetes, you need both master nodes and worker nodes.  
+At least three VMs are required, and during my initial attempts (actually twice...), I didn't know about templates and went through the installation process for each VM manually.  
+Running the setup process for three VMs simultaneously caused network congestion and delays due to update-related traffic.  
+Let's solve this by creating a template, so we can skip the installation process by cloning the template instead.
+
+# Creating an Ubuntu 22.04 Server Template
+
+## 1. Creating a VM
+
+Start by creating a VM that will serve as the base for the template.  
+This VM will use a lightweight cloud image, which requires slightly different settings from the usual process.
+
+1. **Create a VM** in Proxmox.
+2. Name the VM to be used as a template `ubuntu-22-04-server-template`.  
+   Set the **VM ID to 900**, as the instructions assume this ID for further steps.
+3. In the **Media** section, select **Do not use any media**.  
+   This is because we will use a cloud image later.
+4. In the **System** tab, check the box for **Qemu Agent**.  
+   This allows you to monitor the VM's state while it is running. Although optional, enabling this now makes things more convenient later.
+5. **Remove the disk**, set the CPU to **1 core**, and the memory to **1GB**.
+
+6. Configure the **network** settings as you would for a regular VM.
+
+## 2. Setting up Cloud-Init
+
+In the VM's **Hardware** tab, click **Add > CloudInit Drive**.  
+This will add a Cloud-Init drive to the VM's hard disk.  
+Next, go to the **Cloud-Init** tab and configure the **User Data**.  
+Ensure the network setting is configured as DHCP to avoid IP conflicts in cloned VMs.  
+You don't need to specify a domain, and for the SSH Public Key, follow the steps below to generate one.
+
+### 2.1 Generating an SSH Key
+
+Generate an SSH key.
+
+```bash
+ssh-keygen -t <key-type> -C <comment>
+```
+
+Key types include rsa, dsa, ecdsa, and ed25519.  
+The comment is a description for the key.
+
+When prompted with `Enter file in which to save the key (C:\Users\minpeter/.ssh/id_rsa):`, enter an appropriate name like `proxmox_key`.  
+When asked `Enter passphrase (empty for no passphrase):`, you can choose to set a password or leave it blank (the latter is recommended).
+
+Copy the generated public key.
+
+```bash
+cat ~/.ssh/<key-name>.pub
+```
+
+For example, if you named it `proxmox_key`, use `cat ~/.ssh/proxmox_key.pub`.
+
+## 3. Downloading the Cloud Image
+
+Some steps need to be performed in the PVE shell for further configuration.
+
+### 3.1 Accessing the PVE Shell
+
+Access the shell via the web GUI or by running `ssh root@<proxmox server ip>`.
+
+### 3.2 Downloading the Cloud Image
+
+You can download the image from [this link](https://cloud-images.ubuntu.com/minimal/releases/jammy/release/).  
+Use `wget` to download the `ubuntu-22.04-minimal-cloudimg-amd64.img` file.
+
+```bash
+wget https://cloud-images.ubuntu.com/minimal/releases/jammy/release/ubuntu-22.04-minimal-cloudimg-amd64.img
+```
+
+Next, run the command:
+
+```bash
+qm set 900 -serial0 socket -vga serial0
+```
+
+Here, `900` is the VM ID.
+
+### 3.3 Converting the Cloud Image
+
+Convert the image.
+
+```bash
+mv ubuntu-22.04-minimal-cloudimg-amd64.img ubuntu-22.04.qcow2
+qemu-img resize ubuntu-22.04.qcow2 32G
+```
+
+### 3.4 Adding the Cloud Image
+
+Add the image to the VM.
+
+```bash
+qm importdisk 900 ubuntu-22.04.qcow2 local-lvm
+```
+
+Again, `900` refers to the VM ID.
+
+### 3.5 Configuring the Cloud Image
+
+After completing these steps, you'll notice an **Unused Disk 0** in the VM's **Hardware** tab in the web GUI.  
+Click **Edit**, check the **Discard** option, and then click **Apply**.
+
+Go to the **Options** tab, set the **Boot Order** to the second position, and change **Start at boot** to **Yes**.
+
+With all configurations complete, right-click the VM (`900`, `ubuntu-22-04-server-template`) in the VM list and select **Convert to Template**.  
+After a brief process, the template will be created.
+
+## 4. Creating a VM from the Template
+
+Now, let's create a VM using the newly created template.
+
+Right-click the template, and you'll notice the menu has changed.  
+Click **Clone**.
+
+In the **Clone VM** window, change the **Name** to `ubuntu-test` and set the **Mode** to **Full Clone**.  
+Click **Clone**, power on the VM, and wait. That's it!
+
+# In the Next Post...
+
+We'll use this template to create `k8s-ctrlr` and `k8s-node`, add an additional `k8s-node` template, and configure a setup with one `k8s-ctrlr` and two `k8s-nodes`.
+
+<br />
+<Callout>
+  [Continue to k8s via proxmox (2) - Configuring Worker Node & Master
+  Node](/blog/k8s-via-proxmox-2)
+</Callout>
+
+## References
+
+- [youtube/Proxmox VE - How to build an Ubuntu 22.04 Template (Updated Method)](https://youtu.be/MJgIm03Jxdo)
+- [blog/Proxmox VE - How to build an Ubuntu 22.04 Template (Updated Method)](https://www.learnlinux.tv/proxmox-ve-how-to-build-an-ubuntu-22-04-template-updated-method/)
