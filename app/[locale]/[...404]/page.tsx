@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/header";
-import { useI18n } from "@/lib/locales/client";
+import { useI18n } from "@/locales/client";
 
 export default function NotFound() {
   const t = useI18n();

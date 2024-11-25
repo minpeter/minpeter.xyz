@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { nextSentencesGenerator } from "./action";
 import Header from "@/components/header";
-import { useI18n } from "@/lib/locales/client";
+import { useI18n } from "@/locales/client";
 
 // Add utility function to check Korean characters
 const isKorean = (char: string) => {

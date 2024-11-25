@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import { getI18n } from "@/lib/locales/server";
+import { getI18n } from "@/locales/server";
 import Link from "next/link";
 
 import { setStaticParamsLocale } from "next-international/server";

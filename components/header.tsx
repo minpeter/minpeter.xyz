@@ -1,7 +1,7 @@
 "use client";
 
 import { Backlink } from "./link";
-import { useChangeLocale, useCurrentLocale } from "@/lib/locales/client";
+import { useChangeLocale, useCurrentLocale } from "@/locales/client";
 import { cn } from "@/lib/utils";
 
 type HeaderProps = {

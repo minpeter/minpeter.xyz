@@ -11,7 +11,7 @@ import { NuqsAdapter } from "nuqs/adapters/next";
 import localFont from "next/font/local";
 
 import { I18nProvider } from "fumadocs-ui/i18n";
-import { I18nProviderClient } from "@/lib/locales/client";
+import { I18nProviderClient } from "@/locales/client";
 
 import "./global.css";
 
@@ -42,7 +42,7 @@ const FontSans = localFont({
   ],
 });
 
-import { getStaticParams } from "@/lib/locales/server";
+import { getStaticParams } from "@/locales/server";
 
 export function generateStaticParams() {
   return getStaticParams();
@@ -58,6 +58,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const { locale } = await params;
+
   return (
     <html
       lang={locale ? locale : "ko"}

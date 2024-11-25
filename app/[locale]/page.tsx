@@ -1,5 +1,5 @@
 "use client";
-import { useI18n } from "@/lib/locales/client";
+import { useI18n } from "@/locales/client";
 
 import Header from "@/components/header";
 import {
@@ -110,6 +110,22 @@ export default function Page() {
             </Link>
           </div>
         </div>
+      </div>
+
+      <div className="flex flex-col text-center mt-32">
+        {Array.from({ length: 18 }).map((_, index) => (
+          <p
+            key={index}
+            style={{
+              backgroundColor: `rgba(0, 0, 0, ${(index + 1) / 18})`,
+              color: `rgba(255, 255, 255, ${(index + 1) / 18})`,
+              margin: "0 2px",
+            }}
+          >
+            {t("mainText")}
+          </p>
+        ))}
+        <p>{t("subText")}</p>
       </div>
     </section>
   );

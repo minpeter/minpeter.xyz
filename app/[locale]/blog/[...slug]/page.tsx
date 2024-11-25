@@ -10,7 +10,7 @@ import Link from "next/link";
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
-import { getI18n } from "@/lib/locales/server";
+import { getI18n } from "@/locales/server";
 import { setStaticParamsLocale } from "next-international/server";
 
 export async function generateStaticParams() {

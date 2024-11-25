@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 
 import { Card } from "@/components/ui/card";
 import Header from "@/components/header";
-import { useI18n } from "@/lib/locales/client";
+import { useI18n } from "@/locales/client";
 import Link from "next/link";
 
 export default function Page() {

@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { BlogList } from "./list";
 
 import NewMetadata from "@/lib/metadata";
-import { getI18n } from "@/lib/locales/server";
+import { getI18n } from "@/locales/server";
 import { setStaticParamsLocale } from "next-international/server";
 
 export const metadata = NewMetadata({
