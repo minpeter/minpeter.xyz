@@ -42,6 +42,4 @@ export async function nextSentencesGenerator(locale: "ko" | "en") {
 
   const textWithoutQuotes = text.replace(/^"([^"]+)"$/, "$1");
   return textWithoutQuotes;
-
-  // return text;
 }
