@@ -27,6 +27,16 @@ export default function Footer({ className }: { className?: string }) {
         >
           minpeter
           <ArrowTopRightIcon className="w-3 h-3 mb-1 ml-0.5 inline" />
+        </Link>{" "}
+        •{" "}
+        <Link
+          className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100"
+          href="https://github.com/minpeter/minpeter.xyz"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          source code
+          <ArrowTopRightIcon className="w-3 h-3 mb-1 ml-0.5 inline" />
         </Link>
       </p>
       <ModeToggle />

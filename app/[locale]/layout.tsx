@@ -77,7 +77,7 @@ export default async function RootLayout({
               <RootProvider>
                 <NuqsAdapter>
                   <main className="w-full mx-auto px-4 min-h-screen max-w-3xl py-24 relative">
-                    <div className="fixed inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent z-10" />
+                    <div className="fixed inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
                     {children}
                   </main>
 
