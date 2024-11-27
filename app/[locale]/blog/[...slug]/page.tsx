@@ -9,6 +9,7 @@ import { cn, formatDateLong } from "@/lib/utils";
 import Link from "next/link";
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { Callout } from "fumadocs-ui/components/callout";
 import { getI18n } from "@/locales/server";
 import { setStaticParamsLocale } from "next-international/server";
@@ -98,7 +99,13 @@ export default async function Page({
       <DocsBody>
         <MDX
           className="mdx"
-          components={{ ...defaultMdxComponents, Tab, Tabs, Callout }}
+          components={{
+            ...defaultMdxComponents,
+            img: (props) => <ImageZoom {...(props as any)} />,
+            Tab,
+            Tabs,
+            Callout,
+          }}
         />
       </DocsBody>
 
