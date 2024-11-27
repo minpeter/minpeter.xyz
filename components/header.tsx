@@ -18,9 +18,9 @@ export default function Header({ title, description, link }: HeaderProps) {
   const locale = useCurrentLocale();
 
   return (
-    <header className="mb-10 space-y-1">
+    <header className="mb-10 space-y-1" data-animate>
       {link ? (
-        <div data-animate data-animate-speed="fast">
+        <div>
           <Backlink text={link.text} href={link.href} />
         </div>
       ) : (

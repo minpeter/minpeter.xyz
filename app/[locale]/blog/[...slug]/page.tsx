@@ -12,7 +12,6 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { getI18n } from "@/locales/server";
 import { setStaticParamsLocale } from "next-international/server";
-import { Toc } from "fumadocs-ui/components/layout/toc";
 
 export async function generateStaticParams() {
   return blog.generateParams();
@@ -63,7 +62,7 @@ export default async function Page({
   }, {});
 
   return (
-    <section>
+    <section data-animate>
       <Header
         title={post.data.title}
         description={
@@ -77,7 +76,7 @@ export default async function Page({
       <aside className="hidden 2xl:block fixed left-8 top-36 w-72">
         {post.data.toc.length > 0 && (
           <div className="text-sm">
-            <nav>
+            <nav data-animate>
               {post.data.toc.map((item: any) => (
                 <a
                   key={item.url}
@@ -98,8 +97,6 @@ export default async function Page({
       </aside>
       <DocsBody>
         <MDX
-          data-animate
-          data-animate-speed="fast"
           className="mdx"
           components={{ ...defaultMdxComponents, Tab, Tabs, Callout }}
         />

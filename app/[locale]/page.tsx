@@ -17,6 +17,8 @@ import Lickitung from "@/components/Lickitung";
 export default function Page() {
   const t = useI18n();
 
+  const textListLegth = 16;
+
   return (
     <section className="flex flex-col gap-3">
       <Header
@@ -111,13 +113,19 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col text-center mt-32">
-          {Array.from({ length: 18 }).map((_, index) => (
+        <div
+          data-animate
+          data-animate-speed="slow"
+          className="flex flex-col text-center mt-32"
+        >
+          {Array.from({ length: textListLegth }).map((_, index) => (
             <p
               key={index}
               style={{
-                backgroundColor: `rgba(0, 0, 0, ${(index + 1) / 18})`,
-                color: `rgba(255, 255, 255, ${(index + 1) / 18})`,
+                backgroundColor: `rgba(0, 0, 0, ${
+                  (index + 1) / textListLegth
+                })`,
+                color: `rgba(255, 255, 255, ${(index + 1) / textListLegth})`,
                 margin: "0 2px",
               }}
             >
