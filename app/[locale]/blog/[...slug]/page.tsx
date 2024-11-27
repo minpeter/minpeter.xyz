@@ -5,13 +5,14 @@ import defaultMdxComponents from "fumadocs-ui/mdx";
 import { DocsBody } from "fumadocs-ui/page";
 import NewMetadata from "@/lib/metadata";
 import Header from "@/components/header";
-import { formatDateLong } from "@/lib/utils";
+import { cn, formatDateLong } from "@/lib/utils";
 import Link from "next/link";
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 import { getI18n } from "@/locales/server";
 import { setStaticParamsLocale } from "next-international/server";
+import { Toc } from "fumadocs-ui/components/layout/toc";
 
 export async function generateStaticParams() {
   return blog.generateParams();
@@ -73,6 +74,28 @@ export default async function Page({
         link={{ href: `/blog`, text: t("backToBlog") }}
       />
 
+      <aside className="hidden 2xl:block fixed left-8 top-36 w-72">
+        {post.data.toc.length > 0 && (
+          <div className="text-sm">
+            <nav>
+              {post.data.toc.map((item: any) => (
+                <a
+                  key={item.url}
+                  href={item.url}
+                  className={cn(
+                    "block my-1",
+                    "px-0.5 rounded-md hover:bg-secondary/100 animation:enter w-fit",
+                    "py-1 px-2 box-decoration-clone"
+                  )}
+                  style={{ marginLeft: `${(item.depth - 1) * 1}rem` }}
+                >
+                  {item.title.props.children}
+                </a>
+              ))}
+            </nav>
+          </div>
+        )}
+      </aside>
       <DocsBody>
         <MDX
           data-animate
