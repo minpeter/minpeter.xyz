@@ -3,10 +3,16 @@ import Link from "next/link";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import purplePikmin from "@/public/purple-pikmin-carrying-fruit.webp";
+import { cn } from "@/lib/utils";
 
-export default function Footer() {
+export default function Footer({ className }: { className?: string }) {
   return (
-    <footer className="mt-10 gap-1 flex justify-between border-t items-center py-1 px-4">
+    <footer
+      className={cn(
+        className,
+        "mt-10 gap-1 flex justify-between border-t items-center py-1 px-4"
+      )}
+    >
       <Image
         src={purplePikmin}
         alt="Purple Pikmin carrying fruit "
