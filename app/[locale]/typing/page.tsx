@@ -309,7 +309,7 @@ export default function Page() {
   };
 
   return (
-    <section className="flex flex-col gap-12">
+    <section data-animate className="flex flex-col gap-12">
       <Header
         title="Peter's Typing practice"
         description={t("typingDescription")}
