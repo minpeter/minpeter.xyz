@@ -4,7 +4,7 @@ export default {
   typingTitle: "Typing practice",
   showcaseTitle: "Project showcase",
   ipTitle: "IP Address Checker",
-  backToBlog: "blog list",
+  backToBlog: "Blog",
   backToHome: "Home",
   aboutTitle: "Hello, I'm Woonggi Min :)",
   aboutMe: `I am currently working as a frontend developer.
