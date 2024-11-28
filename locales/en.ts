@@ -18,4 +18,6 @@ I also prioritize user experience and strive to provide the best experience for 
     "Sentences are generated automatically, enjoy typing.",
   ],
   typingDescription: "The simplest UI for typing practice",
+  blogPageTitle: "Peter's Development Notes",
+  blogPageDescription: "I don't know if this makes any sense,",
 } as const;

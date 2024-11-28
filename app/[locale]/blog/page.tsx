@@ -23,8 +23,8 @@ export default async function Page({
   return (
     <section data-animate>
       <Header
-        title="민웅기의 개발 노트"
-        description="내가 적은 블로그, 너를 위해 써봤지"
+        title={t("blogPageTitle")}
+        description={t("blogPageDescription")}
         link={{ href: "/", text: t("backToHome") }}
       />
       <Suspense>
