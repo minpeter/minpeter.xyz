@@ -7,11 +7,17 @@ import { useQueryState, parseAsString } from "nuqs";
 import { blog, blogType } from "@/lib/source";
 
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { useCurrentLocale } from "@/locales/client";
 
 export function BlogList({ lang }: { lang: string }) {
   const posts = blog.getPages(lang);
 
-  const [query, setQuery] = useQueryState("q", parseAsString.withDefault(""));
+  const locale = useCurrentLocale();
+
+  const [query, setQuery] = useQueryState(
+    "q",
+    parseAsString.withDefault(locale == "en" ? "(en)" : "")
+  );
 
   const searchIn = (text?: string) =>
     text?.toLowerCase().includes(query.toLowerCase());
