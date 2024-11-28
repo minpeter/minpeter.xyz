@@ -1,0 +1,148 @@
+---
+title: Running GNS3 with Docker
+date: 2024-04-12
+description: "Quickly set up GNS3 for network experiments"
+---
+
+## Introduction
+
+This tutorial demonstrates how to run GNS3 in a Linux VM environment on an OrbStack-enabled MacBook using Docker and execute a simple topology.
+
+The benefits of this setup are as follows:
+
+1. Easy installation.
+2. Isolation from the system reduces potential issues.
+
+This guide does not cover GNS3 Desktop configuration or packet capture but focuses on testing routing through Alpine Docker containers with routers and switches.
+
+Additionally, this tutorial relies on the following project:
+
+[https://github.com/jsimonetti/docker-gns3-server](https://github.com/jsimonetti/docker-gns3-server)
+
+## Setting up an x86 Docker environment on MacBook
+
+Through several tests, I discovered that specific networking functions of the GNS3 server do not work correctly in an ARM64 Docker environment.
+
+To ensure a proper experiment, we will simulate an x86 environment using a virtual machine with Rosetta.
+
+If you are using Windows or an x86-based environment with Docker installed, you can skip this section.
+
+Download the necessary files from [https://orbstack.dev/download](https://orbstack.dev/download) or install OrbStack with `brew install orbstack`.
+
+After installation, launch OrbStack and navigate to the Machines tab.
+
+![Untitled](./images/Untitled.png)
+
+Create a VM with the following settings: Ubuntu and CPU type: Intel.
+
+![Untitled](./images/Untitled-1.png)
+
+Double-click the VM to open its terminal.
+
+![Untitled](./images/Untitled-2.png)
+
+Enter the following commands to set up Docker:
+
+```bash
+cd ~
+curl -L get.docker.com | sh
+```
+
+Run the commands below to confirm Docker installation:
+
+```bash
+sudo docker version
+sudo docker ps
+```
+
+## Running the GNS3 server on Docker
+
+Continuing from the previously configured x86 environment with Docker installed:
+
+Create a folder to store GNS3 data using the following command:
+
+```bash
+mkdir gns3-data
+```
+
+Then run the GNS3 server with the following command:
+
+```bash
+sudo docker run \
+   --rm -d \
+   --name gns3 \
+   --net=host --privileged \
+   -e BRIDGE_ADDRESS=172.21.1.1/24 \
+   -v ./gns3-data:/data \
+   jsimonetti/gns3-server:latest
+```
+
+Access the server via [http://ubuntu-gns3.orb.local:3080/](http://ubuntu-gns3.orb.local:3080/) on your MacBook. If not using OrbStack, use [http://localhost:3080](http://localhost:3080) or the VM’s IP with port 3080.
+
+\*The address may vary if the VM’s name is different. You can verify active addresses at [https://orb.local/](https://orb.local/).
+
+![Untitled](./images/Untitled-3.png)
+
+You will now be able to access the web UI.
+
+## A simple GNS3 experiment
+
+Within GNS3, we will create two Docker containers, assign IPs, and test communication via a switch.
+
+Click `Add blank project` and input any name.
+
+![Untitled](./images/Untitled-4.png)
+
+Click the `+` button at the top center and select `New Template...`.
+
+![Untitled](./images/Untitled-5.png)
+
+Click "Next" and search for "alpine" in the filter. From the list, locate the item of Emulator type "Docker" and click the download icon in its Actions column.
+
+![Untitled](./images/Untitled-6.png)
+
+Complete the setup by clicking `Create docker template`.
+
+![Untitled](./images/Untitled-7.png)
+
+Drag two Alpine Linux instances and one Ethernet switch onto the workspace.
+
+![Untitled](./images/Untitled-8.png)
+
+Connect them using the line tool next to the `+` button.
+
+![Untitled](./images/Untitled-9.png)
+
+Right-click each Alpine Linux machine, select `Configure`, then click `Edit network configuration`. Paste the following content, ensuring the addresses differ for each container:
+
+```text
+# Alpine Linux 1
+auto eth0
+iface eth0 inet static
+	address 192.168.0.1
+	netmask 255.255.255.0
+```
+
+```text
+# Alpine Linux 2
+auto eth0
+iface eth0 inet static
+	address 192.168.0.2
+	netmask 255.255.255.0
+```
+
+Click the start button to run the configuration.
+
+![Untitled](./images/Untitled-10.png)
+
+Right-click each node and select `Web console` to open a terminal for Alpine 1 and Alpine 2.
+
+![Untitled](./images/Untitled-11.png)
+
+Ping from Alpine 1 to `192.168.0.2` and from Alpine 2 to `192.168.0.1` to verify communication.
+
+It works! :)
+
+![Untitled](./images/Untitled-12.png)
+
+Although GNS3 Desktop and EVE-ng are excellent, this setup is lightweight and sufficient for experimenting with Linux routing tables.
