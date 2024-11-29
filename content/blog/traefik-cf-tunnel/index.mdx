@@ -67,22 +67,22 @@ curl -H "Host:ip.local" localhost:80
 아마 다음과 같은 응답을 얻을 수 있을 것입니다.
 
 ```
-Your IP is: 192.168.117.1
+Your IP is: 192.168.100.1
 Hostname: 5e1dbc2a6fe2
 IP: 127.0.0.1
 IP: ::1
-IP: 192.168.117.3
-RemoteAddr: 192.168.117.2:41938
+IP: 192.168.100.3
+RemoteAddr: 192.168.100.2:41938
 GET / HTTP/1.1
 Accept-Encoding: gzip
 Accept: */*
 User-Agent: curl/8.7.1
-X-Forwarded-For: 192.168.117.1
+X-Forwarded-For: 192.168.100.1
 X-Forwarded-Host: ip.tmpf.me
 X-Forwarded-Port: 80
 X-Forwarded-Proto: http
 X-Forwarded-Server: 81638c02bba0
-X-Real-Ip: 192.168.117.1
+X-Real-Ip: 192.168.100.1
 ```
 
 이는 우리가 traefik 컨테이너에 요청을 날렸고 `ip.local` 이란 호스트네임으로 접근하였다는 것을 의미합니다.
