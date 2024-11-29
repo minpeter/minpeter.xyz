@@ -1,0 +1,225 @@
+---
+title: 클라우드플레어 터널을 이용한 Traefik Proxy 구축
+date: 2024-11-29 15:02:00 +0900
+tags:
+  - traefik
+  - homelab
+  - server
+  - cloudflare
+  - docker
+description: 인터넷과 도커가 홈랩에 전부입니다, 무엇이 더 필요한가요?
+---
+
+저는 계속해서 홈랩을 처음 운영하고자하는 누군가의 노력이, 혹은 제 자신이 다시 설정하는 일이 있더라고 최대한 간단하면서 높은 활용도를 가진 설정을 원했습니다.
+
+단지 하나의 raspberrypi에서 동작하다가 proxmox를 이용하도록 확장되어도 문제 없는 그러한 간단한 설정을 추구하였습니다.
+
+이제 여기에 그 답이 있습니다.
+
+저는 현재 “어떠한” 랜덤한 컴퓨터에서 “인터넷과 도커” 만 된다면 자신만의 프로젝트를 인터넷에 공용으로 공유할 수 있는 방법에 대해서 글을 작성하고 있습니다.
+
+이를 달성하기 위해 지금 속해있는 환경에 네트워크 설정 권한을 요구하지 않을 것이고, 포트포워딩도 필요하지 않을 것입니다.
+
+또한 처음 홈랩 작업을 수행할때 큰 허들이 되는 SSL 인증서를 발급 받는 과정 역시 존재하지 않습니다.
+
+여기에 더해 더 이상 공인 아이피가 회전하는 것을 걱정하지 않아도 괜찮습니다.
+
+우리는 홈랩을 구축하고 있습니다, 그런 우리에게 “안정적인 고정 IP”는 사치품입니다.
+
+이제 더 이상 이 문제를 고민하지 마세요, ddns 등의 어려운 설정이 필요하지 않고 그냥 인터넷 접근이 필요한 전부입니다.
+
+이런 이점을 가져오기 위해 cloudflare tunnel를 사용할 것입니다.
+
+기존에 “포트포워딩된 공인 아이피”에 설정해주었던 wildcard DNS record 대신 cloudflare tunnel을 타겟으로 하는 레코드를 추가하고 traefik과 cf tunnel를 연결하여 모든 것을 동작하게 할 것입니다.
+
+바로 가봅시다..!
+
+### docker compose로 traefik 띄우기
+
+우선 2개의 컨테이너를 띄우는 docker compose로 시작해보겠습니다.
+
+```jsx
+services: traefik: image: "traefik:v3.2";
+command: -"--api.insecure=true" -
+  "--providers.docker=true" -
+  "--providers.docker.exposedbydefault=false" -
+  "--entryPoints.web.address=:80";
+ports: -"80:80" - "8080:8080";
+volumes: -"/var/run/docker.sock:/var/run/docker.sock:ro";
+
+iplogger: image: "ghcr.io/minpeter/iplogger";
+labels: -"traefik.enable=true" -
+  "traefik.http.routers.iplogger.rule=Host(`ip.local`)" -
+  "traefik.http.routers.iplogger.entrypoints=web";
+```
+
+위에 내용을 그대로 복사하여 `docker-compose.yaml` 이란 파일을 생성하고, 해당 파일이 있는 경로에서 `docker compose up` 를 실행하면 첫번째 실험을 위한 준비가 끝났습니다.
+
+이 시점에서 우리는 2가지를 해냈습니다.
+
+1. 앞으로 이 포스트에서 호스팅하기로 정한 서비스인 “minpeter/iplogger” 컨테이너를 띄웠습니다. 사용자가 요청을 보내면 해당 유저의 정보를 반환하는 아주 간단한 컨테이너입니다.
+2. traefik 컨테이너를 띄우고 dashboard를 설정하였습니다. 눈으로 확인하기 위하여, [http://localhost:8080](http://localhost:8080) 에 접속하여 바로 확인해볼 수 있습니다.
+
+이제 이 2가지 컨테이너는 연결되었습니다. 이를 테스트하기 위해 아래와 같은 명령을 사용해보겠습니다.
+
+```jsx
+curl -H "Host:ip.local" localhost:80
+```
+
+아마 다음과 같은 응답을 얻을 수 있을 것입니다.
+
+```
+Your IP is: 192.168.117.1
+Hostname: 5e1dbc2a6fe2
+IP: 127.0.0.1
+IP: ::1
+IP: 192.168.117.3
+RemoteAddr: 192.168.117.2:41938
+GET / HTTP/1.1
+Accept-Encoding: gzip
+Accept: */*
+User-Agent: curl/8.7.1
+X-Forwarded-For: 192.168.117.1
+X-Forwarded-Host: ip.tmpf.me
+X-Forwarded-Port: 80
+X-Forwarded-Proto: http
+X-Forwarded-Server: 81638c02bba0
+X-Real-Ip: 192.168.117.1
+```
+
+이는 우리가 traefik 컨테이너에 요청을 날렸고 `ip.local` 이란 호스트네임으로 접근하였다는 것을 의미합니다.
+
+\*호스트 네임은 어떤 도메인을 이용해 http 프로토콜을 사용하는 서비스에 접속할때 자동으로 추가됩니다. 이번에 한해서 [localhost:80](http://localhost:80) 으로 접속하였기 때문에 임의로 지정하였습니다.
+
+이제 우리는 traefik proxy와 traefik proxy 뒤에서 동작하는 한개의 서비스를 넣었습니다.
+
+다음 순서는 이를 cf tunnel로 외부에 노출시키는 것입니다.
+
+### Cloudflare tunnel를 이용해 traefik proxy 외부에 공개하기
+
+우선 cloudflare 계정이 필요합니다. tunnel 기능은 무료 일부 기능을 제외하곤 무료로 제공되기에 걱정하지 않아도 괜찮습니다.
+
+또한 cloudflare에 연결된 도메인이 필요합니다, 여기까지는 설정되어있다고 가정하고 진행하겠습니다.
+
+[https://dash.cloudflare.com](https://dash.cloudflare.com) 에 로그인을 한 후에 왼쪽 메뉴를 보면 “Zero Trust” 라는 메뉴를 찾을 수 있습니다. 누르게 되면 다음과 같은 화면을 확인 할 수 있습니다.
+
+![image.png](./images/image.png)
+
+이 화면에서 이어서 “Nextworks > Tunnels” 메뉴로 들어가줍니다.
+
+![image.png](./images/image%201.png)
+
+여기서 파란색의 “Add a tunnel” 버튼을 누르면 다음과 같은 화면이 나옵니다.
+
+![image.png](./images/image%202.png)
+
+이번 예제에서는 cloudflared container를 활용할 것이기 때문에 “Select Cloudflared” 를 선택해줍시다.
+
+다음 페이지에서 원하는 아무런 이름을 정한 뒤에 “Save tunnel”를 누르게 되면 tunnel이 생성됩니다.
+
+![image.png](./images/image%203.png)
+
+이후 들어와진 창에서 Docker를 선택하면 `docker run...` 으로 시작하는 명령어 박스가 존재하는데 복사 이후 `--token` 뒤에 존재하는 “eyJhI……” 와 같은 값을 전부 복사해줍니다.
+
+자 이제 cloudflare tunnel에 접근할 수 있는 Token를 발급 받았습니다.
+
+다음 순서로 이전에 만들어 두었던 `docker-compose.yaml` 를 아래와 같이 수정해봅시다.
+
+```
+services:
+  traefik:
+    image: "traefik:v3.2"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  iplogger:
+    image: ghcr.io/minpeter/iplogger
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.iplogger.rule=Host(`ip.example.com`)" ## 중요
+      - "traefik.http.routers.iplogger.entrypoints=web"
+
+  cloudflared:
+    image: "cloudflare/cloudflared:latest"
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+```
+
+그리고 이전에 실행한 `docker compose up` 명령을 ctrl+c 로 취소한 뒤 아래와 같이 입력하여줍니다.
+
+```
+TUNNEL_TOKEN="YOUR_CLOUDFLARE_TUNNEL_TOKEN (e.g. eyJhI...)" docker compose up
+```
+
+이렇게 하면 cloudflared, traefik, iplogger 컨테이너가 띄워지게 됩니다.
+
+![image.png](./images/image%204.png)
+
+터미널에서 위와 같이 별다른 에러를 발견하지 못하였다면, 다시 cloudflare zero trust 콘솔로 돌아옵시다.
+
+![image.png](./images/image%205.png)
+
+새로운 커넥션이 생성되었습니다, “Next” 버튼을 눌러주세요.
+
+![image.png](./images/image%206.png)
+
+다음 페이지에서 위와 동일하게 설정해주면 됩니다.
+
+\*tmpf.me의 경우 본인의 도메인으로 설정하세요.
+
+자세한 설정값은 아래와 같습니다.
+
+```
+Subdomain: *
+Domain: exmaple.com
+Path: (none)
+Service Type: HTTP
+Service URL: traefik
+```
+
+자 이제 대부분의 설정이 끝났습니다. “Save Tunnel” 버튼을 누르면 아래와 같은 화면을 만날 수 있습니다.
+
+![image.png](./images/image%207.png)
+
+여기서 Tunnel ID를 복사해줍니다. 이제 마지막 단계입니다!!
+
+Cloudflare Zero trust console에서 빠져와서 해당 도메인 (저의 경우 tmpf.me)의 대시보드에서 “DNS > Records” 메뉴에 들어가줍니다.
+
+이후 아래와 같이 레코드를 추가해줍시다.
+
+```
+Type: CNAME
+Name: *
+Target: <Tunnel ID>.cfargotunnel.com
+Proxy status: ON
+```
+
+![image.png](./images/image%208.png)
+
+이제 정말 끝입니다.
+
+SSL, 포트포워딩, DDNS를 비롯한 모든 귀찮은 설정을 이미 완료한 것이랑 동일한 상황입니다.
+
+정말일까요? 확인을 위해 “https://ip.example.com” 으로 접속해봅시다. (위에 compose.yaml 파일에서 수정하였습니다.)
+
+축하합니다.! 이제 인터넷 환경에 구애받지 않는 개인 리버스 프록시를 만들었습니다.
+
+### 한계점, 발전 가능성
+
+1. “X-Forwarded-For” 해더가 똑바로 forward 되지 않습니다. 다만 “Cf-Connecting-Ip” 와 같은 헤더를 통해 대체할 수 있습니다.
+2. “_.example.com” (root wildcard record) 대신 “_.str.example.com” 같은 연결된 서브도메인 wildcard를 처리할 수 없습니다.
+   이는 cloudflare에서 인증서 발급을 안해주기 때문이고, 돈 이외에는 해결방법이 없습니다.
+3. 아마도 최대 용량 제한이 존재합니다. cloudflare proxy 기능은 Free 티어의 경우 100MB 입니다.
+4. Tunnel은 http 뿐만 아니라 https, tcp 커넥션도 터널링합니다. 에컨데 잘 활용하면 db 커넥션을 공유하는 용으로도 활용할 수 있습니다.
+   traefik에 한정하지 말고 다양한 가능성을 탐구해 볼 수 있습니다.
+
+이러나 저러나, 매우 재미있는 기능인 것은 확실합니다. 이제 스스로 더 나아가봅시다.
