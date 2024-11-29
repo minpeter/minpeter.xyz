@@ -38,19 +38,27 @@ description: 인터넷과 도커가 홈랩에 전부입니다, 무엇이 더 필
 
 우선 2개의 컨테이너를 띄우는 docker compose로 시작해보겠습니다.
 
-```jsx
-services: traefik: image: "traefik:v3.2";
-command: -"--api.insecure=true" -
-  "--providers.docker=true" -
-  "--providers.docker.exposedbydefault=false" -
-  "--entryPoints.web.address=:80";
-ports: -"80:80" - "8080:8080";
-volumes: -"/var/run/docker.sock:/var/run/docker.sock:ro";
+```yaml
+services:
+  traefik:
+    image: "traefik:v3.2"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-iplogger: image: "ghcr.io/minpeter/iplogger";
-labels: -"traefik.enable=true" -
-  "traefik.http.routers.iplogger.rule=Host(`ip.local`)" -
-  "traefik.http.routers.iplogger.entrypoints=web";
+  iplogger:
+    image: "ghcr.io/minpeter/iplogger"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.iplogger.rule=Host(`ip.local`)"
+      - "traefik.http.routers.iplogger.entrypoints=web"
 ```
 
 위에 내용을 그대로 복사하여 `docker-compose.yaml` 이란 파일을 생성하고, 해당 파일이 있는 경로에서 `docker compose up` 를 실행하면 첫번째 실험을 위한 준비가 끝났습니다.
@@ -125,7 +133,7 @@ X-Real-Ip: 192.168.117.1
 
 다음 순서로 이전에 만들어 두었던 `docker-compose.yaml` 를 아래와 같이 수정해봅시다.
 
-```
+```yaml
 services:
   traefik:
     image: "traefik:v3.2"
