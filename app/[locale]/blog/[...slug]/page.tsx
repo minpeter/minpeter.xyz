@@ -112,15 +112,16 @@ export default async function Page({
       <section className="mt-32">
         <div className="flex flex-row items-center gap-2 mb-8 text-sm text-muted-foreground">
           <div className="flex gap-2">
-            <span>작성일:</span>
+            <span>{t("writeDate")}:</span>
             <time dateTime={new Date(post.data.date).toISOString()}>
               {formatDateLong(post.data.date)}
             </time>
           </div>
-          {" • "}
+
+          {post.data.lastModified && <>{" • "}</>}
           {post.data.lastModified && (
             <div className="flex gap-2">
-              <span>수정일:</span>
+              <span>{t("lastModifiedDate")}:</span>
               <time dateTime={new Date(post.data.lastModified).toISOString()}>
                 {formatDateLong(post.data.lastModified)}
               </time>
