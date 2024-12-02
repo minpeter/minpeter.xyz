@@ -10,45 +10,45 @@ tags:
 description: 인터넷과 도커가 홈랩에 전부입니다, 무엇이 더 필요한가요?
 ---
 
-### 서론
+## 서론
 
-홈랩을 처음 시작하거나, 기존 설정을 다시 구성할 때는 간단하면서도 유연한 설정이 중요합니다.  
+홈랩을 처음 시작하거나, 기존 설정을 다시 구성할 때는 간단하면서도 유연한 설정이 중요합니다.
 이 글에서는 Raspberry Pi 같은 소규모 환경부터 Proxmox 기반의 환경까지 대응할 수 있는 실용적인 솔루션을 소개합니다.
 
 여기서 우리는 복잡한 네트워크 설정이나 포트 포워딩, SSL 인증서 발급, 고정 IP 같은 제약 없이 홈랩을 인터넷에 공개하는 방법을 다룹니다.
 
 "준비물은 단 두 가지, 인터넷과 Docker뿐입니다."
 
-Cloudflare Tunnel을 활용하면, 네트워크 권한 없이도 안정적으로 프로젝트를 인터넷에 연결할 수 있습니다.  
+Cloudflare Tunnel을 활용하면, 네트워크 권한 없이도 안정적으로 프로젝트를 인터넷에 연결할 수 있습니다.
 이는 DDNS나 포트포워딩 없이도 SSL이 적용된 안정적인 접속을 제공합니다. Cloudflare Tunnel과 Traefik을 연결해 이 모든 기능을 구현할 수 있습니다.
 
 이제 구체적인 방법을 살펴보겠습니다!
 
-### docker compose로 traefik 띄우기
+## 0: 준비
+
+`docker`, `docker compose` 명령이 사용 가능해야하고, cloudflare에 계정이 존재하며, 등록된 도메인이 있어야 합니다.
+
+다양한 문서에서 해당 과정을 도와주는 가이드를 찾을 수 있습니다.
+
+이 글에서는 [yourdomain.xyz](http://yourdomain.xyz) 를 예시로 글을 작성하겠습니다.
+
+## 1: traefik
 
 우선 2개의 컨테이너를 띄우는 docker compose로 시작해보겠습니다.
 
-```yaml
-services:
-  traefik:
-    image: "traefik:v3.2"
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entryPoints.web.address=:80"
-    ports:
-      - "80:80"
-      - "8080:8080"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+```jsx
+services: traefik: image: "traefik:v3.2";
+command: -"--api.insecure=true" -
+  "--providers.docker=true" -
+  "--providers.docker.exposedbydefault=false" -
+  "--entryPoints.web.address=:80";
+ports: -"80:80" - "8080:8080";
+volumes: -"/var/run/docker.sock:/var/run/docker.sock:ro";
 
-  iplogger:
-    image: "ghcr.io/minpeter/iplogger"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.iplogger.rule=Host(`ip.local`)"
-      - "traefik.http.routers.iplogger.entrypoints=web"
+iplogger: image: "ghcr.io/minpeter/iplogger";
+labels: -"traefik.enable=true" -
+  "traefik.http.routers.iplogger.rule=Host(`ip.local`)" -
+  "traefik.http.routers.iplogger.entrypoints=web";
 ```
 
 위에 내용을 그대로 복사하여 `docker-compose.yaml` 이란 파일을 생성하고, 해당 파일이 있는 경로에서 `docker compose up` 를 실행하면 첫번째 실험을 위한 준비가 끝났습니다.
@@ -60,29 +60,29 @@ services:
 
 이제 이 2가지 컨테이너는 연결되었습니다. 이를 테스트하기 위해 아래와 같은 명령을 사용해보겠습니다.
 
-```sh
+```jsx
 curl -H "Host:ip.local" localhost:80
 ```
 
-아마 다음과 같은 응답을 얻을 수 있을 것입니다.
+이후 아래와 유사한 응답을 받을 수 있을 겁니다.
 
 ```
-Your IP is: 192.168.100.1
-Hostname: 5e1dbc2a6fe2
+Your IP is: 192.168.97.1
+Hostname: e94c02ab482c
 IP: 127.0.0.1
 IP: ::1
-IP: 192.168.100.3
-RemoteAddr: 192.168.100.2:41938
+IP: 192.168.97.2
+RemoteAddr: 192.168.97.3:34676
 GET / HTTP/1.1
 Accept-Encoding: gzip
 Accept: */*
 User-Agent: curl/8.7.1
-X-Forwarded-For: 192.168.100.1
-X-Forwarded-Host: ip.tmpf.me
+X-Forwarded-For: 192.168.97.1
+X-Forwarded-Host: ip.local
 X-Forwarded-Port: 80
 X-Forwarded-Proto: http
-X-Forwarded-Server: 81638c02bba0
-X-Real-Ip: 192.168.100.1
+X-Forwarded-Server: 0867b509fb45
+X-Real-Ip: 192.168.97.1
 ```
 
 이는 우리가 traefik 컨테이너에 요청을 날렸고 `ip.local` 이란 호스트네임으로 접근하였다는 것을 의미합니다.
@@ -91,9 +91,11 @@ X-Real-Ip: 192.168.100.1
 
 이제 우리는 traefik proxy와 traefik proxy 뒤에서 동작하는 한개의 서비스를 넣었습니다.
 
+이 파트가 어렵다면 Traefik에 대해서 조금 더 학습 이후에 이 튜토리얼을 진행하는 것이 좋습니다.
+
 다음 순서는 이를 cf tunnel로 외부에 노출시키는 것입니다.
 
-### Cloudflare tunnel를 이용해 traefik proxy 외부에 공개하기
+## 2: cloudflare tunnel
 
 우선 cloudflare 계정이 필요합니다. tunnel 기능은 무료 일부 기능을 제외하곤 무료로 제공되기에 걱정하지 않아도 괜찮습니다.
 
@@ -123,7 +125,7 @@ X-Real-Ip: 192.168.100.1
 
 다음 순서로 이전에 만들어 두었던 `docker-compose.yaml` 를 아래와 같이 수정해봅시다.
 
-```yaml
+```
 services:
   traefik:
     image: "traefik:v3.2"
@@ -142,14 +144,14 @@ services:
     image: ghcr.io/minpeter/iplogger
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.iplogger.rule=Host(`ip.example.com`)"  // [!code ++]
+      - "traefik.http.routers.iplogger.rule=Host(`ip.yourdomain.xyz`)" ## 중요
       - "traefik.http.routers.iplogger.entrypoints=web"
 
-  cloudflared:                              // [!code ++]
-    image: "cloudflare/cloudflared:latest"  // [!code ++]
-    command: "tunnel --no-autoupdate run"   // [!code ++]
-    environment:                            // [!code ++]
-      - "TUNNEL_TOKEN=${TUNNEL_TOKEN}"      // [!code ++]
+  cloudflared:
+    image: "cloudflare/cloudflared:latest"
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
 ```
 
 그리고 이전에 실행한 `docker compose up` 명령을 ctrl+c 로 취소한 뒤 아래와 같이 입력하여줍니다.
@@ -207,15 +209,131 @@ Proxy status: ON
 
 SSL, 포트포워딩, DDNS를 비롯한 모든 귀찮은 설정을 이미 완료한 것이랑 동일한 상황입니다.
 
-정말일까요? 확인을 위해 “https://ip.example.com” 으로 접속해봅시다. (위에 compose.yaml 파일에서 수정하였습니다.)
+정말일까요? 확인을 위해 “https://ip.yourdomain.xyz” 으로 접속해봅시다. (위에 compose.yaml 파일에서 수정하였습니다.)
 
 축하합니다.! 이제 인터넷 환경에 구애받지 않는 개인 리버스 프록시를 만들었습니다.
 
-### 한계점, 발전 가능성
+## 3: cloudflare companion
+
+와일드 카드는 항상 최고의 옵션은 아닙니다.
+
+네스팅된 서브도메인에 대해서 인증서를 발급해주지 않는 cloudflare에서는 특히 이러한 와일드 카드 방식을 도메인당 하나 밖에 사용하지 못하게 됩니다.
+
+따라서 한가지 개선사항이 있습니다, traefik에서 특정 서비스를 선언한 경우에 한하여 DNS record를 동적으로 추가하면 어떨까요?
+
+[`ghcr.io/tiredofit/docker-traefik-cloudflare-companion:latest`](http://ghcr.io/tiredofit/docker-traefik-cloudflare-companion:latest) 통해 구현할 수 있습니다.
+
+다만 몇가지 설정을 수행하여야합니다.
+
+.env 파일을 만들고 아래 내용을 채워줍시다.
+
+```
+TUNNEL_TOKEN=<TUNNEL_TOKEN>
+TARGET_DOMAIN=<TARGET_DOMAIN>
+
+DOMAIN1=<DOMAIN1>
+DOMAIN1_ZONE_ID=<DOMAIN1_ZONE_ID>
+CF_TOKEN=<CF_TOKEN>
+```
+
+| TUNNEL_TOKEN    | 위에서 발급 받았던 cf tunnel의 토큰입니다. 그대로 붙혀 넣어줍시다.                                                                         |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| TARGET_DOMAIN   | 동적으로 추가될 레코드의 값입니다. 위에서 와일드 카드 도메인을 등록할떄 사용한 “Tunnel ID.cfargotunnel.com” 값을 그대로 입력해주면 됩니다. |
+| DOMAIN1         | 동적으로 트래킹 해 줄 도메인의 이름입니다. “yourdomain.xyz” 이 되겠습니다.                                                                 |
+| DOMAIN1_ZONE_ID | “yourdomain.xyz”의 cloudflare 상의 zone_id 입니다. 아래에서 구하는 방법을 설명하겠습니다.                                                  |
+| CF_TOKEN        | cloudflare에 api token입니다. 레코드를 업데이트하는 권한이 있어야합니다. 아래에서 바로 발급 받겠습니다.                                    |
+
+### DOMAIN1_ZONE_ID
+
+클라우드 플레어 콘솔에서 구하고자하는 도메인을 눌러줍니다. (yourdomain.xyz가 되겠네요)
+
+![Screenshot 2024-12-02 at 11.01.02 AM.png](./images/Screenshot_2024-12-02_at_11.01.02_AM.png)
+
+이러한 페이지가 나오고 노란색 부분의 값을 복사하면 됩니다.
+
+### CF_TOKEN
+
+[https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens) 에 접속합니다.
+
+이후 파란색 “Create Token”를 눌러줍니다. (API Key가 아닙니다, API Tokens의 Create Token 입니다)
+
+![image.png](./images/image%209.png)
+
+Edit zone DNS 탬플릿의 “Use template”를 눌러줍니다.
+
+![image.png](./images/image%2010.png)
+
+Zone Resources의 범위를 “All zone” 으로 선택하고 Continue to summary 를 누릅니다. (범위를 특정해도 상관 없습니다)
+
+다음 화면에서 보이는 토큰을 소중히 복사합시다.
+
+이제 전에 step 2에서 추가한 도메인 레코드 설정의 \*.yourdomain 와일드 카드 레코드를 삭제해줍시다. 자동으로 traefik의 설정을 확인하여 필요한 레코드만 추가될 것이기 때문에 필요 없습니다.
+
+### Final compose
+
+```yaml
+services:
+  traefik:
+    image: "traefik:v3.2"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  iplogger:
+    image: ghcr.io/minpeter/iplogger
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.iplogger.rule=Host(`ip.tmpf.me`)"
+      - "traefik.http.routers.iplogger.entrypoints=web"
+
+  whoami:
+    image: traefik/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.tmpf.me`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+
+  cloudflared:
+    image: "cloudflare/cloudflared:latest"
+    command: "tunnel --no-autoupdate run"
+    environment:
+      - "TUNNEL_TOKEN=${TUNNEL_TOKEN}"
+
+  cloudflare-companion:
+    image: ghcr.io/tiredofit/docker-traefik-cloudflare-companion:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TRAEFIK_POLL_URL=http://traefik:8080/api
+      - ENABLE_TRAEFIK_POLL=TRUE
+      - REFRESH_ENTRIES=TRUE
+      - TARGET_DOMAIN=${TARGET_DOMAIN}
+      - DOMAIN1_PROXIED=TRUE
+      - DOMAIN1=${DOMAIN1}
+      - DOMAIN1_ZONE_ID=${DOMAIN1_ZONE_ID}
+      - CF_TOKEN=${CF_TOKEN}
+```
+
+다음과 같이 compose를 업데이트하여 cloudflare-companion를 추가합시다.
+
+도메인이 여러개인 경우 DOMAIN2, DOMAIN2_ZONE_ID 를 추가하여 확장할 수 있습니다.
+
+이제 `docker compose up` 를 실행하면 cloudflare companion 과 함께 실행되고, 아주 잠시 뒤에 “ip.yourdomain.xyz” 가 레코드에 추가되는 것을 볼 수 있습니다.
+
+끝났습니다. 이제 도메인의 와일드 카드 레코드르 사용하지 않고도 traefik에서 정의한 모든 서비스를 등록하여 서비스할 수 있게 되었습니다.
+
+## 한계점, 발전 가능성
 
 1. “X-Forwarded-For” 해더가 똑바로 forward 되지 않습니다. 다만 “Cf-Connecting-Ip” 와 같은 헤더를 통해 대체할 수 있습니다.
-2. “_.example.com” (root wildcard record) 대신 “_.str.example.com” 같은 연결된 서브도메인 wildcard를 처리할 수 없습니다.
-   이는 cloudflare에서 인증서 발급을 안해주기 때문이고, 돈 이외에는 해결방법이 없습니다.
+2. “_.yourdomain.xyz” (root wildcard record) 대신 “_.str.yourdomain.xyz” 같은 연결된 서브도메인 wildcard를 처리할 수 없습니다.
+   이는 cloudflare에서 인증서 발급을 안해주기 때문이고, tunnel를 사용하는 한 해결방법이 없습니다. 다시 포트포워딩을 하여 DNS only + 자체 인증서 방식으로 해결하여야 합니다.
 3. 아마도 최대 용량 제한이 존재합니다. cloudflare proxy 기능은 Free 티어의 경우 100MB 입니다.
 4. Tunnel은 http 뿐만 아니라 https, tcp 커넥션도 터널링합니다. 에컨데 잘 활용하면 db 커넥션을 공유하는 용으로도 활용할 수 있습니다.
    traefik에 한정하지 말고 다양한 가능성을 탐구해 볼 수 있습니다.
