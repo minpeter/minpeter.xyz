@@ -17,7 +17,7 @@ export default {
     "엔터 키를 눌러 강제로 다음 문장으로 이동할 수 있습니다.",
     "문장은 자동으로 생성됩니다, 즐거운 타이핑하세요.",
   ],
-  typingDescription: "너가 원하는 방식이 맞는지 모르겠어. 마음에 들면 좋겠다",
+  typingDescription: "원하는 방식이 맞는지 모르겠어. 마음에 들면 좋겠다",
 
   blogPageTitle: "민웅기의 개발 노트",
   blogPageDescription: "내가 적은 블로그, 너를 위해 써봤지",

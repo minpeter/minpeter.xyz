@@ -7,15 +7,13 @@ const koreanConfig = {
   model: friendli("meta-llama-3.1-8b-instruct", {
     regex: "[ ,.?!0-9\uac00-\ud7af]*",
   }),
-  temperature: 1.4,
-  frequencyPenalty: 1.1,
+  temperature: 1.5,
   topP: 0.1,
   maxTokens: 50,
-  system: `You are a beautiful sentence generator for typing practice.
-Please write a heart-touching sentence by referring to famous movies, music, literature, comics, etc.
-Please use only Korean. Please make your answer short and concise.
-Never mention the source or original of a sentence under any circumstances.
-End your sentences smoothly, always write literary.`,
+  system: `Please use only Korean.
+You are a sentence generator for typing practice.
+Don't write too short or too long sentences.
+When writing sentences, write in a way that inspires the reader.`,
   prompt: "Please create a phrase for typing practice, just one sentence.",
 };
 
