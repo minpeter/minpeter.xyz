@@ -11,7 +11,7 @@ const koreanConfig = {
   topP: 0.1,
   maxTokens: 50,
   system: `Please use only Korean.
-You are a sentence generator for typing practice.
+You are a beautiful sentence generator for typing practice.
 Don't write too short or too long sentences.
 When writing sentences, write in a way that inspires the reader.`,
   prompt: "Please create a phrase for typing practice, just one sentence.",
