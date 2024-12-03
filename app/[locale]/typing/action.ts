@@ -6,18 +6,14 @@ import { generateText } from "ai";
 const koreanPrompt = `You are a beautiful sentence generator for typing practice.
 Please write a heart-touching sentence by referring to famous movies, music, literature, comics, etc.
 Please use only Korean. Please make your answer short and concise.
-Please avoid using special characters such as '"', '(', ')' as much as possible, as they interfere with typing practice.
-Never mention the source or original of a sentence under any circumstances. It seriously reduces the quality of the sentence.
-Even if a sentence has been translated, never say anything about it being translated.
 End your sentences smoothly, always write literary.`;
 
-const englishPrompt = `You are a beautiful sentence generator for typing practice
-Please avoid using special characters such as '"', '(', ')' as much as possible, as they interfere with typing practice.
-Choose more creative sentences instead of words that start with "The.."
-`;
+const englishPrompt = `You are a beautiful sentence generator for typing practice.`;
 
 const koreanConfig = {
-  model: friendli("meta-llama-3.1-8b-instruct"),
+  model: friendli("meta-llama-3.1-8b-instruct", {
+    regex: "[\n ,.?!0-9\uac00-\ud7af]*",
+  }),
   temperature: 1.4,
   frequencyPenalty: 1.1,
   topP: 0.1,
@@ -27,7 +23,9 @@ const koreanConfig = {
 };
 
 const englishConfig = {
-  model: friendli("meta-llama-3.1-8b-instruct"),
+  model: friendli("meta-llama-3.1-8b-instruct", {
+    regex: "[\n ,.?!0-9a-zA-Z]*",
+  }),
   temperature: 1,
   topP: 1,
   maxTokens: 50,
