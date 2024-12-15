@@ -5,6 +5,7 @@ import { cn, formatDate, formatYear } from "@/lib/utils";
 
 import { useQueryState, parseAsString } from "nuqs";
 import { blog, blogType } from "@/lib/source";
+import { Badge } from "@/components/ui/badge";
 
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useCurrentLocale } from "@/locales/client";
@@ -93,9 +94,13 @@ export function BlogList({ lang }: { lang: string }) {
                           </span>
                         </Link>
 
-                        <div className={cn(itemSytles, "text-nowrap h-fit")}>
-                          {formatDate(post.data.date)}
-                        </div>
+                        {post.data.draft ? (
+                          <Badge variant="secondary">Draft</Badge>
+                        ) : (
+                          <div className={cn(itemSytles, "text-nowrap h-fit")}>
+                            {formatDate(post.data.date)}
+                          </div>
+                        )}
                       </li>
                     ))}
                   </ul>

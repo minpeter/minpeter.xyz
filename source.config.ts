@@ -12,6 +12,7 @@ export const { docs, meta } = defineDocs({
   dir: "content/blog",
   docs: {
     schema: frontmatterSchema.extend({
+      draft: z.boolean().optional().default(false),
       date: z
         .string()
         .or(z.date())
