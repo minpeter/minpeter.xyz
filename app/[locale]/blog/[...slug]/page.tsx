@@ -119,6 +119,7 @@ export default async function Page({
           </div>
 
           {post.data.lastModified && <>{" • "}</>}
+
           {post.data.lastModified && (
             <div className="flex gap-2">
               <span>{t("lastModifiedDate")}:</span>
@@ -127,6 +128,10 @@ export default async function Page({
               </time>
             </div>
           )}
+
+          {post.data.draft && <>{" • "}</>}
+
+          {post.data.draft && <span>draft</span>}
         </div>
 
         <hr className="my-8" />
