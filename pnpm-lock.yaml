@@ -1574,8 +1574,8 @@ packages:
     resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
     engines: {node: '>=6'}
 
-  detect-gpu@5.0.60:
-    resolution: {integrity: sha512-HOUiexaACwaeTBelnR3OrUN0mxgPadneTf7VndBEieQa3cx7xzrsQ/pm3niim4hZhN8gaDpAbTdCrjveGnNToQ==}
+  detect-gpu@5.0.61:
+    resolution: {integrity: sha512-7fe6+weEj1JAQl4ys/pcuCtR0m70FCpsgAb4oox6udPUzBD44U+kMBfudCZWv3ytJZnbKT9hxaQto3jbIeJttQ==}
 
   detect-libc@2.0.3:
     resolution: {integrity: sha512-bwy0MGW55bG41VqxxypOsdSdGqLwXPI/focwgTYCFMbdUiBAxLg9CFzG08sz2aqzknwiX7Hkl0bQENjg8iLByw==}
@@ -1858,9 +1858,6 @@ packages:
 
   international-types@0.8.1:
     resolution: {integrity: sha512-tajBCAHo4I0LIFlmQ9ZWfjMWVyRffzuvfbXCd6ssFt5u1Zw15DN0UBpVTItXdNa1ls+cpQt3Yw8+TxsfGF8JcA==}
-
-  invariant@2.2.4:
-    resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
 
   is-alphabetical@2.0.1:
     resolution: {integrity: sha512-FWyyY60MeTNyeSRpkM2Iry0G9hpr7/9kD40mD/cGQEuilcZYS4okz8SN2Q6rLCJ8gbCt6fN+rC+6tMGS99LaxQ==}
@@ -2413,12 +2410,12 @@ packages:
     peerDependencies:
       react: 19.0.0-rc-935180c7e0-20240524
 
-  react-remove-scroll-bar@2.3.6:
-    resolution: {integrity: sha512-DtSYaao4mBmX+HDo5YWYdBWQwYIQQshUV/dVxFxK+KM26Wjwp1gZ6rv6OC3oujI6Bfu6Xyg3TwK533AQutsn/g==}
+  react-remove-scroll-bar@2.3.8:
+    resolution: {integrity: sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==}
     engines: {node: '>=10'}
     peerDependencies:
-      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -2433,12 +2430,22 @@ packages:
       '@types/react':
         optional: true
 
-  react-style-singleton@2.2.1:
-    resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
+  react-remove-scroll@2.6.1:
+    resolution: {integrity: sha512-jWEvWQidZ/C/FnFlUIB1mDLpY3r7uEb22WZ3uVeKj520caKDiaBsNDEB9J1gHJgpiLo+eTdPl2MVi0JitFTiFg==}
     engines: {node: '>=10'}
     peerDependencies:
-      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  react-style-singleton@2.2.3:
+    resolution: {integrity: sha512-b6jSvxvVnyptAiLjbkWLE/lOnR4lfTtDAl+eUC7RZy+QQWc6wRzIV2CE6xBuMmDxc2qIihtDCZD5NPOFl7fRBQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -2795,12 +2802,12 @@ packages:
       '@types/react':
         optional: true
 
-  use-sidecar@1.1.2:
-    resolution: {integrity: sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==}
+  use-sidecar@1.1.3:
+    resolution: {integrity: sha512-Fedw0aZvkhynoPYlA5WXrMCAMm+nSWdZt6lzJQ7Ok8S6Q+VsHmHpRWndVRJ8Be0ZbkfPc5LRYH+5XrzXcEeLRQ==}
     engines: {node: '>=10'}
     peerDependencies:
-      '@types/react': ^16.9.0 || ^17.0.0 || ^18.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -3871,7 +3878,7 @@ snapshots:
       '@use-gesture/react': 10.3.1(react@19.0.0)
       camera-controls: 2.9.0(three@0.169.0)
       cross-env: 7.0.3
-      detect-gpu: 5.0.60
+      detect-gpu: 5.0.61
       glsl-noise: 0.0.0
       hls.js: 1.5.17
       maath: 0.10.8(@types/three@0.163.0)(three@0.169.0)
@@ -4285,7 +4292,7 @@ snapshots:
 
   dequal@2.0.3: {}
 
-  detect-gpu@5.0.60:
+  detect-gpu@5.0.61:
     dependencies:
       webgl-constants: 1.1.1
 
@@ -4472,7 +4479,7 @@ snapshots:
       hast-util-to-jsx-runtime: 2.3.2
       image-size: 1.1.1
       negotiator: 1.0.0
-      react-remove-scroll: 2.6.0(@types/react@19.0.1)(react@19.0.0)
+      react-remove-scroll: 2.6.1(@types/react@19.0.1)(react@19.0.0)
       remark: 15.0.1
       remark-gfm: 4.0.0
       scroll-into-view-if-needed: 3.1.0
@@ -4680,10 +4687,6 @@ snapshots:
   inline-style-parser@0.2.4: {}
 
   international-types@0.8.1: {}
-
-  invariant@2.2.4:
-    dependencies:
-      loose-envify: 1.4.0
 
   is-alphabetical@2.0.1: {}
 
@@ -5460,10 +5463,10 @@ snapshots:
       react: 19.0.0
       scheduler: 0.25.0-rc-935180c7e0-20240524
 
-  react-remove-scroll-bar@2.3.6(@types/react@19.0.1)(react@19.0.0):
+  react-remove-scroll-bar@2.3.8(@types/react@19.0.1)(react@19.0.0):
     dependencies:
       react: 19.0.0
-      react-style-singleton: 2.2.1(@types/react@19.0.1)(react@19.0.0)
+      react-style-singleton: 2.2.3(@types/react@19.0.1)(react@19.0.0)
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.0.1
@@ -5471,18 +5474,28 @@ snapshots:
   react-remove-scroll@2.6.0(@types/react@19.0.1)(react@19.0.0):
     dependencies:
       react: 19.0.0
-      react-remove-scroll-bar: 2.3.6(@types/react@19.0.1)(react@19.0.0)
-      react-style-singleton: 2.2.1(@types/react@19.0.1)(react@19.0.0)
+      react-remove-scroll-bar: 2.3.8(@types/react@19.0.1)(react@19.0.0)
+      react-style-singleton: 2.2.3(@types/react@19.0.1)(react@19.0.0)
       tslib: 2.8.1
       use-callback-ref: 1.3.2(@types/react@19.0.1)(react@19.0.0)
-      use-sidecar: 1.1.2(@types/react@19.0.1)(react@19.0.0)
+      use-sidecar: 1.1.3(@types/react@19.0.1)(react@19.0.0)
     optionalDependencies:
       '@types/react': 19.0.1
 
-  react-style-singleton@2.2.1(@types/react@19.0.1)(react@19.0.0):
+  react-remove-scroll@2.6.1(@types/react@19.0.1)(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-remove-scroll-bar: 2.3.8(@types/react@19.0.1)(react@19.0.0)
+      react-style-singleton: 2.2.3(@types/react@19.0.1)(react@19.0.0)
+      tslib: 2.8.1
+      use-callback-ref: 1.3.2(@types/react@19.0.1)(react@19.0.0)
+      use-sidecar: 1.1.3(@types/react@19.0.1)(react@19.0.0)
+    optionalDependencies:
+      '@types/react': 19.0.1
+
+  react-style-singleton@2.2.3(@types/react@19.0.1)(react@19.0.0):
     dependencies:
       get-nonce: 1.0.1
-      invariant: 2.2.4
       react: 19.0.0
       tslib: 2.8.1
     optionalDependencies:
@@ -5936,7 +5949,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.0.1
 
-  use-sidecar@1.1.2(@types/react@19.0.1)(react@19.0.0):
+  use-sidecar@1.1.3(@types/react@19.0.1)(react@19.0.0):
     dependencies:
       detect-node-es: 1.1.0
       react: 19.0.0
