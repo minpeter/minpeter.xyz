@@ -47,3 +47,140 @@ Hello? How have you been?<|im_end|>
 <|im_start|>assistant
 I'm fine, thanks. How are you?<|im_end|>
 ```
+
+---
+
+## chat template이란?
+
+LLM 모델 중 chat (instruct) 모델의 경우에는 `/v1/completions`를 통한 텍스트 문자열 대신 `/v1/chat/completions`를 통한 role과 content로 이루어진 messages 배열을 입력으로 받습니다.
+
+```json
+[
+  { "role": "user", "content": "안녕?" },
+  { "role": "assistant", "content": "안녕하세요, 저는 친절한 쳇봇입니다" },
+  { "role": "user", "content": "하늘이 파란 이유가 무엇인가요?" }
+]
+```
+
+이런 메세지 배열을 실제로 모델에 입력하기 앞서 텍스트 문자열 형식으로 변환하여야 하는데 이때 chat template이 사용됩니다.
+chat template은 위에 messages 배열을 어떤 포맷의 텍스트 문자열로 변환할지를 결정하는 jinja template를 의미합니다.
+
+아래는 많은 chat template format 중 하나인 alpaca chat template의 간소화된 예시입니다.
+
+```jinja
+{%- for message in messages %}
+  {% if message['role'] == 'user' %}
+    {{- '### Instruction:\n' }}
+    {{- message['content'] + '\n' }}
+  {% elif message['role'] == 'assistant' %}
+    {{- '### Response:\n' }}
+    {{- message['content'] + '\n' }}
+  {% endif %}
+{%- endfor %}
+
+// [!code highlight:3]
+{% if add_generation_prompt %}
+  {{- '### Response:\n' }}
+{% endif %}
+```
+
+위에 messages 배열을 alpaca chat template을 통해 변환하면 다음과 같은 텍스트 문자열이 생성됩니다.
+
+```text
+### Instruction:
+안녕?
+### Response:
+안녕하세요, 저는 친절한 쳇봇입니다
+### Instruction:
+하늘이 파란 이유가 무엇인가요?
+// [!code highlight:2]
+### Response:
+ㅤ
+```
+
+기본적으로 `Instruction`과 `Response`를 이용해 사용자의 입력과 모델 응답을 나타내고 있으며 마지막에 새로운 `### Response:`를 추가하여 모델이 다음 응답을 생성할 수 있도록 합니다.
+이렇게 랜더링된 텍스트를 모델에게 입력하면 모델은 다음과 같이 응답을 생성합니다.
+
+```text
+### Instruction:
+안녕?
+### Response:
+안녕하세요, 저는 친절한 쳇봇입니다
+### Instruction:
+하늘이 파란 이유가 무엇인가요?
+### Response:
+// [!code word:하늘이 파란 이유는 빛의 산란이라는 현상 때문입니다.]
+하늘이 파란 이유는 빛의 산란이라는 현상 때문입니다.
+```
+
+여기서 실제로 모델은 `<맥락과 턴에 맞게 생성된 응답>`과 `\n`를 생성하였고, stop token으로 `\n`이 인식되어 생성이 중단되었습니다.
+여기까지 완료되면 `/v1/chat/completions`에 대한 응답으로 모델의 응답이 반환됩니다.
+
+여기까지가 alpaca format을 예시로 한 chat template과 `/v1/chat/completions`의 내부 동작 방식에 대한 설명이였습니다.
+다만 Base model이 아닌 Instruct model의 경우 학습단계에서 특정한 chat template을 사용하므로, 해당 모델의 chat template을 사용하여야 합니다.
+모델별로 매우 다양한 chat template이 존재하며 아래는 그 정리입니다.
+
+## Alpaca
+
+```text
+넌 사용자에게 맛있는 음식 추천을 해주는 친구야.
+
+### Instruction:
+점심 뭐 먹지?
+### Response:
+국밥 어때?
+### Instruction:
+국밥 말고 다른 거!
+### Response:
+김치찌게 추천!
+```
+
+## ChatML
+
+```text
+// [!code word:<|im_start|>]
+// [!code word:<|im_end|>]
+<|im_start|>system
+넌 사용자를 항상 텐션 업 시켜주는 에너제틱한 친구야.<|im_end|>
+<|im_start|>user
+졸리다.<|im_end|>
+<|im_start|>assistant
+커피 마셔!<|im_end|>
+<|im_start|>user
+근데 커피 별로 안 땡겨.<|im_end|>
+<|im_start|>assistant
+그럼 시원한 아이스 초코 가자!<|im_end|>
+```
+
+## Mistral (Latest)
+
+mistral 계열은 특징으로 렌더링 결과가 한줄로 나온다는 점이 있는데, 아래에서는 시각적 편의를 위해 줄바꿈을 추가하였습니다.
+
+```text title="mistralai/Mistral-Small-24B-Instruct-2501 (V7-Tekken)"
+// [!code word:<s>]
+// [!code word:</s>]
+// [!code word:[INST\]]
+// [!code word:[/INST\]]
+// [!code word:[SYSTEM_PROMPT\]]
+// [!code word:[/SYSTEM_PROMPT\]]
+
+<s>
+[SYSTEM_PROMPT]넌 사용자에게 빠르게 날씨를 알려주는 친구야.[/SYSTEM_PROMPT]
+[INST]오늘 날씨 어때?[/INST]흐리고 쌀쌀해.</s>
+[INST]우산 필요할까?[/INST]응, 비 올 수도 있어!</s>
+```
+
+```text title="mistralai/Ministral-8B-Instruct-2410 (V3-Tekken)"
+// [!code word:<s>]
+// [!code word:</s>]
+// [!code word:[INST\]]
+// [!code word:[/INST\]]
+
+<s>
+[INST]넌 사용자에게 빠르게 날씨를 알려주는 친구야.
+ㅤ
+오늘 날씨 어때?[/INST]흐리고 쌀쌀해.</s>
+[INST]우산 필요할까?[/INST]응, 비 올 수도 있어!</s>
+```
+
+## Llama 3.x
