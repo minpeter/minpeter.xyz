@@ -120,22 +120,14 @@ chat template은 위에 messages 배열을 어떤 포맷의 텍스트 문자열�
 다만 Base model이 아닌 Instruct model의 경우 학습단계에서 특정한 chat template을 사용하므로, 해당 모델의 chat template을 사용하여야 합니다.
 모델별로 매우 다양한 chat template이 존재하며 아래는 그 정리입니다.
 
-## Alpaca
-
-```text
-넌 사용자에게 맛있는 음식 추천을 해주는 친구야.
-
-### Instruction:
-점심 뭐 먹지?
-### Response:
-국밥 어때?
-### Instruction:
-국밥 말고 다른 거!
-### Response:
-김치찌게 추천!
-```
-
 ## ChatML
+
+가장 광범위하게 채택된 포맷이며 준수한 성능을 보여줍니다.
+ChatML과 그 파생형을 사용하는 대표적인 모델은 다음과 같습니다.
+
+Qwen, Hermes, SmolLM, InternLM (파생형)....
+
+턴의 시작을 알리는 `<|im_start|>{{role}}\n`과 턴의 끝을 알리는 `<|im_end|>`를 사용합니다.
 
 ```text
 // [!code word:<|im_start|>]
@@ -152,9 +144,39 @@ chat template은 위에 messages 배열을 어떤 포맷의 텍스트 문자열�
 그럼 시원한 아이스 초코 가자!<|im_end|>
 ```
 
+## Alpaca
+
+스탠포드에서 개발된 [Alpaca 7B 모델](https://crfm.stanford.edu/2023/03/13/alpaca.html)에서 적용된 포맷입니다.
+싱글턴을 전제하에 개발되었으며 prompt_no_input, prompt_input 2가지 버전이 존재한다.
+
+```text tab="prompt_no_input"
+// [!code word:### Instruction\:]
+// [!code word:### Response\:]
+### Instruction:
+점심 뭐 먹지?
+ㅤ
+### Response:
+국밥 어때?
+```
+
+```text tab="prompt_input"
+// [!code word:### Instruction\:]
+// [!code word:### Response\:]
+// [!code word:### Input\:]
+### Instruction:
+홀수 중 하나를 밝히세요.
+ㅤ
+### Input:
+트위터, 인스타그램, 텔레그램
+ㅤ
+### Response:
+텔레그램
+```
+
 ## Mistral (Latest)
 
-mistral 계열은 특징으로 렌더링 결과가 한줄로 나온다는 점이 있는데, 아래에서는 시각적 편의를 위해 줄바꿈을 추가하였습니다.
+mistral 계열은 특징으로 렌더링 결과가 개행 없이 한 줄로 나온다는 점이 있는데, 아래에서는 시각적 편의를 위해 줄바꿈을 추가하였습니다.
+또한 mistralai는 chat template를 가장 자주 업데이트하고 개선하는데 버전 별로 공백처리, 개행처리 등의 개선을 보는 것도 재미있습니다.
 
 ```text title="mistralai/Mistral-Small-24B-Instruct-2501 (V7-Tekken)"
 // [!code word:<s>]
@@ -182,5 +204,7 @@ mistral 계열은 특징으로 렌더링 결과가 한줄로 나온다는 점이
 오늘 날씨 어때?[/INST]흐리고 쌀쌀해.</s>
 [INST]우산 필요할까?[/INST]응, 비 올 수도 있어!</s>
 ```
+
+_For more information about the tokenizer please refer to [mistral-common](https://github.com/mistralai/mistral-common)_
 
 ## Llama 3.x
