@@ -1,5 +1,5 @@
 ---
-title: chatml & alpaca
+title: chat template - alpaca & chatml
 date: 2025-02-02 05:20:25 +0900
 tags:
   - chatml
@@ -17,7 +17,7 @@ LLM 모델 중 chat (instruct) 모델의 경우에는 `/v1/completions`를 통�
 ```json
 [
   { "role": "user", "content": "안녕?" },
-  { "role": "assistant", "content": "안녕하세요, 저는 친절한 쳇봇입니다" },
+  { "role": "assistant", "content": "안녕하세요, 저는 친절한 챗봇입니다" },
   { "role": "user", "content": "하늘이 파란 이유가 무엇인가요?" }
 ]
 ```
@@ -25,58 +25,50 @@ LLM 모델 중 chat (instruct) 모델의 경우에는 `/v1/completions`를 통�
 이런 메세지 배열을 실제로 모델에 입력하기 앞서 텍스트 문자열 형식으로 변환하여야 하는데 이때 chat template이 사용됩니다.
 chat template은 위에 messages 배열을 어떤 포맷의 텍스트 문자열로 변환할지를 결정하는 jinja template를 의미합니다.
 
-아래는 많은 chat template format 중 하나인 alpaca chat template의 간소화된 예시입니다.
+아래는 많은 chat template format 중 하나인 chatml format의 간소화된 예시입니다.
 
 ```jinja
+{% if not add_generation_prompt is defined %}
+  {% set add_generation_prompt = false %}
+{% endif %}
+
 {%- for message in messages %}
-  {% if message['role'] == 'user' %}
-    {{- '### Instruction:\n' }}
-    {{- message['content'] + '\n' }}
-  {% elif message['role'] == 'assistant' %}
-    {{- '### Response:\n' }}
-    {{- message['content'] + '\n' }}
-  {% endif %}
+    {{- '<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n' }}
 {%- endfor %}
 
 // [!code highlight:3]
-{% if add_generation_prompt %}
-  {{- '### Response:\n' }}
-{% endif %}
+{%- if add_generation_prompt %}
+    {{- '<|im_start|>assistant\n' }}
+{%- endif %}
 ```
 
-위에 messages 배열을 alpaca chat template을 통해 변환하면 다음과 같은 텍스트 문자열이 생성됩니다.
+위에 messages 배열을 chatml format을 통해 변환하면 다음과 같은 텍스트 문자열이 생성됩니다.
 
 ```text
-### Instruction:
-안녕?
-### Response:
-안녕하세요, 저는 친절한 쳇봇입니다
-### Instruction:
-하늘이 파란 이유가 무엇인가요?
+<|im_start|>user
+안녕?<|im_end|>
+<|im_start|>assistant
+안녕하세요, 저는 친절한 챗봇입니다<|im_end|>
+<|im_start|>user
+하늘이 파란 이유가 무엇인가요?<|im_end|>
 // [!code highlight:2]
-### Response:
+<|im_start|>assistant
 ㅤ
 ```
 
-기본적으로 `Instruction`과 `Response`를 이용해 사용자의 입력과 모델 응답을 나타내고 있으며 마지막에 새로운 `### Response:`를 추가하여 모델이 다음 응답을 생성할 수 있도록 합니다.
+기본적으로 `<|im_start|>`과 `<|im_end|>`는 각각 턴의 시작과 끝을 나타내며, 마지막 하이라이팅된 부분은 model에게 지침을 제공하기 위해 `add_generation_prompt` 옵션을 True로 하여 앞으로 생성해야할 부분의 시작을 (header를) 랜더링 한 결과이다.
+
 이렇게 랜더링된 텍스트를 모델에게 입력하면 모델은 다음과 같이 응답을 생성합니다.
 
 ```text
-### Instruction:
-안녕?
-### Response:
-안녕하세요, 저는 친절한 쳇봇입니다
-### Instruction:
-하늘이 파란 이유가 무엇인가요?
-### Response:
 // [!code word:하늘이 파란 이유는 빛의 산란이라는 현상 때문입니다.]
-하늘이 파란 이유는 빛의 산란이라는 현상 때문입니다.
+하늘이 파란 이유는 빛의 산란이라는 현상 때문입니다.<|im_end|>
 ```
 
-여기서 실제로 모델은 `<맥락과 턴에 맞게 생성된 응답>`과 `\n`를 생성하였고, stop token으로 `\n`이 인식되어 생성이 중단되었습니다.
+여기서 실제로 모델은 `<맥락과 턴에 맞게 생성된 응답>`과 `<|im_end|>`를 생성하였고, stop token (eos token)으로 `<|im_end|>`이 인식되어 생성이 중단되었습니다.  
 여기까지 완료되면 `/v1/chat/completions`에 대한 응답으로 모델의 응답이 반환됩니다.
 
-여기까지가 alpaca format을 예시로 한 chat template과 `/v1/chat/completions`의 내부 동작 방식에 대한 설명이였습니다.
+여기까지가 chatml format을 예시로 한 chat template과 `/v1/chat/completions`의 내부 동작 방식에 대한 설명이였습니다.
 다만 Base model이 아닌 Instruct model의 경우 학습단계에서 특정한 chat template을 사용하므로, 해당 모델의 chat template을 사용하여야 합니다.
 모델별로 매우 다양한 chat template이 존재하며 아래는 그 정리입니다.
 
