@@ -56,7 +56,7 @@ export const h4Variants = cva(
   }
 );
 
-export const pVariants = cva("leading-7 [&:not(:first-child)]:mt-6", {
+export const pVariants = cva("leading-7 not-first:mt-6", {
   variants: {
     color: {
       primary: "",

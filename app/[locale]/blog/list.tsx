@@ -40,16 +40,16 @@ export function BlogList({ lang }: { lang: string }) {
   }, {});
 
   const itemSytles =
-    "group-hover/year:!opacity-100 group-hover/post:bg-secondary/100 group-hover/list:opacity-60 rounded-md";
+    "group-hover/year:opacity-100! group-hover/post:bg-secondary/100 group-hover/list:opacity-60 rounded-md";
 
   return (
     <>
-      <div className="relative flex flex-1 flex-shrink-0">
+      <div className="relative flex flex-1 shrink-0">
         <label htmlFor="search" className="sr-only">
           Search
         </label>
         <input
-          className="w-full rounded-md border focus:outline-none py-[9px] pl-10 text-sm outline-none placeholder:text-gray-500"
+          className="w-full rounded-md border focus:outline-hidden py-[9px] pl-10 text-sm outline-hidden placeholder:text-gray-500"
           placeholder="Search blog posts..."
           onChange={(e) => setQuery(e.target.value)}
           value={query}

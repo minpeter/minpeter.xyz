@@ -5,7 +5,7 @@ import { generateText } from "ai";
 
 const koreanConfig = {
   model: friendli("meta-llama-3.1-8b-instruct", {
-    regex: "[ ,.?!0-9\uac00-\ud7af]*",
+    regex: new RegExp("[ ,.?!0-9\uac00-\ud7af]*"),
   }),
   temperature: 1.5,
   topP: 0.1,
@@ -19,7 +19,7 @@ When writing sentences, write in a way that inspires the reader.`,
 
 const englishConfig = {
   model: friendli("meta-llama-3.1-8b-instruct", {
-    regex: "[ ,.?!0-9a-zA-Z]*",
+    regex: new RegExp("[ ,.?!0-9a-zA-Z]*"),
   }),
   temperature: 1,
   topP: 1,
