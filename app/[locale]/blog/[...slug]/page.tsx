@@ -136,7 +136,9 @@ export default async function Page({
 
         <hr className="my-8" />
         <div className="flex flex-col justify-center items-center mb-8">
-          <h2 className="opacity-60">이전글 / 다음글</h2>
+          <h2 className="opacity-60">
+            {`${t("prevPost")} / ${t("nextPost")}`}
+          </h2>
         </div>
         <div className="flex justify-between">
           {postsIndex[post.slugs.join("/")].previous ? (

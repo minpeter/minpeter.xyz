@@ -22,4 +22,6 @@ I also prioritize user experience and strive to provide the best experience for 
   blogPageDescription: "I don't know if this makes any sense,",
   writeDate: "Write",
   lastModifiedDate: "Modified",
+  nextPost: "Next",
+  prevPost: "Previous",
 } as const;

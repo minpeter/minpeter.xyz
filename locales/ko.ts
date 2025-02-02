@@ -23,4 +23,6 @@ export default {
   blogPageDescription: "내가 적은 블로그, 너를 위해 써봤지",
   writeDate: "작성일",
   lastModifiedDate: "수정일",
+  nextPost: "다음글",
+  prevPost: "이전글",
 } as const;
