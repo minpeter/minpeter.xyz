@@ -10,46 +10,6 @@ description: "LLM 모델들의 chat-template 총정리: Alpaca부터 ChatML까�
 draft: true
 ---
 
-code block hilighting test
-
-```json
-// [!code word:You are User's best friend, and can respond wittily to every conversation.]
-// [!code word:Hello? How have you been?]
-// [!code word:I'm fine, thanks. How are you?]
-You are User's best friend, and can respond wittily to every conversation.
-
-### Instruction:
-Hello? How have you been?
-
-### Response:
-I'm fine, thanks. How are you?
-```
-
-```json
-// [!code word:You are User's best friend, and can respond wittily to every conversation.]
-// [!code word:Hello? How have you been?]
-// [!code word:I'm fine, thanks. How are you?]
-<|im_start|>system
-You are User's best friend, and can respond wittily to every conversation.<|im_end|>
-<|im_start|>user
-Hello? How have you been?<|im_end|>
-<|im_start|>assistant
-I'm fine, thanks. How are you?<|im_end|>
-```
-
-```json
-// [!code word:<|im_start|>]
-// [!code word:<|im_end|>]
-<|im_start|>system
-You are User's best friend, and can respond wittily to every conversation.<|im_end|>
-<|im_start|>user
-Hello? How have you been?<|im_end|>
-<|im_start|>assistant
-I'm fine, thanks. How are you?<|im_end|>
-```
-
----
-
 ## chat template이란?
 
 LLM 모델 중 chat (instruct) 모델의 경우에는 `/v1/completions`를 통한 텍스트 문자열 대신 `/v1/chat/completions`를 통한 role과 content로 이루어진 messages 배열을 입력으로 받습니다.
@@ -120,12 +80,14 @@ chat template은 위에 messages 배열을 어떤 포맷의 텍스트 문자열�
 다만 Base model이 아닌 Instruct model의 경우 학습단계에서 특정한 chat template을 사용하므로, 해당 모델의 chat template을 사용하여야 합니다.
 모델별로 매우 다양한 chat template이 존재하며 아래는 그 정리입니다.
 
-## ChatML
+## chat template 포맷 종류
+
+### ChatML
 
 가장 광범위하게 채택된 포맷이며 준수한 성능을 보여줍니다.
 ChatML과 그 파생형을 사용하는 대표적인 모델은 다음과 같습니다.
 
-Qwen, Hermes, SmolLM, InternLM (파생형)....
+Qwen, Hermes, SmolLM, Dolphin, InternLM (파생형)....
 
 턴의 시작을 알리는 `<|im_start|>{{role}}\n`과 턴의 끝을 알리는 `<|im_end|>`를 사용합니다.
 
@@ -144,7 +106,7 @@ Qwen, Hermes, SmolLM, InternLM (파생형)....
 그럼 시원한 아이스 초코 가자!<|im_end|>
 ```
 
-## Alpaca
+### Alpaca
 
 스탠포드에서 개발된 [Alpaca 7B 모델](https://crfm.stanford.edu/2023/03/13/alpaca.html)에서 적용된 포맷입니다.
 싱글턴을 전제하에 개발되었으며 prompt_no_input, prompt_input 2가지 버전이 존재한다.
@@ -173,10 +135,13 @@ Qwen, Hermes, SmolLM, InternLM (파생형)....
 텔레그램
 ```
 
-## Mistral (Latest)
+### Mistral (Latest)
 
 mistral 계열은 특징으로 렌더링 결과가 개행 없이 한 줄로 나온다는 점이 있는데, 아래에서는 시각적 편의를 위해 줄바꿈을 추가하였습니다.
 또한 mistralai는 chat template를 가장 자주 업데이트하고 개선하는데 버전 별로 공백처리, 개행처리 등의 개선을 보는 것도 재미있습니다.
+
+BOS: `<s>`  
+EOS: `</s>`
 
 ```text title="mistralai/Mistral-Small-24B-Instruct-2501 (V7-Tekken)"
 // [!code word:<s>]
@@ -207,4 +172,29 @@ mistral 계열은 특징으로 렌더링 결과가 개행 없이 한 줄로 나�
 
 _For more information about the tokenizer please refer to [mistral-common](https://github.com/mistralai/mistral-common)_
 
-## Llama 3.x
+### Llama 3.x
+
+llama 계열 Instruct 모델에서 사용되는 포맷이다.  
+EOS와 다음 지침을 의미하는 스페셜 토큰 간에 개행이 없는 것이 특징이다.
+
+BOS: `<|begin_of_text|>`  
+EOS: `<|eot_id|>`
+
+```text title="meta-llama/Llama-3.3-70B-Instruct"
+// [!code word:<|begin_of_text|>]
+// [!code word:<|start_header_id|>]
+// [!code word:<|end_header_id|>]
+// [!code word:<|eot_id|>]
+
+<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+ㅤ
+넌 사용자의 결정을 도와주는 현실적인 친구야.<|eot_id|><|start_header_id|>user<|end_header_id|>
+ㅤ
+운동 갈까 말까?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+ㅤ
+가라, 후회 안 한다.<|eot_id|><|start_header_id|>user<|end_header_id|>
+ㅤ
+근데 너무 귀찮은데...<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+ㅤ
+5분만 가볍게라도 해봐, 그럼 몸이 풀릴 걸!<|eot_id|>
+```
