@@ -83,10 +83,13 @@ Qwen, Hermes, SmolLM, Dolphin, InternLM (파생형)....
 
 턴의 시작을 알리는 `<|im_start|>{{role}}\n`과 턴의 끝을 알리는 `<|im_end|>`를 사용합니다.
 
-```text
+BOS: `<|begin_of_text|>` (Depends on model)  
+EOS: `<|im_end|>`
+
+```text title="NousResearch/Hermes-3-Llama-3.1-8B"
 // [!code word:<|im_start|>]
 // [!code word:<|im_end|>]
-<|im_start|>system
+<|begin_of_text|><|im_start|>system
 넌 사용자를 항상 텐션 업 시켜주는 에너제틱한 친구야.<|im_end|>
 <|im_start|>user
 졸리다.<|im_end|>
@@ -136,27 +139,23 @@ BOS: `<s>`
 EOS: `</s>`
 
 ```text title="mistralai/Mistral-Small-24B-Instruct-2501 (V7-Tekken)"
-// [!code word:<s>]
 // [!code word:</s>]
 // [!code word:[INST\]]
 // [!code word:[/INST\]]
 // [!code word:[SYSTEM_PROMPT\]]
 // [!code word:[/SYSTEM_PROMPT\]]
 
-<s>
-[SYSTEM_PROMPT]넌 사용자에게 빠르게 날씨를 알려주는 친구야.[/SYSTEM_PROMPT]
+<s>[SYSTEM_PROMPT]넌 사용자에게 빠르게 날씨를 알려주는 친구야.[/SYSTEM_PROMPT]
 [INST]오늘 날씨 어때?[/INST]흐리고 쌀쌀해.</s>
 [INST]우산 필요할까?[/INST]응, 비 올 수도 있어!</s>
 ```
 
 ```text title="mistralai/Ministral-8B-Instruct-2410 (V3-Tekken)"
-// [!code word:<s>]
 // [!code word:</s>]
 // [!code word:[INST\]]
 // [!code word:[/INST\]]
 
-<s>
-[INST]넌 사용자에게 빠르게 날씨를 알려주는 친구야.
+<s>[INST]넌 사용자에게 빠르게 날씨를 알려주는 친구야.
 ㅤ
 오늘 날씨 어때?[/INST]흐리고 쌀쌀해.</s>
 [INST]우산 필요할까?[/INST]응, 비 올 수도 있어!</s>
@@ -173,7 +172,6 @@ BOS: `<|begin_of_text|>`
 EOS: `<|eot_id|>`
 
 ```text title="meta-llama/Llama-3.3-70B-Instruct"
-// [!code word:<|begin_of_text|>]
 // [!code word:<|start_header_id|>]
 // [!code word:<|end_header_id|>]
 // [!code word:<|eot_id|>]
@@ -190,3 +188,10 @@ EOS: `<|eot_id|>`
 ㅤ
 5분만 가볍게라도 해봐, 그럼 몸이 풀릴 걸!<|eot_id|>
 ```
+
+## Reference
+
+- https://github.com/openai/openai-python/blob/release-v0.28.0/chatml.md
+- https://github.com/InternLM/InternLM/blob/main/chat/chat_format.md
+- https://huggingface.co/docs/transformers/chat_templating
+- https://huggingface.co/blog/chat-templates
