@@ -7,11 +7,10 @@ tags:
   - chatbot
   - ai
 description: "LLM 모델들의 chat-template 총정리: Alpaca부터 ChatML까지"
+draft: false
 ---
 
-## chat template이란?
-
-LLM 모델 중 chat (instruct) 모델의 경우에는 `/v1/completions`를 통한 텍스트 문자열 대신 `/v1/chat/completions`를 통한 role과 content로 이루어진 messages 배열을 입력으로 받습니다.
+LLM 모델 중 chat (instruct) 모델의 경우에는 API로 사용할 때 `/v1/completions`를 통한 텍스트 문자열 대신 `/v1/chat/completions`를 통한 role과 content로 이루어진 messages 배열을 입력으로 받습니다.
 
 ```json
 [
@@ -27,10 +26,6 @@ chat template은 위에 messages 배열을 어떤 포맷의 텍스트 문자열�
 아래는 많은 chat template format 중 하나인 chatml format의 간소화된 예시입니다.
 
 ```jinja
-{% if not add_generation_prompt is defined %}
-  {% set add_generation_prompt = false %}
-{% endif %}
-
 {%- for message in messages %}
     {{- '<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n' }}
 {%- endfor %}
@@ -55,7 +50,7 @@ chat template은 위에 messages 배열을 어떤 포맷의 텍스트 문자열�
 ㅤ
 ```
 
-기본적으로 `<|im_start|>`과 `<|im_end|>`는 각각 턴의 시작과 끝을 나타내며, 마지막 하이라이팅된 부분은 model에게 지침을 제공하기 위해 `add_generation_prompt` 옵션을 True로 하여 앞으로 생성해야할 부분의 시작을 (header를) 랜더링 한 결과이다.
+기본적으로 `<|im_start|>`과 `<|im_end|>`는 각각 턴의 시작과 끝을 나타내며, 마지막 하이라이팅된 부분은 model에게 지침을 제공하기 위해 `add_generation_prompt` 옵션을 True로 하여 앞으로 생성해야할 부분의 시작을 (`<|im_start|>assistant\n`) 랜더링 한 결과입니다.
 
 이렇게 랜더링된 텍스트를 모델에게 입력하면 모델은 다음과 같이 응답을 생성합니다.
 
@@ -67,9 +62,8 @@ chat template은 위에 messages 배열을 어떤 포맷의 텍스트 문자열�
 여기서 실제로 모델은 `<맥락과 턴에 맞게 생성된 응답>`과 `<|im_end|>`를 생성하였고, stop token (eos token)으로 `<|im_end|>`이 인식되어 생성이 중단되었습니다.  
 여기까지 완료되면 `/v1/chat/completions`에 대한 응답으로 모델의 응답이 반환됩니다.
 
-여기까지가 chatml format을 예시로 한 chat template과 `/v1/chat/completions`의 내부 동작 방식에 대한 설명이였습니다.
-다만 Base model이 아닌 Instruct model의 경우 학습단계에서 특정한 chat template을 사용하므로, 해당 모델의 chat template을 사용하여야 합니다.
-모델별로 매우 다양한 chat template이 존재하며 아래는 그 정리입니다.
+이러한 유저와 모델의 대화를 특정한 포맷으로 나타내는 것을 넓은 범위에서 Chat markup language (ChatML)이라고 하고 그 파생형들이 존재합니다. (\*ChatML이라는 이름은 특정 포맷을 가리키기도 합니다.)
+이런 특정 포맷으로 랜더링 시켜주는 탬플릿 코드가 Chat template이며 이는 각 모델이 Instruct tuning를 하는 과정에서 학습되기 때문에 모델별로 고유한 탬플릿이 존재합니다.
 
 ## chat template 포맷 종류
 
@@ -190,11 +184,11 @@ EOS: `<|eot_id|>`
 
 ## 모델별 chat template 찾는 법
 
-모델 별로 학습할 때 사용된 탬플릿을 찾아서 올바르게 사용하는 것이 모델 성능에 큰 영향을 미치는데, 이를 찾는 방법은 어렵지 않다.
+모델 별로 학습할 때 사용된 탬플릿을 찾아서 올바르게 사용하는 것이 모델 성능에 큰 영향을 미치는데, 이를 찾는 방법은 어렵지 않습니다.
 
 1. huggingface files에서 `tokenizer_config.json` 파일 찾기  
-   모델이 instrcut 모델이라면 높은 확율로 `tokenizer_config.json` 파일에 chat template 필드가 존재한다.
-   보통 한줄로 포맷팅되어 있으며 여기에 탬플릿이 존재한다면 대부분 그대로 사용하면 된다.
+   모델이 instrcut 모델이라면 높은 확율로 `tokenizer_config.json` 파일에 chat template 필드가 존재합니다.
+   보통 한줄로 포맷팅되어 있으며 여기에 탬플릿이 존재한다면 대부분 그대로 사용하면 됩니다.
 
    ```json title="hf.co/NousResearch/Hermes-3-Llama-3.2-3B/blob/main/tokenizer_config.json"
    ...
