@@ -4,32 +4,36 @@ import Link from "next/link";
 import { cn, formatDate, formatYear } from "@/lib/utils";
 
 import { useQueryState, parseAsString } from "nuqs";
-import { blog, blogType } from "@/lib/source";
+import { postMetadataType } from "@/lib/source";
 import { Badge } from "@/components/ui/badge";
 
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { useCurrentLocale } from "@/locales/client";
-
-export function BlogList({ lang }: { lang: string }) {
-  const posts = blog.getPages(lang);
-
-  const locale = useCurrentLocale();
-
-  const [query, setQuery] = useQueryState(
+export function BlogList({
+  lang,
+  posts,
+}: {
+  lang: string;
+  posts: postMetadataType[];
+}) {
+  const [query] = useQueryState(
     "q",
-    parseAsString.withDefault(locale == "en" ? "(en)" : "")
+    parseAsString.withDefault(lang == "en" ? "(en)" : "")
   );
 
-  const searchIn = (text?: string) =>
-    text?.toLowerCase().includes(query.toLowerCase());
+  return <BlogListFallback posts={posts} query={query} />;
+}
 
-  const filteredPosts = posts.filter((post: any) => searchIn(post.data.title));
-  filteredPosts.sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+export function BlogListFallback({
+  posts,
+  query,
+}: {
+  posts: postMetadataType[];
+  query: string;
+}) {
+  const filteredPosts = posts.filter((post: any) =>
+    post.title?.toLowerCase().includes(query.toLowerCase())
   );
-
   const yearList = filteredPosts.reduce((acc: any, post) => {
-    const year = formatYear(post.data.date);
+    const year = formatYear(post.date);
 
     if (!acc[year]) {
       acc[year] = [];
@@ -43,72 +47,57 @@ export function BlogList({ lang }: { lang: string }) {
     "group-hover/year:opacity-100! group-hover/post:bg-secondary/100 group-hover/list:opacity-60 rounded-md";
 
   return (
-    <>
-      <div className="relative flex flex-1 shrink-0">
-        <label htmlFor="search" className="sr-only">
-          Search
-        </label>
-        <input
-          className="w-full rounded-md border focus:outline-hidden py-[9px] pl-10 text-sm outline-hidden placeholder:text-gray-500"
-          placeholder="Search blog posts..."
-          onChange={(e) => setQuery(e.target.value)}
-          value={query}
-        />
-        <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
-      </div>
-
-      <div data-animate data-animate-speed="slow" className="group/list">
-        {posts.length === 0 ? (
-          <div className="py-8 text-center">
-            <p>검색 결과가 없습니다 :/</p>
-          </div>
-        ) : (
-          Object.keys(yearList)
-            .reverse()
-            .map((year) => (
-              <div
-                key={year}
-                className="group/year flex flex-col sm:flex-row gap-2 border-t last-of-type:border-b py-8"
-              >
-                <div className="w-24">
-                  <h2 className="w-fit px-2 rounded-md opacity-60 group-hover/year:bg-secondary/100">
-                    {year}
-                  </h2>
-                </div>
-                {
-                  <ul data-animate className="space-y-3 w-full">
-                    {yearList[year].map((post: blogType) => (
-                      <li
-                        data-animate
-                        key={post.slugs.join("/")}
-                        className="flex justify-between group/post space-x-4"
-                      >
-                        <Link href={post.url}>
-                          <span
-                            className={cn(
-                              itemSytles,
-                              "inline py-1 px-2 box-decoration-clone"
-                            )}
-                          >
-                            {post.data.title}
-                          </span>
-                        </Link>
-
-                        {post.data.draft ? (
-                          <Badge variant="secondary">Draft</Badge>
-                        ) : (
-                          <div className={cn(itemSytles, "text-nowrap h-fit")}>
-                            {formatDate(post.data.date)}
-                          </div>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                }
+    <div data-animate data-animate-speed="slow" className="group/list">
+      {posts.length === 0 ? (
+        <div className="py-8 text-center">
+          <p>검색 결과가 없습니다 :/</p>
+        </div>
+      ) : (
+        Object.keys(yearList)
+          .reverse()
+          .map((year) => (
+            <div
+              key={year}
+              className="group/year flex flex-col sm:flex-row gap-2 border-t last-of-type:border-b py-8"
+            >
+              <div className="w-24">
+                <h2 className="w-fit px-2 rounded-md opacity-60 group-hover/year:bg-secondary/100">
+                  {year}
+                </h2>
               </div>
-            ))
-        )}
-      </div>
-    </>
+              {
+                <ul data-animate className="space-y-3 w-full">
+                  {yearList[year].map((post: postMetadataType) => (
+                    <li
+                      data-animate
+                      key={post.url}
+                      className="flex justify-between group/post space-x-4"
+                    >
+                      <Link href={post.url}>
+                        <span
+                          className={cn(
+                            itemSytles,
+                            "inline py-1 px-2 box-decoration-clone"
+                          )}
+                        >
+                          {post.title}
+                        </span>
+                      </Link>
+
+                      {post.draft ? (
+                        <Badge variant="secondary">Draft</Badge>
+                      ) : (
+                        <div className={cn(itemSytles, "text-nowrap h-fit")}>
+                          {formatDate(post.date)}
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              }
+            </div>
+          ))
+      )}
+    </div>
   );
 }

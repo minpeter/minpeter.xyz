@@ -12,4 +12,41 @@ export const blog = loader({
 });
 
 export type blogListType = ReturnType<typeof blog.getPages>;
-export type blogType = blogListType[number];
+export type blogType = ReturnType<typeof blog.getPage>;
+
+export type postMetadataType = {
+  url: string;
+  title: string;
+  draft: boolean;
+  date: Date;
+};
+
+export function getPostMetadata(post: blogType): postMetadataType {
+  if (!post) {
+    console.error("Post not found");
+
+    return {
+      url: "",
+      title: "",
+      draft: false,
+      date: new Date(),
+    };
+  }
+
+  return {
+    url: post.url,
+    title: post.data.title,
+    draft: post.data.draft,
+    date: post.data.date,
+  };
+}
+
+export function getPostsMetadata(posts: blogListType): postMetadataType[] {
+  return posts
+    .sort((a, b) => {
+      return b.data.date.getTime() - a.data.date.getTime();
+    })
+    .map((post) => {
+      return getPostMetadata(post);
+    });
+}

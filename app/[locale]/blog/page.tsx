@@ -1,25 +1,40 @@
 import Header from "@/components/header";
 import { Suspense } from "react";
-import { BlogList } from "./list";
+import { BlogList, BlogListFallback } from "./list";
 
 import NewMetadata from "@/lib/metadata";
 import { getI18n } from "@/locales/server";
 import { setStaticParamsLocale } from "next-international/server";
+import { BlogSearch, BlogSearchFallback } from "./search";
+import { createLoader, parseAsString, SearchParams } from "nuqs/server";
+import { blog, getPostsMetadata } from "@/lib/source";
 
 export const metadata = NewMetadata({
   title: "minpeter | blog",
   description: "내가 적은 블로그, 너를 위해 써봤지",
 });
 
+export const blogSearchParams = {
+  q: parseAsString.withDefault(""),
+};
+
+const loadSearchParams = createLoader(blogSearchParams);
+
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<SearchParams>;
 }) {
   const { locale } = await params;
-  setStaticParamsLocale(locale);
+  const { q: query } = await loadSearchParams(searchParams);
 
+  const posts = getPostsMetadata(blog.getPages(locale));
+
+  setStaticParamsLocale(locale);
   const t = await getI18n();
+
   return (
     <section data-animate>
       <Header
@@ -27,8 +42,11 @@ export default async function Page({
         description={t("blogPageDescription")}
         link={{ href: "/", text: t("backToHome") }}
       />
-      <Suspense>
-        <BlogList lang={locale} />
+      <Suspense fallback={<BlogSearchFallback />}>
+        <BlogSearch lang={locale} />
+      </Suspense>
+      <Suspense fallback={<BlogListFallback query={query} posts={posts} />}>
+        <BlogList posts={posts} lang={locale} />
       </Suspense>
     </section>
   );
