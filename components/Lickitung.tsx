@@ -78,7 +78,8 @@ export function Model() {
         anchorX="center"
         anchorY="middle"
         textAlign="center"
-        opacity={0.7} // 텍스트 투명도 조정
+        // opacity={0.7} // 텍스트 투명도 조정
+        fillOpacity={0.7}
       >
         {"VUD ❤️\n\nflag{1ICK17un6_1o8-2}\n\nNULL"}
       </Text>
