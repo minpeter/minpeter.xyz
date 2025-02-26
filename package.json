@@ -27,7 +27,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "ai": "^4.1.46",
-    "axios": "^1.8.0",
+    "axios": "^1.8.1",
     "class-variance-authority": "^0.7.1",
     "clipboard-copy": "^4.0.1",
     "clsx": "^2.1.1",
