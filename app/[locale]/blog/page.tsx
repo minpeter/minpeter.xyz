@@ -14,7 +14,7 @@ export const metadata = NewMetadata({
   description: "내가 적은 블로그, 너를 위해 써봤지",
 });
 
-export const blogSearchParams = {
+const blogSearchParams = {
   q: parseAsString.withDefault(""),
 };
 
