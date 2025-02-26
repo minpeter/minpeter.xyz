@@ -113,27 +113,6 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div
-          data-animate
-          data-animate-speed="slow"
-          className="flex flex-col text-center mt-32"
-        >
-          {Array.from({ length: textListLegth }).map((_, index) => (
-            <p
-              key={index}
-              style={{
-                backgroundColor: `rgba(0, 0, 0, ${
-                  (index + 1) / textListLegth
-                })`,
-                color: `rgba(255, 255, 255, ${(index + 1) / textListLegth})`,
-                margin: "0 2px",
-              }}
-            >
-              {t("mainText")}
-            </p>
-          ))}
-          <p>{t("subText")}</p>
-        </div>
       </div>
     </section>
   );

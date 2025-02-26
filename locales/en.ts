@@ -10,8 +10,6 @@ export default {
   aboutMe: `I am currently working as a frontend developer.
 As a frontend developer, I enjoy learning and applying rapidly changing technologies.
 I also prioritize user experience and strive to provide the best experience for users.`,
-  mainText: "Was it a dream, or the beginning of a nightmare?",
-  subText: "Was it a dream, or the beginning of a nightmare?",
   typingInitialSentences: [
     "Each sentence will automatically move to the next one once completed.",
     "You can press the Enter key to forcefully move to the next sentence.",
