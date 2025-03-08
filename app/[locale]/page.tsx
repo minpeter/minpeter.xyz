@@ -108,6 +108,7 @@ export default function Page() {
                 },
               ].map((item) => (
                 <Link
+                  aria-label={`social link to ${item.href}`}
                   key={item.href}
                   href={item.href}
                   target="_blank"
@@ -118,7 +119,11 @@ export default function Page() {
                 </Link>
               ))}
 
-              <Link className="col-span-3" href={"/show"}>
+              <Link
+                aria-label="Project Showcase Link"
+                className="col-span-3"
+                href={"/show"}
+              >
                 <Lickitung aspect="3/2" />
               </Link>
             </div>
