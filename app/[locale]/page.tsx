@@ -8,7 +8,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 import Image from "next/image";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import {
   Carousel,
@@ -28,7 +28,12 @@ import {
 import { CodeIcon, KeyboardIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
-import Lickitung from "@/components/Lickitung";
+import dynamic from "next/dynamic";
+
+import { Skeleton } from "@/components/ui/skeleton";
+
+const Lickitung = dynamic(() => import("@/components/Lickitung"));
+
 import { cn } from "@/lib/utils";
 
 export default function Page() {
@@ -124,7 +129,11 @@ export default function Page() {
                 className="col-span-3"
                 href={"/show"}
               >
-                <Lickitung aspect="3/2" />
+                <Suspense
+                  fallback={<Skeleton className="aspect-3/2 h-full w-full" />}
+                >
+                  <Lickitung aspect="3/2" />
+                </Suspense>
               </Link>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import { RootProvider } from "fumadocs-ui/provider";
 import { NuqsAdapter } from "nuqs/adapters/next";
 import localFont from "next/font/local";
@@ -72,12 +73,12 @@ export default async function RootLayout({
                 </NuqsAdapter>
               </RootProvider>
             </ThemeProvider>
-            <Analytics />
-            <SpeedInsights />
-            <GoogleAnalytics gaId="G-8L34G6HSJS" />
           </I18nProvider>
         </I18nProviderClient>
       </body>
+      <Analytics />
+      <SpeedInsights />
+      <GoogleAnalytics gaId="G-8L34G6HSJS" />
     </html>
   );
 }

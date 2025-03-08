@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, Suspense } from "react";
+import React, { useRef } from "react";
 import {
   Environment,
   MeshTransmissionMaterial,
@@ -37,11 +37,9 @@ export default function Lickitung({ aspect = "3/2" }) {
             antialias: false, // 안티앨리어싱 비활성화
           }}
         >
-          <Suspense fallback={null}>
-            <Model />
-            <directionalLight intensity={2} position={[0, 2, 3]} />
-            <Environment files="/studio_small_03_1k.hdr" />
-          </Suspense>
+          <Model />
+          <directionalLight intensity={2} position={[0, 2, 3]} />
+          <Environment files="/studio_small_03_1k.hdr" />
         </Canvas>
       </div>
     </div>

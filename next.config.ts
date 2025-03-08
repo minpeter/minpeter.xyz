@@ -26,7 +26,13 @@ const nextConfig: NextConfig = {
     // Trade off FCP, LCP and TTFB
     inlineCss: true,
 
-    optimizePackageImports: ["@radix-ui/react-icons"],
+    optimizePackageImports: [
+      "@radix-ui/react-icons",
+      "@react-three/drei",
+      "@react-three/fiber",
+      "matter-js",
+      "three",
+    ],
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
