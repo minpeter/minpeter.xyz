@@ -2,7 +2,6 @@ export default {
   "404": "Page not found :/",
   blogTitle: "A space to share development stories and daily life",
   typingTitle: "Typing practice",
-  showcaseTitle: "Project showcase",
   ipTitle: "IP Address Checker",
   backToBlog: "Blog",
   backToHome: "Home",

@@ -1,19 +1,5 @@
 "use client";
 
-import mainImage1 from "@/public/assets/images/main-image-1.jpg";
-import mainImage2 from "@/public/assets/images/main-image-2.png";
-import mainImage3 from "@/public/assets/images/main-image-3.png";
-
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-
-import Image from "next/image";
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-
 import { useEffect, useState } from "react";
 
 import { Card } from "@/components/ui/card";
@@ -43,9 +29,7 @@ export default function Page() {
             {t("aboutMe")}
           </p>
         </Card>
-        <div className="grid lg:grid-cols-2 grid-cols-1 gap-2 w-full">
-          <CarouselImage />
-        </div>
+
         <div className="mt-4">
           내루미가 뭔지 아시나요?
           <br />
@@ -120,41 +104,5 @@ function Countdown() {
         "Happy New Year!"
       )}
     </div>
-  );
-}
-
-function CarouselImage() {
-  const [grayscale, setGrayscale] = useState("grayscale(1)");
-
-  return (
-    <Carousel>
-      <CarouselContent>
-        {Array.from({ length: 3 }).map((_, index) => (
-          <CarouselItem key={index}>
-            <AspectRatio ratio={5 / 5}>
-              <Image
-                fill
-                className="rounded-lg object-cover"
-                src={
-                  index === 0
-                    ? mainImage1
-                    : index === 1
-                    ? mainImage2
-                    : mainImage3
-                }
-                alt="main"
-                style={{
-                  filter: grayscale,
-                  transition: "filter 1s",
-                }}
-                onMouseEnter={() => setGrayscale("grayscale(0)")}
-                onMouseLeave={() => setGrayscale("grayscale(70%)")}
-                onTouchEnd={() => setGrayscale("grayscale(70%)")}
-              />
-            </AspectRatio>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-    </Carousel>
   );
 }

@@ -1,4 +1,21 @@
 "use client";
+
+import mainImage1 from "@/public/assets/images/main-image-1.jpg";
+import mainImage2 from "@/public/assets/images/main-image-2.png";
+import mainImage3 from "@/public/assets/images/main-image-3.png";
+
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+
+import Image from "next/image";
+
+import { useEffect, useState } from "react";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+
 import { useI18n } from "@/locales/client";
 
 import Header from "@/components/header";
@@ -49,11 +66,6 @@ export default function Page() {
                 icon: <KeyboardIcon className="w-4 h-4" />,
               },
               {
-                href: "/show",
-                text: t("showcaseTitle"),
-                icon: <TransformIcon className="w-4 h-4" />,
-              },
-              {
                 href: "https://ip.minpeter.xyz/",
                 text: t("ipTitle"),
                 icon: <CodeIcon className="w-4 h-4" />,
@@ -79,6 +91,10 @@ export default function Page() {
                 <span className="text-sm self-start mt-auto">{item.text}</span>
               </Link>
             ))}
+
+            <div className="gap-2">
+              <CarouselImage />
+            </div>
 
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -107,7 +123,7 @@ export default function Page() {
                 </Link>
               ))}
 
-              <Link className="col-span-3" href={"/about"}>
+              <Link className="col-span-3" href={"/show"}>
                 <Lickitung aspect="3/2" />
               </Link>
             </div>
@@ -115,5 +131,41 @@ export default function Page() {
         </div>
       </div>
     </section>
+  );
+}
+
+function CarouselImage() {
+  const [grayscale, setGrayscale] = useState("grayscale(1)");
+
+  return (
+    <Carousel>
+      <CarouselContent>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <CarouselItem key={index}>
+            <AspectRatio ratio={5 / 5}>
+              <Image
+                fill
+                className="rounded-lg object-cover"
+                src={
+                  index === 0
+                    ? mainImage1
+                    : index === 1
+                    ? mainImage2
+                    : mainImage3
+                }
+                alt="main"
+                style={{
+                  filter: grayscale,
+                  transition: "filter 1s",
+                }}
+                onMouseEnter={() => setGrayscale("grayscale(0)")}
+                onMouseLeave={() => setGrayscale("grayscale(70%)")}
+                onTouchEnd={() => setGrayscale("grayscale(70%)")}
+              />
+            </AspectRatio>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+    </Carousel>
   );
 }
