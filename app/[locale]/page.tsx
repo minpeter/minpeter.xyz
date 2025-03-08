@@ -160,7 +160,7 @@ function CarouselImage() {
                 onTouchEnd={() => setGrayscale("grayscale(70%)")}
                 onClick={() => {
                   if (index === 0) {
-                    window.open("https://youtu.be/n_R0-YosZ3g?t=40");
+                    window.open("https://youtu.be/n_R0-YosZ3g?t=39");
                   } else if (index === 2) {
                     window.open(
                       "/73e3da8fa7a397e7b1bc36efabb2cbb265524a75d7d5e6d1620b9e10e694257"
