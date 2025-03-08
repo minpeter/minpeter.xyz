@@ -10,6 +10,8 @@ const withMDX = createMDX();
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+
   compiler: {
     // Remove console logs only in production, excluding error logs
     removeConsole:
@@ -23,6 +25,9 @@ const nextConfig: NextConfig = {
   experimental: {
     // Trade off FCP, LCP and TTFB
     inlineCss: true,
+
+    optimizePackageImports: ["@radix-ui/react-icons"],
+    useLightningcss: true,
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
