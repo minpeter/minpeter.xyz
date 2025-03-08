@@ -25,7 +25,7 @@ export default async function Page({
     <section className="flex flex-col gap-3">
       <Header
         title="showcase"
-        description="공들여 만들었지만 사용하지 않는 컴포넌트의 무덤"
+        description="Just things I did"
         link={{ href: "/", text: t("backToHome") }}
       />
       <div
@@ -43,6 +43,10 @@ export default async function Page({
 
         <Link href="/show/dynamic-hacked-text" className="underline">
           /show/dynamic-hacked-text
+        </Link>
+
+        <Link href="/show/model-card-artwork" className="underline">
+          /show/model-card-artwork
         </Link>
       </div>
     </section>
