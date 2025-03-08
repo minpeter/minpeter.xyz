@@ -141,10 +141,10 @@ export function ModCodeBlock({
                         return newFocus;
                       })
                     }
-                    onKeyDown={(e: any) => {
+                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                       if (e.key === "Enter") {
                         e.preventDefault();
-                        e.target.blur();
+                        (e.target as HTMLInputElement).blur();
                       }
                     }}
                   />

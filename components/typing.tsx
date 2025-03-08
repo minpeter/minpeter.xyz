@@ -1,7 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export default function Typing({ staticText, dynamic }: any) {
+export default function Typing({
+  staticText,
+  dynamic,
+}: {
+  staticText: string;
+  dynamic: string[];
+}) {
   const [text, setText] = useState("");
   const [count, setCount] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);

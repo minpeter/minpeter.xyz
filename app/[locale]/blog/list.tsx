@@ -29,19 +29,22 @@ export function BlogListFallback({
   posts: postMetadataType[];
   query: string;
 }) {
-  const filteredPosts = posts.filter((post: any) =>
+  const filteredPosts = posts.filter((post: postMetadataType) =>
     post.title?.toLowerCase().includes(query.toLowerCase())
   );
-  const yearList = filteredPosts.reduce((acc: any, post) => {
-    const year = formatYear(post.date);
+  const yearList = filteredPosts.reduce(
+    (acc: Record<string, postMetadataType[]>, post) => {
+      const year = formatYear(post.date);
 
-    if (!acc[year]) {
-      acc[year] = [];
-    }
+      if (!acc[year]) {
+        acc[year] = [];
+      }
 
-    acc[year].push(post);
-    return acc;
-  }, {});
+      acc[year].push(post);
+      return acc;
+    },
+    {}
+  );
 
   const itemSytles =
     "group-hover/year:opacity-100! group-hover/post:bg-secondary/100 group-hover/list:opacity-60 rounded-md";

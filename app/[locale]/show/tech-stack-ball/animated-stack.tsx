@@ -119,12 +119,11 @@ export function Playground({
 
     const iconSize = 30;
     const iconScale = iconSize / 300;
-    const boxs = stackIcon.map((icon, _) => {
+    const boxs = stackIcon.map((icon) => {
       return Bodies.circle(100, 100, iconSize, {
         render: {
           sprite: {
-            texture: require(`@/public/assets/images/stack-icon/${icon}`)
-              .default.src,
+            texture: `/assets/images/stack-icon/${icon}`,
             xScale: iconScale,
             yScale: iconScale,
           },

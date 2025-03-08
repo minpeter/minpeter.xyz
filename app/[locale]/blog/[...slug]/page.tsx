@@ -13,6 +13,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { Callout } from "fumadocs-ui/components/callout";
 import { getI18n } from "@/locales/server";
 import { setStaticParamsLocale } from "next-international/server";
+import { TOCItemType } from "fumadocs-core/server";
 
 export async function generateStaticParams() {
   return blog.generateParams();
@@ -53,14 +54,22 @@ export default async function Page({
 
   const MDX = post.data.body;
 
-  const postsIndex = posts.reduce((acc: any, post, index) => {
-    acc[post.slugs.join("/")] = {
-      ...post,
-      previous: posts[index - 1] || null,
-      next: posts[index + 1] || null,
-    };
-    return acc;
-  }, {});
+  type PostWithNavigation = (typeof posts)[0] & {
+    previous: (typeof posts)[0] | null;
+    next: (typeof posts)[0] | null;
+  };
+
+  const postsIndex = posts.reduce<Record<string, PostWithNavigation>>(
+    (acc, post, index) => {
+      acc[post.slugs.join("/")] = {
+        ...post,
+        previous: posts[index - 1] || null,
+        next: posts[index + 1] || null,
+      };
+      return acc;
+    },
+    {}
+  );
 
   return (
     <section data-animate>
@@ -78,7 +87,7 @@ export default async function Page({
         {post.data.toc.length > 0 && (
           <div className="text-sm">
             <nav data-animate>
-              {post.data.toc.map((item: any) => (
+              {post.data.toc.map((item: TOCItemType) => (
                 <a
                   key={item.url}
                   href={item.url}
@@ -89,7 +98,9 @@ export default async function Page({
                   )}
                   style={{ marginLeft: `${(item.depth - 1) * 1}rem` }}
                 >
-                  {item.title.props.children}
+                  {/* eslint-disable-next-line */}
+                  {/* @ts-ignore */}
+                  {item.title?.props.children}
                 </a>
               ))}
             </nav>
@@ -101,7 +112,7 @@ export default async function Page({
           className="mdx"
           components={{
             ...defaultMdxComponents,
-            img: (props) => <ImageZoom {...(props as any)} />,
+            img: (props) => <ImageZoom {...props} />,
             Tab,
             Tabs,
             Callout,
@@ -143,10 +154,10 @@ export default async function Page({
         <div className="flex justify-between">
           {postsIndex[post.slugs.join("/")].previous ? (
             <Link
-              href={`${postsIndex[post.slugs.join("/")].previous.url}`}
+              href={`${postsIndex[post.slugs.join("/")].previous?.url}`}
               className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
             >
-              ← {postsIndex[post.slugs.join("/")].previous.data.title}
+              ← {postsIndex[post.slugs.join("/")].previous?.data.title}
             </Link>
           ) : (
             <div></div>
@@ -154,10 +165,10 @@ export default async function Page({
 
           {postsIndex[post.slugs.join("/")].next && (
             <Link
-              href={`${postsIndex[post.slugs.join("/")].next.url}`}
+              href={`${postsIndex[post.slugs.join("/")].next?.url}`}
               className="text-primary hover:bg-secondary/100 rounded-md px-2 py-1"
             >
-              {postsIndex[post.slugs.join("/")].next.data.title} →
+              {postsIndex[post.slugs.join("/")].next?.data.title} →
             </Link>
           )}
         </div>

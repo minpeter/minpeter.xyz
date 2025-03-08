@@ -1,7 +1,7 @@
 "use client";
 
 import { useQueryState, parseAsString } from "nuqs";
-import { blog } from "@/lib/source";
+import { blog, blogType } from "@/lib/source";
 
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
@@ -16,7 +16,9 @@ export function BlogSearch({ lang }: { lang: string }) {
   const searchIn = (text?: string) =>
     text?.toLowerCase().includes(query.toLowerCase());
 
-  const filteredPosts = posts.filter((post: any) => searchIn(post.data.title));
+  const filteredPosts = posts.filter((post: blogType) =>
+    searchIn(post?.data.title)
+  );
   filteredPosts.sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
   );

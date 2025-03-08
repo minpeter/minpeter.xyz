@@ -75,6 +75,7 @@ export async function uploadFile(file: File[]) {
 
 export default function TmpfUI() {
   const [file, setFile] = useState<File[] | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [uploaded, setUploaded] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -128,6 +129,7 @@ export default function TmpfUI() {
           </div>
 
           <ul>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {uploaded.files.map((f: any) => (
               <li key={f.fileName}>
                 <Link

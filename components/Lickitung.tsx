@@ -65,6 +65,7 @@ export function Model() {
   };
 
   useFrame(() => {
+    // eslint-disable-next-line
     // @ts-ignore
     torus.current.rotation.z += 0.02;
   });
@@ -86,6 +87,7 @@ export function Model() {
 
       <mesh
         ref={torus}
+        // eslint-disable-next-line
         // @ts-ignore
         geometry={nodes.mesh_0.geometry}
         position={[0, -6, 0]}

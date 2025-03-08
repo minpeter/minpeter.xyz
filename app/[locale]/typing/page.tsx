@@ -156,6 +156,7 @@ export default function Page() {
     };
 
     checkCompletion();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     userInput,
     composingText,
@@ -365,19 +366,19 @@ export default function Page() {
                       ? "opacity-100 text-emerald-400"
                       : "opacity-100 text-pink-400"
                     : isCurrentTyping
-                    ? "opacity-100"
-                    : "opacity-30"
+                      ? "opacity-100"
+                      : "opacity-30"
                 } ${isComposingHere ? "border-b-2" : ""}`}
               >
                 {isComposingHere
                   ? composingText
                   : isTyped
-                  ? isWrongSpace || isTypedSpace
-                    ? "_"
-                    : typedChar
-                  : isSpace
-                  ? " "
-                  : char}
+                    ? isWrongSpace || isTypedSpace
+                      ? "_"
+                      : typedChar
+                    : isSpace
+                      ? " "
+                      : char}
               </span>
             );
           })}
