@@ -142,6 +142,7 @@ function CarouselImage() {
             <AspectRatio ratio={5 / 5}>
               <Image
                 fill
+                placeholder="blur"
                 className="rounded-lg object-cover"
                 src={
                   index === 0
