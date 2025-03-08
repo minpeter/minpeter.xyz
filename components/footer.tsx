@@ -31,7 +31,7 @@ export default function Footer({ className }: { className?: string }) {
         {" • "}
         <Link
           className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100"
-          href="https://github.com/minpeter/minpeter.xyz"
+          href="https://github.com/minpeter/minpeter.uk"
           target="_blank"
           rel="noopener noreferrer"
         >
