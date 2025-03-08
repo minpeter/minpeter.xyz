@@ -142,11 +142,10 @@ function CarouselImage() {
           <CarouselItem key={index}>
             <AspectRatio ratio={1}>
               <Image
-                fill
                 loading="lazy"
                 placeholder="blur"
                 className={cn(
-                  "rounded-lg object-cover transition-filter duration-1000 cursor-pointer grayscale-[70%]",
+                  "h-full w-full rounded-lg object-cover transition-filter duration-1000 cursor-pointer grayscale-[70%]",
                   grayscale === "grayscale(0)" && "grayscale-0"
                 )}
                 width={300}

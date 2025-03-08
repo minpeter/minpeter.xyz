@@ -7,7 +7,6 @@ import localFont from "next/font/local";
 import { I18nProvider } from "fumadocs-ui/i18n";
 
 import Footer from "@/components/footer";
-import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProviderClient } from "@/locales/client";
 import NewMetadata from "@/lib/metadata";
@@ -75,7 +74,6 @@ export default async function RootLayout({
                   </main>
 
                   <Footer />
-                  <Toaster />
                 </NuqsAdapter>
               </RootProvider>
             </ThemeProvider>
