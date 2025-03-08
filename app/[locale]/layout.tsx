@@ -28,11 +28,6 @@ const FontSans = localFont({
       weight: "400",
       style: "normal",
     },
-    {
-      path: "../../public/fonts/AritaBuri-SemiBold.woff2",
-      weight: "700",
-      style: "bold",
-    },
   ],
 });
 
