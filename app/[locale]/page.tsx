@@ -8,7 +8,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 import Image from "next/image";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Carousel,
@@ -24,7 +24,6 @@ import {
   GitHubLogoIcon,
   InstagramLogoIcon,
   LinkedInLogoIcon,
-  TransformIcon,
 } from "@radix-ui/react-icons";
 import { CodeIcon, KeyboardIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
@@ -33,8 +32,6 @@ import Lickitung from "@/components/Lickitung";
 
 export default function Page() {
   const t = useI18n();
-
-  const textListLegth = 16;
 
   return (
     <section className="flex flex-col gap-3">
@@ -150,8 +147,8 @@ function CarouselImage() {
                   index === 0
                     ? mainImage1
                     : index === 1
-                    ? mainImage2
-                    : mainImage3
+                    ? mainImage3
+                    : mainImage2
                 }
                 alt="main"
                 style={{

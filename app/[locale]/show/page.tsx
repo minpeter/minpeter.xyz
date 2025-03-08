@@ -45,6 +45,10 @@ export default async function Page({
           /show/dynamic-hacked-text
         </Link>
 
+        <Link href="/show/new-year-clock" className="underline">
+          /show/new-year-clock
+        </Link>
+
         <Link href="/show/model-card-artwork" className="underline">
           /show/model-card-artwork
         </Link>
