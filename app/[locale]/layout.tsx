@@ -1,24 +1,19 @@
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
-import { Toaster } from "@/components/ui/toaster";
 import { RootProvider } from "fumadocs-ui/provider";
-import { ThemeProvider } from "@/components/theme-provider";
-
 import { NuqsAdapter } from "nuqs/adapters/next";
-
 import localFont from "next/font/local";
-
 import { I18nProvider } from "fumadocs-ui/i18n";
-import { I18nProviderClient } from "@/locales/client";
-
-import "./global.css";
-
-import NewMetadata from "@/lib/metadata";
 
 import Footer from "@/components/footer";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/theme-provider";
+import { I18nProviderClient } from "@/locales/client";
+import NewMetadata from "@/lib/metadata";
 import { cn } from "@/lib/utils";
+
+import "./global.css";
 
 export const metadata = NewMetadata({
   title: "minpeter",
@@ -47,8 +42,6 @@ import { getStaticParams } from "@/locales/server";
 export function generateStaticParams() {
   return getStaticParams();
 }
-
-// export const dynamic = "force-dynamic";
 
 export default async function RootLayout({
   params,
