@@ -10,7 +10,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-
+  experimental: {
+    mdxRs: true,
+    // Trade off FCP, LCP and TTFB
+    inlineCss: true,
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
