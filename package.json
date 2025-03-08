@@ -9,7 +9,9 @@
     "dev": "next dev --turbopack -p 4000",
     "start": "next start",
     "postinstall": "fumadocs-mdx",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
   },
   "dependencies": {
     "@friendliai/ai-provider": "^0.2.4",
@@ -59,6 +61,7 @@
     "next-sitemap": "^4.2.3",
     "next-themes": "^0.4.4",
     "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.0.12",
     "tailwindcss-animate": "^1.0.7",

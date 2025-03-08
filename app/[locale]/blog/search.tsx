@@ -47,13 +47,13 @@ export function BlogSearchFallback({
         Search
       </label>
       <input
-        className="w-full rounded-md border focus:outline-hidden py-[9px] pl-10 text-sm outline-hidden placeholder:text-gray-500"
+        className="w-full rounded-md border py-[9px] pl-10 text-sm outline-hidden placeholder:text-gray-500 focus:outline-hidden"
         placeholder="Search blog posts..."
         onChange={onChangehandler}
         value={query}
         disabled={disabled}
       />
-      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+      <MagnifyingGlassIcon className="absolute top-1/2 left-3 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
     </div>
   );
 }

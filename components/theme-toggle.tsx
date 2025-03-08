@@ -11,11 +11,11 @@ export function ModeToggle() {
 
   return (
     <div
-      className="relative w-6 h-6 cursor-pointer flex items-center justify-center"
+      className="relative flex h-6 w-6 cursor-pointer items-center justify-center"
       onClick={() => (theme === "dark" ? setTheme("light") : setTheme("dark"))}
     >
-      <SunIcon className="absolute h-3 w-3 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <FiMoon className="absolute h-3 w-3 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <SunIcon className="absolute h-3 w-3 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+      <FiMoon className="absolute h-3 w-3 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
       <span className="sr-only">Toggle theme</span>
     </div>
   );

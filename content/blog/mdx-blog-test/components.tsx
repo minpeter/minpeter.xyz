@@ -18,8 +18,8 @@ export function SimpleButton() {
       {count >= 8
         ? "You pushed me 8 times!!"
         : toggle
-        ? "You pushed me!!"
-        : "Push me!!"}
+          ? "You pushed me!!"
+          : "Push me!!"}
     </Button>
   );
 }

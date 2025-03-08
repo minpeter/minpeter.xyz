@@ -42,28 +42,28 @@ tags: ["DNS", "homelab", "pihole", "raspberrypi", "server"]
    # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
    services:
    pihole:
-       container_name: pihole
-       image: pihole/pihole:latest
-       ports:
+     container_name: pihole
+     image: pihole/pihole:latest
+     ports:
        - "53:53/tcp"
        - "53:53/udp"
        - "67:67/udp"
        - "80:80/tcp"
        - "443:443/tcp"
-       environment:
-       TZ: 'Asia/Seoul'
-       WEBPASSWORD: '<MY_PASSWORD>'
-       # Volumes store your data between container upgrades
-       volumes:
-       - './etc-pihole/:/etc/pihole/'
-       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
-       dns:
+     environment:
+     TZ: "Asia/Seoul"
+     WEBPASSWORD: "<MY_PASSWORD>"
+     # Volumes store your data between container upgrades
+     volumes:
+       - "./etc-pihole/:/etc/pihole/"
+       - "./etc-dnsmasq.d/:/etc/dnsmasq.d/"
+     dns:
        - 127.0.0.1
        - 1.1.1.1
        - 1.0.0.1
-       # Recommended but not required (DHCP needs NET_ADMIN)
-       #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-       cap_add:
+     # Recommended but not required (DHCP needs NET_ADMIN)
+     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+     cap_add:
    ```
 
    위에 파일에서 수정해야될것은 딱 한가지인데 WEBPASSWORD의 &lt;MY_PASSWORD&gt;을 대신해서 비밀번호를 입력해주면된다.  

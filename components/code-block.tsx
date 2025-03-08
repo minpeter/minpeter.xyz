@@ -86,7 +86,7 @@ export function ModCodeBlock({
     <div className="flex flex-col gap-1">
       <pre style={{ marginBottom: 0 }}>
         <div
-          className="invisible absolute right-3 top-3 hover:cursor-pointer border rounded-md p-1 bg-card"
+          className="bg-card invisible absolute top-3 right-3 rounded-md border p-1 hover:cursor-pointer"
           onClick={() => {
             setOnCopy(true);
             handleCopyClick(
@@ -121,7 +121,7 @@ export function ModCodeBlock({
                     type="text"
                     autoFocus
                     //
-                    className={`inline bg-secondary px-1 py-0.5 rounded-md h-5`}
+                    className={`bg-secondary inline h-5 rounded-md px-1 py-0.5`}
                     key={i}
                     value={state[data]}
                     onFocus={(e) => {
@@ -158,7 +158,7 @@ export function ModCodeBlock({
                         return newFocus;
                       });
                     }}
-                    className="cursor-pointer bg-secondary px-1 py-0.5 rounded-md text-blue-500 hover:text-white hover:bg-blue-500"
+                    className="bg-secondary cursor-pointer rounded-md px-1 py-0.5 text-blue-500 hover:bg-blue-500 hover:text-white"
                   >
                     {state[data] || `plz enter \`${data}\``}
                   </span>
@@ -169,7 +169,7 @@ export function ModCodeBlock({
         </div>
       </pre>
 
-      <div className="text-xs text-gray-500 pl-1 mb-4">
+      <div className="mb-4 pl-1 text-xs text-gray-500">
         *파란색 텍스트를 클릭하면 간편하게 수정 후 복사할 수 있습니다.
       </div>
     </div>
@@ -205,7 +205,7 @@ export function CodeBlock({
   return (
     <>
       <div
-        className="invisible absolute right-3 top-3 hover:cursor-pointer border rounded-md p-1 bg-card"
+        className="bg-card invisible absolute top-3 right-3 rounded-md border p-1 hover:cursor-pointer"
         onClick={() => {
           setOnCopy(true);
           handleCopyClick(code);

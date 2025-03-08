@@ -45,15 +45,14 @@ export default function Page() {
           data-animate
           data-animate-speed="slow"
           // 상위 레이아웃에 넓이 제한이 존재하기 때문에 여기서 넓이 제한은 의미없음
-          className="grid lg:grid-cols-2 grid-cols-1 gap-2 w-full"
+          className="grid w-full grid-cols-1 gap-2 lg:grid-cols-2"
         >
           <Link
             href="/blog"
-            className="p-5 dark:bg-white/5 bg-black/5 rounded-xl flex flex-col justify-between
-               hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 h-40 lg:square lg:h-auto"
+            className="lg:square flex h-40 flex-col justify-between rounded-xl bg-black/5 p-5 transition-colors duration-200 hover:bg-black/10 lg:h-auto dark:bg-white/5 dark:hover:bg-white/10"
           >
             <span className="text-lg font-medium">{t("blogTitle")}</span>
-            <CookieIcon className="w-6 h-6" />
+            <CookieIcon className="h-6 w-6" />
           </Link>
 
           <div className="grid grid-cols-2 gap-2">
@@ -61,12 +60,12 @@ export default function Page() {
               {
                 href: "/typing",
                 text: t("typingTitle"),
-                icon: <KeyboardIcon className="w-4 h-4" />,
+                icon: <KeyboardIcon className="h-4 w-4" />,
               },
               {
                 href: "https://ip.minpeter.xyz/",
                 text: t("ipTitle"),
-                icon: <CodeIcon className="w-4 h-4" />,
+                icon: <CodeIcon className="h-4 w-4" />,
                 external: true,
               },
             ].map((item) => (
@@ -74,19 +73,18 @@ export default function Page() {
                 key={item.href}
                 href={item.href}
                 target={item.external ? "_blank" : undefined}
-                className="p-3 dark:bg-white/5 bg-black/5 rounded-xl flex flex-col relative
-                       hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 aspect-square"
+                className="relative flex aspect-square flex-col rounded-xl bg-black/5 p-3 transition-colors duration-200 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10"
               >
-                <div className="absolute top-3 left-3 flex gap-1.5 items-center">
+                <div className="absolute top-3 left-3 flex items-center gap-1.5">
                   {item.icon}
                 </div>
 
                 {item.external && (
-                  <div className="absolute top-3 right-3 flex gap-1.5 items-center">
-                    <ExternalLinkIcon className="w-3 h-3" />
+                  <div className="absolute top-3 right-3 flex items-center gap-1.5">
+                    <ExternalLinkIcon className="h-3 w-3" />
                   </div>
                 )}
-                <span className="text-sm self-start mt-auto">{item.text}</span>
+                <span className="mt-auto self-start text-sm">{item.text}</span>
               </Link>
             ))}
 
@@ -98,15 +96,15 @@ export default function Page() {
               {[
                 {
                   href: "https://github.com/minpeter",
-                  icon: <GitHubLogoIcon className="w-4 h-4" />,
+                  icon: <GitHubLogoIcon className="h-4 w-4" />,
                 },
                 {
                   href: "https://instagram.com/minpeter2",
-                  icon: <InstagramLogoIcon className="w-4 h-4" />,
+                  icon: <InstagramLogoIcon className="h-4 w-4" />,
                 },
                 {
                   href: "https://linkedin.com/in/minpeter/",
-                  icon: <LinkedInLogoIcon className="w-4 h-4" />,
+                  icon: <LinkedInLogoIcon className="h-4 w-4" />,
                 },
               ].map((item) => (
                 <Link
@@ -114,10 +112,9 @@ export default function Page() {
                   href={item.href}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="p-3 dark:bg-white/5 bg-black/5 rounded-xl flex justify-center items-center
-                 hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 aspect-square"
+                  className="flex aspect-square items-center justify-center rounded-xl bg-black/5 p-3 transition-colors duration-200 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10"
                 >
-                  <div className="flex gap-1.5 items-center">{item.icon}</div>
+                  <div className="flex items-center gap-1.5">{item.icon}</div>
                 </Link>
               ))}
 
@@ -145,7 +142,7 @@ function CarouselImage() {
                 loading="lazy"
                 placeholder="blur"
                 className={cn(
-                  "h-full w-full rounded-lg object-cover transition-filter duration-1000 cursor-pointer grayscale-[70%]",
+                  "transition-filter h-full w-full cursor-pointer rounded-lg object-cover grayscale-[70%] duration-1000",
                   grayscale === "grayscale(0)" && "grayscale-0"
                 )}
                 width={300}

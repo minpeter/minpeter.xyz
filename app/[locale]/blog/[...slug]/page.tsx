@@ -83,7 +83,7 @@ export default async function Page({
         link={{ href: `/blog`, text: t("backToBlog") }}
       />
 
-      <aside className="hidden 2xl:block fixed left-8 top-36 w-72">
+      <aside className="fixed top-36 left-8 hidden w-72 2xl:block">
         {post.data.toc.length > 0 && (
           <div className="text-sm">
             <nav data-animate>
@@ -92,9 +92,9 @@ export default async function Page({
                   key={item.url}
                   href={item.url}
                   className={cn(
-                    "block my-1",
-                    "px-0.5 rounded-md hover:bg-secondary/100 animation:enter w-fit",
-                    "py-1 px-2 box-decoration-clone"
+                    "my-1 block",
+                    "hover:bg-secondary/100 animation:enter w-fit rounded-md px-0.5",
+                    "box-decoration-clone px-2 py-1"
                   )}
                   style={{ marginLeft: `${(item.depth - 1) * 1}rem` }}
                 >
@@ -121,7 +121,7 @@ export default async function Page({
       </DocsBody>
 
       <section className="mt-32">
-        <div className="flex flex-row items-center gap-2 mb-8 text-sm text-muted-foreground">
+        <div className="text-muted-foreground mb-8 flex flex-row items-center gap-2 text-sm">
           <div className="flex gap-2">
             <span>{t("writeDate")}:</span>
             <time dateTime={new Date(post.data.date).toISOString()}>
@@ -146,7 +146,7 @@ export default async function Page({
         </div>
 
         <hr className="my-8" />
-        <div className="flex flex-col justify-center items-center mb-8">
+        <div className="mb-8 flex flex-col items-center justify-center">
           <h2 className="opacity-60">
             {`${t("prevPost")} / ${t("nextPost")}`}
           </h2>

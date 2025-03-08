@@ -12,8 +12,8 @@ export default function NewMetadata({
       process.env.PUBLIC_BASE_URL
         ? process.env.PUBLIC_BASE_URL
         : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : `http://localhost:${process.env.PORT ?? 3_000}`
+          ? `https://${process.env.VERCEL_URL}`
+          : `http://localhost:${process.env.PORT ?? 3_000}`
     ),
 
     title: title,

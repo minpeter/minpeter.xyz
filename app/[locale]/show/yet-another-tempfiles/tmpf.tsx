@@ -124,7 +124,7 @@ export default function TmpfUI() {
                 }
               }}
             >
-              <DownloadIcon className="w-4 h-4" />
+              <DownloadIcon className="h-4 w-4" />
             </Button>
           </div>
 
@@ -138,7 +138,7 @@ export default function TmpfUI() {
                   target="_blank"
                 >
                   <span>{f.fileName}</span>
-                  <EyeOpenIcon className="w-4 h-4" />
+                  <EyeOpenIcon className="h-4 w-4" />
                 </Link>
               </li>
             ))}

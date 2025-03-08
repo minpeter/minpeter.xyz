@@ -11,10 +11,10 @@ export function Backlink({
 }) {
   return (
     <Link
-      className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100 animation:enter w-fit"
+      className="hover:bg-secondary/100 animation:enter w-fit rounded-md px-0.5 text-sm text-gray-400 underline"
       href={href}
     >
-      <ArrowTopLeftIcon className="w-3 h-3 mb-1 mr-0.5 inline" />
+      <ArrowTopLeftIcon className="mr-0.5 mb-1 inline h-3 w-3" />
       {text}
     </Link>
   );

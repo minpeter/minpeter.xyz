@@ -317,14 +317,14 @@ export default function Page() {
         link={{ href: "/", text: t("backToHome") }}
       />
       <div
-        className="flex flex-col items-center justify-center p-4 relative gap-4"
+        className="relative flex flex-col items-center justify-center gap-4 p-4"
         onClick={() => !isTransitioning && inputRef.current?.focus()}
       >
         {/* 숨겨진 입력 필드 */}
         <input
           ref={inputRef}
           type="text"
-          className="opacity-0 absolute"
+          className="absolute opacity-0"
           onCompositionStart={handleCompositionStart}
           onCompositionUpdate={(e) => {
             if (!isTransitioning) {
@@ -338,7 +338,7 @@ export default function Page() {
         />
 
         {/* 타이핑 텍스트 표시 */}
-        <div className="text-2xl font-mono">
+        <div className="font-mono text-2xl">
           {currentSentence.split("").map((char, index) => {
             const isTyped = index < userInput.length;
             const typedChar = userInput[index];
@@ -363,8 +363,8 @@ export default function Page() {
                 className={`transition-all ${
                   isTyped
                     ? isCorrect
-                      ? "opacity-100 text-emerald-400"
-                      : "opacity-100 text-pink-400"
+                      ? "text-emerald-400 opacity-100"
+                      : "text-pink-400 opacity-100"
                     : isCurrentTyping
                       ? "opacity-100"
                       : "opacity-30"
@@ -385,7 +385,7 @@ export default function Page() {
         </div>
 
         {/* Update progress display to include fetching indicator */}
-        <div className="text-sm text-gray-400 flex items-center gap-2">
+        <div className="flex items-center gap-2 text-sm text-gray-400">
           <span>
             {currentSentenceIndex + 1} / {sentences.length}
           </span>

@@ -27,14 +27,14 @@ export default function Header({ title, description, link }: HeaderProps) {
         <div className="invisible">.</div>
       )}
       <div className="flex flex-row justify-between">
-        <h1 className=" flex flex-wrap items-center break-all text-bold">
+        <h1 className="text-bold flex flex-wrap items-center break-all">
           {title || "minpeter"}
         </h1>
 
         <div className="flex space-x-1">
           <button
             className={cn(
-              "text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100 animation:enter w-fit",
+              "hover:bg-secondary/100 animation:enter w-fit rounded-md px-0.5 text-sm text-gray-400 underline",
               {
                 "text-primary": locale === "ko",
               }
@@ -45,7 +45,7 @@ export default function Header({ title, description, link }: HeaderProps) {
           </button>
           <button
             className={cn(
-              "text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100 animation:enter w-fit",
+              "hover:bg-secondary/100 animation:enter w-fit rounded-md px-0.5 text-sm text-gray-400 underline",
               {
                 "text-primary": locale === "en",
               }
@@ -57,7 +57,7 @@ export default function Header({ title, description, link }: HeaderProps) {
         </div>
       </div>
       {description && (
-        <p className="text-sm text-gray-400 w-full">{description}</p>
+        <p className="w-full text-sm text-gray-400">{description}</p>
       )}
     </header>
   );

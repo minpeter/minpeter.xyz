@@ -1,7 +1,7 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@import 'fumadocs-ui/css/neutral.css';
-@import 'fumadocs-ui/css/preset.css';
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
 
 @source '../../node_modules/fumadocs-ui/dist/**/*.js';
 
@@ -58,7 +58,6 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
-
   *,
   ::after,
   ::before,
@@ -69,10 +68,9 @@
 }
 
 @layer base {
-
   /* width */
   ::-webkit-scrollbar {
-    @apply w-1.5 h-1;
+    @apply h-1 w-1.5;
   }
 
   /* Track */
@@ -86,7 +84,6 @@
 
     background: var(--scroll-bar-color);
   }
-
 
   ::selection {
     @apply bg-secondary text-secondary-foreground;
@@ -137,7 +134,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
 
   .dark {
@@ -180,9 +177,8 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
-
 }
 
 @layer base {
@@ -194,7 +190,6 @@
     @apply bg-background text-foreground;
   }
 }
-
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes enter {
@@ -209,92 +204,94 @@
     }
   }
 
-  [data-animate]>* {
+  [data-animate] > * {
     --lv: 0;
     --lv-wait: 0;
     --delay: 50ms;
     --start: 0ms;
     animation: enter 0.5s both;
-    animation-delay: calc(var(--lv) * var(--delay) + var(--lv-wait) * var(--delay) + var(--start));
+    animation-delay: calc(
+      var(--lv) * var(--delay) + var(--lv-wait) * var(--delay) + var(--start)
+    );
   }
 
-  [data-animate-speed='slow']>* {
+  [data-animate-speed="slow"] > * {
     --delay: 100ms;
   }
 
-  [data-animate-speed='fast']>* {
+  [data-animate-speed="fast"] > * {
     --delay: 25ms;
   }
 }
 
-[data-animate]>*:nth-child(1) {
+[data-animate] > *:nth-child(1) {
   --lv: 1;
 }
 
-[data-animate]>*:nth-child(2) {
+[data-animate] > *:nth-child(2) {
   --lv: 2;
 }
 
-[data-animate]>*:nth-child(3) {
+[data-animate] > *:nth-child(3) {
   --lv: 3;
 }
 
-[data-animate]>*:nth-child(4) {
+[data-animate] > *:nth-child(4) {
   --lv: 4;
 }
 
-[data-animate]>*:nth-child(5) {
+[data-animate] > *:nth-child(5) {
   --lv: 5;
 }
 
-[data-animate]>*:nth-child(6) {
+[data-animate] > *:nth-child(6) {
   --lv: 6;
 }
 
-[data-animate]>*:nth-child(7) {
+[data-animate] > *:nth-child(7) {
   --lv: 7;
 }
 
-[data-animate]>*:nth-child(8) {
+[data-animate] > *:nth-child(8) {
   --lv: 8;
 }
 
-[data-animate]>*:nth-child(9) {
+[data-animate] > *:nth-child(9) {
   --lv: 9;
 }
 
-[data-animate]>*:nth-child(10) {
+[data-animate] > *:nth-child(10) {
   --lv: 10;
 }
 
-[data-animate]>*:nth-child(11) {
+[data-animate] > *:nth-child(11) {
   --lv: 11;
 }
 
-[data-animate]>*:nth-child(12) {
+[data-animate] > *:nth-child(12) {
   --lv: 12;
 }
 
-[data-animate]>*:nth-child(13) {
+[data-animate] > *:nth-child(13) {
   --lv: 13;
 }
 
-[data-animate]>*:nth-child(14) {
+[data-animate] > *:nth-child(14) {
   --lv: 14;
 }
 
-[data-animate]>*:nth-child(15) {
+[data-animate] > *:nth-child(15) {
   --lv: 15;
 }
 
-[data-animate]>*:nth-child(16) {
+[data-animate] > *:nth-child(16) {
   --lv: 16;
 }
 
-[data-animate]>*:nth-child(17) {
+[data-animate] > *:nth-child(17) {
   --lv: 17;
 }
 
-[data-animate]>*:nth-child(n+18) {
+[data-animate] > *:nth-child(n + 18) {
   --lv-wait: 17;
 }

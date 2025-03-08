@@ -10,7 +10,7 @@ export default function Page() {
         title="/show/model-card-artwork"
         link={{ href: "/show", text: "Back" }}
       />
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 items-center">
+      <div className="grid grid-cols-1 items-center gap-3 sm:grid-cols-2 md:grid-cols-3">
         <Image placeholder="blur" src={llama3p1} alt="llama3.1" />
         <Image placeholder="blur" src={hermes3} alt="hermes3" />
         <Image placeholder="blur" src={qwen2p5} alt="qwen2.5" />

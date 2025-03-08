@@ -10,7 +10,7 @@ export default function Footer({ className }: { className?: string }) {
     <footer
       className={cn(
         className,
-        "mt-10 gap-1 flex justify-between border-t items-center py-1 px-4"
+        "mt-10 flex items-center justify-between gap-1 border-t px-4 py-1"
       )}
     >
       <Image
@@ -22,21 +22,21 @@ export default function Footer({ className }: { className?: string }) {
       <p className="text-sm text-gray-400">
         written by{" "}
         <Link
-          className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100"
+          className="hover:bg-secondary/100 rounded-md px-0.5 text-sm text-gray-400 underline"
           href="/about"
         >
           minpeter
-          <ArrowTopRightIcon className="w-3 h-3 mb-1 ml-0.5 inline" />
+          <ArrowTopRightIcon className="mb-1 ml-0.5 inline h-3 w-3" />
         </Link>
         {" • "}
         <Link
-          className="text-sm text-gray-400 underline px-0.5 rounded-md hover:bg-secondary/100"
+          className="hover:bg-secondary/100 rounded-md px-0.5 text-sm text-gray-400 underline"
           href="https://github.com/minpeter/minpeter.uk"
           target="_blank"
           rel="noopener noreferrer"
         >
           source code
-          <ArrowTopRightIcon className="w-3 h-3 mb-1 ml-0.5 inline" />
+          <ArrowTopRightIcon className="mb-1 ml-0.5 inline h-3 w-3" />
         </Link>
       </p>
       <ModeToggle />

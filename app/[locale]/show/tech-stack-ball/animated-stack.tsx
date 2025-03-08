@@ -169,7 +169,7 @@ export function Playground({
       width={w}
       height={h}
       className={cn(
-        "rounded-lg border bg-card text-card-foreground shadow-xs",
+        "bg-card text-card-foreground rounded-lg border shadow-xs",
         className
       )}
       style={{

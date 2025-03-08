@@ -63,8 +63,8 @@ export default async function RootLayout({
             >
               <RootProvider>
                 <NuqsAdapter>
-                  <main className="w-full mx-auto px-4 min-h-screen max-w-3xl py-24 relative">
-                    <div className="fixed inset-x-0 top-0 h-24 bg-linear-to-b from-background to-transparent z-10 pointer-events-none" />
+                  <main className="relative mx-auto min-h-screen w-full max-w-3xl px-4 py-24">
+                    <div className="from-background pointer-events-none fixed inset-x-0 top-0 z-10 h-24 bg-linear-to-b to-transparent" />
                     {children}
                   </main>
 

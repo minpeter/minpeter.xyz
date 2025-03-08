@@ -61,26 +61,26 @@ export function BlogListFallback({
           .map((year) => (
             <div
               key={year}
-              className="group/year flex flex-col sm:flex-row gap-2 border-t last-of-type:border-b py-8"
+              className="group/year flex flex-col gap-2 border-t py-8 last-of-type:border-b sm:flex-row"
             >
               <div className="w-24">
-                <h2 className="w-fit px-2 rounded-md opacity-60 group-hover/year:bg-secondary/100">
+                <h2 className="group-hover/year:bg-secondary/100 w-fit rounded-md px-2 opacity-60">
                   {year}
                 </h2>
               </div>
               {
-                <ul data-animate className="space-y-3 w-full">
+                <ul data-animate className="w-full space-y-3">
                   {yearList[year].map((post: postMetadataType) => (
                     <li
                       data-animate
                       key={post.url}
-                      className="flex justify-between group/post space-x-4"
+                      className="group/post flex justify-between space-x-4"
                     >
                       <Link href={post.url}>
                         <span
                           className={cn(
                             itemSytles,
-                            "inline py-1 px-2 box-decoration-clone"
+                            "inline box-decoration-clone px-2 py-1"
                           )}
                         >
                           {post.title}
@@ -90,7 +90,7 @@ export function BlogListFallback({
                       {post.draft ? (
                         <Badge variant="secondary">Draft</Badge>
                       ) : (
-                        <div className={cn(itemSytles, "text-nowrap h-fit")}>
+                        <div className={cn(itemSytles, "h-fit text-nowrap")}>
                           {formatDate(post.date)}
                         </div>
                       )}

@@ -19,7 +19,7 @@ const calculateAspectRatio = (ratio: string) => {
 export default function Lickitung({ aspect = "3/2" }) {
   return (
     <div
-      className="w-full relative"
+      className="relative w-full"
       style={{ paddingTop: calculateAspectRatio(aspect) }}
     >
       <div className="absolute inset-0">
