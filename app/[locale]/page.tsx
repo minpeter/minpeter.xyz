@@ -149,6 +149,8 @@ function CarouselImage() {
                   "rounded-lg object-cover transition-filter duration-1000 cursor-pointer grayscale-[70%]",
                   grayscale === "grayscale(0)" && "grayscale-0"
                 )}
+                width={300}
+                height={300}
                 src={[mainImage1, mainImage3, mainImage2][index]}
                 alt={`Main image ${index + 1}`}
                 onMouseEnter={() => setGrayscale("grayscale(0)")}
