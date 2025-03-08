@@ -29,6 +29,7 @@ import { CodeIcon, KeyboardIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
 import Lickitung from "@/components/Lickitung";
+import { cn } from "@/lib/utils";
 
 export default function Page() {
   const t = useI18n();
@@ -139,34 +140,27 @@ function CarouselImage() {
       <CarouselContent>
         {Array.from({ length: 3 }).map((_, index) => (
           <CarouselItem key={index}>
-            <AspectRatio ratio={5 / 5}>
+            <AspectRatio ratio={1}>
               <Image
                 fill
+                loading="lazy"
                 placeholder="blur"
-                className="rounded-lg object-cover"
-                src={
-                  index === 0
-                    ? mainImage1
-                    : index === 1
-                    ? mainImage3
-                    : mainImage2
-                }
-                alt="main"
-                style={{
-                  filter: grayscale,
-                  transition: "filter 1s",
-                }}
+                className={cn(
+                  "rounded-lg object-cover transition-filter duration-1000 cursor-pointer grayscale-[70%]",
+                  grayscale === "grayscale(0)" && "grayscale-0"
+                )}
+                src={[mainImage1, mainImage3, mainImage2][index]}
+                alt={`Main image ${index + 1}`}
                 onMouseEnter={() => setGrayscale("grayscale(0)")}
                 onMouseLeave={() => setGrayscale("grayscale(70%)")}
                 onTouchEnd={() => setGrayscale("grayscale(70%)")}
                 onClick={() => {
-                  if (index === 0) {
-                    window.open("https://youtu.be/n_R0-YosZ3g?t=39");
-                  } else if (index === 2) {
-                    window.open(
-                      "/73e3da8fa7a397e7b1bc36efabb2cbb265524a75d7d5e6d1620b9e10e694257"
-                    );
-                  }
+                  const urls = [
+                    "https://youtu.be/n_R0-YosZ3g?t=39",
+                    null,
+                    "/73e3da8fa7a397e7b1bc36efabb2cbb265524a75d7d5e6d1620b9e10e694257",
+                  ];
+                  if (urls[index]) window.open(urls[index]);
                 }}
               />
             </AspectRatio>
