@@ -27,7 +27,6 @@ const nextConfig: NextConfig = {
     inlineCss: true,
 
     optimizePackageImports: ["@radix-ui/react-icons"],
-    useLightningcss: true,
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
